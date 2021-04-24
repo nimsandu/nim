@@ -1,0 +1,5 @@
+﻿{
+  "Description": "Domain ownership verification file for Microsoft 365 - place in the website root",
+  "Domain": "nimsandu.tk",
+  "Id": "6f7664de-2a92-4af1-abb2-d26da02d6352"
+}
