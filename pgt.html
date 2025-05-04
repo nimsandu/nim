@@ -2,69 +2,132 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Page Goal Timer</title>
   <style>
+    :root {
+      --bg-color: #121212;
+      --text-color: #f0f0f0;
+      --accent-color: #4fc3f7;
+      --danger-color: #ef5350;
+      --success-color: #66bb6a;
+    }
+
     body {
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: #f0f4ff;
-      color: #222;
-      text-align: center;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       padding: 2rem;
     }
+
     h1 {
-      font-size: 2rem;
-      color: #3a56e0;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
     }
+
+    .inputs, .status {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     input, button {
       padding: 0.7rem;
-      margin: 0.5rem;
       font-size: 1rem;
       border-radius: 8px;
-      border: 1px solid #ccc;
+      border: none;
+      outline: none;
     }
+
+    input {
+      width: 150px;
+      background-color: #1e1e1e;
+      color: var(--text-color);
+      border: 1px solid #333;
+    }
+
     button {
-      background-color: #3a56e0;
-      color: white;
+      background-color: var(--accent-color);
+      color: #000;
       cursor: pointer;
+      font-weight: bold;
     }
+
     .status {
       margin-top: 2rem;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
+      text-align: center;
     }
+
     .timer {
-      font-size: 2.5rem;
-      margin-top: 1rem;
-      font-weight: bold;
-      color: #ff4d4d;
+      font-size: 3rem;
+      color: var(--danger-color);
+      margin: 1rem 0;
     }
-    .cheer {
-      font-size: 1.1rem;
-      color: #28a745;
+
+    .clock {
+      font-size: 1.2rem;
+      color: var(--accent-color);
       margin-top: 0.5rem;
+    }
+
+    .progress-container {
+      width: 100%;
+      max-width: 500px;
+      background-color: #333;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .progress-bar {
+      height: 20px;
+      background-color: var(--success-color);
+      width: 0%;
+    }
+
+    .controls button {
+      margin: 0.5rem;
+      background-color: #666;
+      color: white;
+    }
+
+    .cheer {
+      color: var(--success-color);
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
 
   <h1>📘 Page Goal Timer</h1>
-
-  <div>
-    <label>Number of pages: <input id="totalPages" type="number" min="1" /></label>
-    <label>Minutes per page: <input id="minutesPerPage" type="number" min="1" /></label>
-    <button onclick="startTimer()">Start!</button>
+  <div class="inputs">
+    <label>Pages: <input id="totalPages" type="number" min="1"></label>
+    <label>Minutes/Page: <input id="minutesPerPage" type="number" min="1"></label>
+    <button onclick="startTimer()">Start</button>
   </div>
 
   <div class="status" id="status"></div>
   <div class="timer" id="timer"></div>
+  <div class="controls">
+    <button onclick="pauseTimer()">Pause</button>
+    <button onclick="resumeTimer()">Resume</button>
+  </div>
   <div class="cheer" id="cheer"></div>
+  <div class="clock" id="clock"></div>
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
 
   <script>
-    let totalPages = 0;
-    let currentPage = 0;
-    let timePerPage = 0;
-    let timeLeft = 0;
-    let timerInterval;
+    let totalPages = 0, currentPage = 0, timePerPage = 0;
+    let timeLeft = 0, pausedTime = 0, timerInterval, paused = false;
+    let totalSecondsElapsed = 0;
 
     function startTimer() {
       totalPages = parseInt(document.getElementById("totalPages").value);
@@ -74,39 +137,55 @@
         return;
       }
       currentPage = 1;
+      totalSecondsElapsed = 0;
+      paused = false;
       nextPage();
     }
 
     function nextPage() {
       if (currentPage > totalPages) {
-        document.getElementById("status").innerText = "🎉 You're done! Amazing work!";
+        document.getElementById("status").innerText = "🎉 All done! You’re amazing!";
         document.getElementById("timer").innerText = "";
         document.getElementById("cheer").innerText = "";
+        document.getElementById("progressBar").style.width = "100%";
         return;
       }
 
       timeLeft = timePerPage;
-      document.getElementById("status").innerText = `📄 Page ${currentPage} of ${totalPages}`;
-      document.getElementById("cheer").innerText = "🔥 You got this!";
-      updateTimerDisplay();
-
+      updateDisplay();
       clearInterval(timerInterval);
       timerInterval = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay();
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          currentPage++;
-          nextPage();
+        if (!paused) {
+          timeLeft--;
+          totalSecondsElapsed++;
+          updateDisplay();
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            currentPage++;
+            document.getElementById("cheer").innerText = "👏 Page done! Moving to next...";
+            setTimeout(() => nextPage(), 1000);
+          }
         }
       }, 1000);
     }
 
-    function updateTimerDisplay() {
+    function pauseTimer() {
+      paused = true;
+      document.getElementById("cheer").innerText = "⏸️ Timer paused";
+    }
+
+    function resumeTimer() {
+      paused = false;
+      document.getElementById("cheer").innerText = "▶️ Resumed! Let’s go!";
+    }
+
+    function updateDisplay() {
       const mins = Math.floor(timeLeft / 60);
       const secs = timeLeft % 60;
-      document.getElementById("timer").innerText =
-        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      document.getElementById("timer").innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      document.getElementById("status").innerText = `📄 Page ${currentPage} of ${totalPages}`;
+      document.getElementById("progressBar").style.width = `${(currentPage - 1 + (1 - timeLeft/timePerPage)) / totalPages * 100}%`;
+      document.getElementById("clock").innerText = `⏱️ Total time: ${Math.floor(totalSecondsElapsed / 60)}m ${totalSecondsElapsed % 60}s`;
     }
   </script>
 
