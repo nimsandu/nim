@@ -10,12 +10,12 @@
       --card-bg: rgba(20, 20, 20, 0.8);
       --text-color: #e0e0e0;
       --accent-color: #7dfafd;
-      --accent-glow: rgba(125, 250, 253, 0.2);
+      --accent-glow: rgba(125, 250, 253, 0.3);
       --danger-color: #ff5e5e;
       --success-color: #5effae;
-      --dot-color: rgba(255, 255, 255, 0.3);
+      --dot-color: rgba(255, 255, 255, 0.2);
       --dot-size: 1px;
-      --dot-space: 12px;
+      --dot-space: 16px;
     }
 
     * {
@@ -46,12 +46,12 @@
       right: 0;
       bottom: 0;
       background-image: 
-        radial-gradient(var(--dot-color) var(--dot-size), transparent var(--dot-size)),
-        radial-gradient(var(--dot-color) var(--dot-size), transparent var(--dot-size));
+        radial-gradient(var(--dot-color) 2px, transparent 2px),
+        radial-gradient(var(--dot-color) 2px, transparent 2px);
       background-position: 0 0, calc(var(--dot-space) / 2) calc(var(--dot-space) / 2);
       background-size: var(--dot-space) var(--dot-space);
       z-index: -1;
-      opacity: 0.4;
+      opacity: 0.7;
     }
 
     .container {
@@ -162,6 +162,7 @@
       align-items: center;
       justify-content: center;
       margin: 1.5rem 0;
+      display: none; /* Hide by default */
     }
 
     .timer {
@@ -200,6 +201,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 0.8rem;
       margin: 1.5rem 0;
+      display: none; /* Hide by default */
     }
 
     .control-btn {
@@ -251,6 +253,7 @@
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
       margin: 1.5rem 0;
+      display: none; /* Hide by default */
     }
 
     .stat-box {
@@ -281,6 +284,7 @@
       overflow: hidden;
       margin: 1.5rem 0;
       position: relative;
+      display: none; /* Hide by default */
     }
 
     .progress-bar {
@@ -324,6 +328,7 @@
       gap: 4px;
       margin: 1rem 0;
       flex-wrap: wrap;
+      display: none; /* Hide by default */
     }
 
     .page-dot {
@@ -366,7 +371,7 @@
   <div class="container">
     <h1><span>Page Goal Timer</span></h1>
     
-    <div class="inputs">
+    <div class="inputs" id="setupCard">
       <label>
         Pages to Read
         <input id="totalPages" type="number" min="1" placeholder="10">
@@ -460,6 +465,14 @@
       isPaused = false;
       isTimerActive = true;
       
+      // Hide setup card and show session elements
+      document.getElementById("setupCard").style.display = "none";
+      document.querySelector(".timer-display").style.display = "flex";
+      document.querySelector(".controls").style.display = "grid";
+      document.querySelector(".progress-container").style.display = "block";
+      document.querySelector(".page-indicators").style.display = "flex";
+      document.querySelector(".stats").style.display = "grid";
+      
       // Clear any existing intervals
       clearInterval(timerInterval);
       
@@ -485,6 +498,17 @@
         document.getElementById("timer").innerText = "00:00";
         document.getElementById("message").innerText = "Great job finishing all pages!";
         document.getElementById("progressBar").style.width = "100%";
+        
+        // Show setup card and hide session elements
+        document.getElementById("setupCard").style.display = "grid";
+        setTimeout(() => {
+          document.querySelector(".timer-display").style.display = "none";
+          document.querySelector(".controls").style.display = "none";
+          document.querySelector(".progress-container").style.display = "none";
+          document.querySelector(".page-indicators").style.display = "none";
+          document.querySelector(".stats").style.display = "none";
+        }, 2000);
+        
         isTimerActive = false;
         return;
       }
