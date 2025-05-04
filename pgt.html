@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Page Goal Timer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4ff;
+      color: #222;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #3a56e0;
+    }
+    input, button {
+      padding: 0.7rem;
+      margin: 0.5rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #3a56e0;
+      color: white;
+      cursor: pointer;
+    }
+    .status {
+      margin-top: 2rem;
+      font-size: 1.3rem;
+    }
+    .timer {
+      font-size: 2.5rem;
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #ff4d4d;
+    }
+    .cheer {
+      font-size: 1.1rem;
+      color: #28a745;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📘 Page Goal Timer</h1>
+
+  <div>
+    <label>Number of pages: <input id="totalPages" type="number" min="1" /></label>
+    <label>Minutes per page: <input id="minutesPerPage" type="number" min="1" /></label>
+    <button onclick="startTimer()">Start!</button>
+  </div>
+
+  <div class="status" id="status"></div>
+  <div class="timer" id="timer"></div>
+  <div class="cheer" id="cheer"></div>
+
+  <script>
+    let totalPages = 0;
+    let currentPage = 0;
+    let timePerPage = 0;
+    let timeLeft = 0;
+    let timerInterval;
+
+    function startTimer() {
+      totalPages = parseInt(document.getElementById("totalPages").value);
+      timePerPage = parseInt(document.getElementById("minutesPerPage").value) * 60;
+      if (!totalPages || !timePerPage) {
+        alert("Enter valid numbers for both fields.");
+        return;
+      }
+      currentPage = 1;
+      nextPage();
+    }
+
+    function nextPage() {
+      if (currentPage > totalPages) {
+        document.getElementById("status").innerText = "🎉 You're done! Amazing work!";
+        document.getElementById("timer").innerText = "";
+        document.getElementById("cheer").innerText = "";
+        return;
+      }
+
+      timeLeft = timePerPage;
+      document.getElementById("status").innerText = `📄 Page ${currentPage} of ${totalPages}`;
+      document.getElementById("cheer").innerText = "🔥 You got this!";
+      updateTimerDisplay();
+
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          currentPage++;
+          nextPage();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timeLeft / 60);
+      const secs = timeLeft % 60;
+      document.getElementById("timer").innerText =
+        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+  </script>
+
+</body>
+</html>
