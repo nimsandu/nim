@@ -347,6 +347,30 @@
       background-color: var(--success-color);
     }
 
+    .simplified-link {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .simplified-btn {
+      padding: 0.8rem 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: 12px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--text-color);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .simplified-btn:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
     @media (max-width: 500px) {
       .container {
         padding: 1.5rem;
@@ -413,6 +437,10 @@
         <div class="stat-label">Paused Time</div>
         <div class="stat-value" id="pausedTime">00:00</div>
       </div>
+    </div>
+    
+    <div class="simplified-link">
+      <a href="https://nimaat.top/pt.html" class="simplified-btn">For a simplified version visit</a>
     </div>
   </div>
 
