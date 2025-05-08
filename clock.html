@@ -34,7 +34,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+      background-color: rgba(0, 0, 0, 0.65); /* Darker overlay */
       z-index: 1;
     }
     
@@ -51,9 +51,9 @@
     
     .clock {
       font-family: 'Courier New', monospace;
-      font-size: 8rem; /* Increased size from 4.5rem to 8rem */
+      font-size: 12rem; /* Increased size to make clock even bigger */
       font-weight: 400;
-      letter-spacing: 8px; /* Increased from 4px */
+      letter-spacing: 12px; /* Increased spacing */
       color: #a0aec0;
       margin-bottom: 1.5rem;
       transition: all 0.3s ease;
@@ -61,61 +61,71 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      mix-blend-mode: normal;
     }
     
     body.bg-gif .clock {
-      color: #ffffff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
-      padding: 15px;
-      border-radius: 10px;
-      background-color: rgba(0, 0, 0, 0.2);
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+      mix-blend-mode: overlay;
     }
     
     .digit {
       display: grid;
-      grid-template-columns: repeat(3, 10px); /* Increased from 6px */
-      grid-template-rows: repeat(5, 10px); /* Increased from 6px */
-      gap: 4px; /* Increased from 2px */
-      margin: 0 4px; /* Increased from 2px */
+      grid-template-columns: repeat(3, 15px); /* Increased size */
+      grid-template-rows: repeat(5, 15px); /* Increased size */
+      gap: 6px; /* Increased gap */
+      margin: 0 6px; /* Increased margin */
+      position: relative; /* For blur effect */
     }
     
     .dot {
-      width: 10px; /* Increased from 6px */
-      height: 10px; /* Increased from 6px */
-      border-radius: 2px;
+      width: 15px; /* Increased size */
+      height: 15px; /* Increased size */
+      border-radius: 3px;
       background-color: #94a3b8;
       opacity: 0.2;
       transition: opacity 0.3s ease;
     }
 
     body.bg-gif .dot {
-      background-color: #ffffff;
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
     }
     
     .dot.active {
       opacity: 0.9;
     }
     
+    /* Apply blur effect to active dots in gif mode */
+    body.bg-gif .dot.active {
+      box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+    }
+    
     .separator {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      height: 50px; /* Increased from 30px */
-      margin: 0 16px; /* Increased from 8px */
+      height: 80px; /* Increased height for bigger clock */
+      margin: 0 24px; /* Increased margin */
     }
     
     .separator-dot {
-      width: 10px; /* Increased from 6px */
-      height: 10px; /* Increased from 6px */
-      border-radius: 2px;
+      width: 15px; /* Increased size */
+      height: 15px; /* Increased size */
+      border-radius: 3px;
       background-color: #94a3b8;
       opacity: 0.7;
     }
 
     body.bg-gif .separator-dot {
-      background-color: #ffffff;
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.3);
     }
     
     .date {
@@ -176,8 +186,8 @@
     .timer-container {
       position: absolute;
       top: 0;
-      right: -50%; /* Start off-screen */
-      width: 50%;
+      right: -20%; /* Start off-screen - 1/5 of screen width */
+      width: 20%; /* 1/5 of screen width */
       height: 100%;
       background: rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(8px);
@@ -209,7 +219,7 @@
 
     /* Adjust main content when timer is visible */
     .timer-visible .main-content {
-      width: 50%;
+      width: 80%;
     }
   </style>
 </head>
@@ -219,7 +229,6 @@
     <div class="main-content">
       <div>
         <div class="clock" id="clock"></div>
-        <div class="date" id="date">---</div>
       </div>
     </div>
     
