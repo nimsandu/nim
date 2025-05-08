@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cozy Clock</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: #cbd5e1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      transition: background 0.8s ease;
+    }
+    
+    body.bg-gif {
+      background: url('bg.gif') no-repeat center center fixed;
+      background-size: cover;
+    }
+    
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .clock {
+      font-size: 5.5rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+      color: #e2e8f0;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+    
+    .date {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #94a3b8;
+      opacity: 0.7;
+      margin-top: -0.5rem;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+    
+    .button {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.06);
+      border: none;
+      color: #94a3b8;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all 0.3s ease;
+      opacity: 0.5;
+    }
+    
+    .button:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: scale(1.05);
+      opacity: 1;
+    }
+    
+    .button svg {
+      width: 18px;
+      height: 18px;
+      opacity: 0.8;
+    }
+    
+    #toggle-bg {
+      top: 20px;
+      right: 20px;
+    }
+    
+    #open-timer {
+      bottom: 20px;
+      right: 20px;
+    }
+    
+    .timer-container {
+      position: relative;
+      margin-top: 2rem;
+      width: 320px;
+      height: 180px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(8px);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.5s ease;
+    }
+    
+    .timer-container.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="clock" id="clock">--:--:--</div>
+    <div class="date" id="date">---</div>
+    
+    <button class="button" id="toggle-bg" title="Toggle Background">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="M4.93 4.93l1.41 1.41"></path>
+        <path d="M17.66 17.66l1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="M6.34 17.66l-1.41 1.41"></path>
+        <path d="M19.07 4.93l-1.41 1.41"></path>
+      </svg>
+    </button>
+    
+    <button class="button" id="open-timer" title="Toggle Timer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </svg>
+    </button>
+    
+    <div class="timer-container" id="timer-container">
+      <iframe id="timer-frame" src=""></iframe>
+    </div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      
+      document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+      
+      // Update date
+      const options = { weekday: 'long', month: 'long', day: 'numeric' };
+      const dateStr = now.toLocaleDateString(undefined, options);
+      document.getElementById('date').textContent = dateStr;
+    }
+    
+    setInterval(updateClock, 1000);
+    updateClock();
+    
+    // Toggle background
+    document.getElementById('toggle-bg').addEventListener('click', () => {
+      document.body.classList.toggle('bg-gif');
+    });
+    
+    // Toggle timer
+    document.getElementById('open-timer').addEventListener('click', () => {
+      const container = document.getElementById('timer-container');
+      const frame = document.getElementById('timer-frame');
+      
+      if (frame.src === '' || frame.src === window.location.href) {
+        frame.src = './pt.html';
+      }
+      
+      container.classList.toggle('visible');
+    });
+  </script>
+</body>
+</html>
