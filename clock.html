@@ -34,7 +34,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.65); /* Darker overlay */
+      background-color: rgba(0, 0, 0, 0.45);
       z-index: 1;
     }
     
@@ -51,9 +51,9 @@
     
     .clock {
       font-family: 'Courier New', monospace;
-      font-size: 12rem; /* Increased size to make clock even bigger */
+      font-size: 12rem;
       font-weight: 400;
-      letter-spacing: 12px; /* Increased spacing */
+      letter-spacing: 12px;
       color: #a0aec0;
       margin-bottom: 1.5rem;
       transition: all 0.3s ease;
@@ -72,16 +72,16 @@
     
     .digit {
       display: grid;
-      grid-template-columns: repeat(3, 15px); /* Increased size */
-      grid-template-rows: repeat(5, 15px); /* Increased size */
-      gap: 6px; /* Increased gap */
-      margin: 0 6px; /* Increased margin */
-      position: relative; /* For blur effect */
+      grid-template-columns: repeat(3, 15px);
+      grid-template-rows: repeat(5, 15px);
+      gap: 6px;
+      margin: 0 6px;
+      position: relative;
     }
     
     .dot {
-      width: 15px; /* Increased size */
-      height: 15px; /* Increased size */
+      width: 15px;
+      height: 15px;
       border-radius: 3px;
       background-color: #94a3b8;
       opacity: 0.2;
@@ -98,7 +98,6 @@
       opacity: 0.9;
     }
     
-    /* Apply blur effect to active dots in gif mode */
     body.bg-gif .dot.active {
       box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.4);
       backdrop-filter: blur(3px);
@@ -109,13 +108,13 @@
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      height: 80px; /* Increased height for bigger clock */
-      margin: 0 24px; /* Increased margin */
+      height: 80px;
+      margin: 0 24px;
     }
     
     .separator-dot {
-      width: 15px; /* Increased size */
-      height: 15px; /* Increased size */
+      width: 15px;
+      height: 15px;
       border-radius: 3px;
       background-color: #94a3b8;
       opacity: 0.7;
@@ -126,21 +125,6 @@
       backdrop-filter: blur(5px);
       -webkit-backdrop-filter: blur(5px);
       box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.3);
-    }
-    
-    .date {
-      font-size: 2rem; /* Increased from 1.2rem */
-      font-weight: 300;
-      color: #94a3b8;
-      opacity: 0.7;
-      margin-top: -0.5rem;
-      letter-spacing: 2px; /* Increased from 1px */
-      user-select: none;
-    }
-
-    body.bg-gif .date {
-      color: #ffffff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
     
     .button {
@@ -186,8 +170,8 @@
     .timer-container {
       position: absolute;
       top: 0;
-      right: -20%; /* Start off-screen - 1/5 of screen width */
-      width: 20%; /* 1/5 of screen width */
+      right: -20%;
+      width: 20%;
       height: 100%;
       background: rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(8px);
@@ -207,7 +191,6 @@
       border: none;
     }
 
-    /* Main content container to accommodate side panel */
     .main-content {
       display: flex;
       justify-content: center;
@@ -217,7 +200,6 @@
       transition: width 0.5s ease;
     }
 
-    /* Adjust main content when timer is visible */
     .timer-visible .main-content {
       width: 80%;
     }
@@ -229,7 +211,6 @@
     <div class="main-content">
       <div>
         <div class="clock" id="clock"></div>
-        <!--<div class="date" id="date">---</div>-->
       </div>
     </div>
     
@@ -260,75 +241,23 @@
   </div>
 
   <script>
-    // Dot matrix patterns for digits 0-9
     const digitPatterns = [
-      // 0
-      [1,1,1,
-       1,0,1,
-       1,0,1,
-       1,0,1,
-       1,1,1],
-      // 1
-      [0,1,0,
-       1,1,0,
-       0,1,0,
-       0,1,0,
-       1,1,1],
-      // 2
-      [1,1,1,
-       0,0,1,
-       1,1,1,
-       1,0,0,
-       1,1,1],
-      // 3
-      [1,1,1,
-       0,0,1,
-       0,1,1,
-       0,0,1,
-       1,1,1],
-      // 4
-      [1,0,1,
-       1,0,1,
-       1,1,1,
-       0,0,1,
-       0,0,1],
-      // 5
-      [1,1,1,
-       1,0,0,
-       1,1,1,
-       0,0,1,
-       1,1,1],
-      // 6
-      [1,1,1,
-       1,0,0,
-       1,1,1,
-       1,0,1,
-       1,1,1],
-      // 7
-      [1,1,1,
-       0,0,1,
-       0,1,0,
-       0,1,0,
-       0,1,0],
-      // 8
-      [1,1,1,
-       1,0,1,
-       1,1,1,
-       1,0,1,
-       1,1,1],
-      // 9
-      [1,1,1,
-       1,0,1,
-       1,1,1,
-       0,0,1,
-       1,1,1]
+      [1,1,1,1,0,1,1,0,1,1,0,1,1,1,1],
+      [0,1,0,1,1,0,0,1,0,0,1,0,1,1,1],
+      [1,1,1,0,0,1,1,1,1,1,0,0,1,1,1],
+      [1,1,1,0,0,1,0,1,1,0,0,1,1,1,1],
+      [1,0,1,1,0,1,1,1,1,0,0,1,0,0,1],
+      [1,1,1,1,0,0,1,1,1,0,0,1,1,1,1],
+      [1,1,1,1,0,0,1,1,1,1,0,1,1,1,1],
+      [1,1,1,0,0,1,0,1,0,0,1,0,0,1,0],
+      [1,1,1,1,0,1,1,1,1,1,0,1,1,1,1],
+      [1,1,1,1,0,1,1,1,1,0,0,1,1,1,1]
     ];
     
     function createClockDisplay() {
       const clockElement = document.getElementById('clock');
       clockElement.innerHTML = '';
       
-      // Create digits for hours
       const hoursContainer = document.createElement('div');
       hoursContainer.className = 'hours';
       hoursContainer.style.display = 'flex';
@@ -341,7 +270,6 @@
       hourDigit2.className = 'digit hour-digit-2';
       hourDigit2.dataset.position = 1;
       
-      // Create dots for each digit
       for (let i = 0; i < 15; i++) {
         const dot = document.createElement('div');
         dot.className = 'dot';
@@ -352,7 +280,6 @@
       hoursContainer.appendChild(hourDigit1);
       hoursContainer.appendChild(hourDigit2);
       
-      // Create separator
       const separator = document.createElement('div');
       separator.className = 'separator';
       const separatorDot1 = document.createElement('div');
@@ -362,7 +289,6 @@
       separator.appendChild(separatorDot1);
       separator.appendChild(separatorDot2);
       
-      // Create digits for minutes
       const minutesContainer = document.createElement('div');
       minutesContainer.className = 'minutes';
       minutesContainer.style.display = 'flex';
@@ -375,7 +301,6 @@
       minuteDigit2.className = 'digit minute-digit-2';
       minuteDigit2.dataset.position = 3;
       
-      // Create dots for each digit
       for (let i = 0; i < 15; i++) {
         const dot = document.createElement('div');
         dot.className = 'dot';
@@ -386,7 +311,6 @@
       minutesContainer.appendChild(minuteDigit1);
       minutesContainer.appendChild(minuteDigit2);
       
-      // Add everything to the clock
       clockElement.appendChild(hoursContainer);
       clockElement.appendChild(separator);
       clockElement.appendChild(minutesContainer);
@@ -404,12 +328,10 @@
         parseInt(m[1])
       ];
       
-      // Update each digit
       for (let pos = 0; pos < 4; pos++) {
         const digit = timeDigits[pos];
         const pattern = digitPatterns[digit];
         
-        // Find the right digit element based on position
         let selector;
         if (pos === 0) selector = '.hour-digit-1';
         else if (pos === 1) selector = '.hour-digit-2';
@@ -419,7 +341,6 @@
         const digitElement = document.querySelector(selector);
         const dots = digitElement.querySelectorAll('.dot');
         
-        // Update dots based on the pattern
         for (let i = 0; i < pattern.length; i++) {
           if (pattern[i] === 1) {
             dots[i].classList.add('active');
@@ -428,35 +349,22 @@
           }
         }
       }
-      
-      // Update date
-      const options = { weekday: 'long', month: 'long', day: 'numeric' };
-      const dateStr = now.toLocaleDateString(undefined, options);
-      document.getElementById('date').textContent = dateStr;
     }
     
-    // Create the clock display once
     createClockDisplay();
-    
-    // Update it immediately and then every minute
     updateClock();
-    setInterval(updateClock, 60000);
     
-    // Also update on the next minute boundary
     const now = new Date();
     const secondsToNextMinute = (60 - now.getSeconds()) * 1000;
     setTimeout(() => {
       updateClock();
-      // Then set the interval to exactly match minute boundaries
       setInterval(updateClock, 60000);
     }, secondsToNextMinute);
     
-    // Toggle background
     document.getElementById('toggle-bg').addEventListener('click', () => {
       document.body.classList.toggle('bg-gif');
     });
     
-    // Toggle timer
     document.getElementById('open-timer').addEventListener('click', () => {
       const container = document.getElementById('timer-container');
       const frame = document.getElementById('timer-frame');
