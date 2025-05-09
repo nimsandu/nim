@@ -49,8 +49,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(2px) contrast(70%);
+      background-color: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px) contrast(80%);
       z-index: 0;
     }
     
@@ -67,6 +67,7 @@
     
     .clock-container {
       margin-bottom: 2rem;
+      scale: 0.8;
     }
     
     .clock {
@@ -90,12 +91,12 @@
       width: 100%;
       height: 100%;
       border-radius: 0%;
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba(69, 69, 69, 0.3);
       transition: background-color 0.3s ease;
     }
     
     .dot.active {
-      background-color: var(--text-color);
+      background-color: rgba(255, 255, 255, 0.8);
       box-shadow: 0 0 10px rgba(111, 78, 55, 0.6);
     }
     
@@ -111,7 +112,7 @@
       width: 16px;
       height: 16px;
       border-radius: 0%;
-      background-color: var(--accent-color);
+      background-color: rgba(255, 255, 255, 0.8);
       opacity: 0.5;
       animation: pulse 2s infinite;
     }
