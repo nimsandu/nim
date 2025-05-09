@@ -5,19 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cozy Clock</title>
   <style>
-    html,body{margin:0;padding:0;height:100%;width:100%;overflow:hidden;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background-color:#121212;color:#cbd5e1;display:flex;justify-content:center;align-items:center;flex-direction:column;transition:background 0.8s ease}body.bg-gif{position:relative;background:url('bg.gif') no-repeat center center fixed;background-size:cover}body.bg-gif::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.4);z-index:1;backdrop-filter:blur(2px) contrast(0.8)}.container{position:relative;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:2}.clock{font-family:'Courier New',monospace;font-size:8rem;font-weight:400;letter-spacing:8px;color:#a0aec0;margin-bottom:1.5rem;transition:all 0.3s ease;user-select:none;display:flex;align-items:center;scale:1.4;justify-content:center;mix-blend-mode:normal}body.bg-gif .clock{color:rgba(255,255,255,1);text-shadow:0 0 12px rgba(255,255,255,0.4);mix-blend-mode:overlay}.digit{display:grid;grid-template-columns:repeat(5,10px);grid-template-rows:repeat(7,10px);gap:4px;margin:0 4px;position:relative}.dot{width:10px;height:10px;border-radius:2px;background-color:#94a3b8;opacity:0.1;transition:opacity 0.3s ease,transform 0.2s ease}body.bg-gif .dot{background-color:rgba(255,255,255,1);backdrop-filter:blur(10px)}.dot.active{opacity:0.95;transform:scale(1.1)}body.bg-gif .dot.active{box-shadow:0 0 8px 2px rgba(0,0,0,0.1)}.separator{display:flex;flex-direction:column;justify-content:space-around;height:120px;margin:0 16px}.separator-dot{width:12px;height:12px;border-radius:3px;background-color:#94a3b8;opacity:0.9}body.bg-gif .separator-dot{background-color:rgba(255,255,255,0.9);box-shadow:0 0 8px 2px rgba(255,255,255,0.3)}.button{position:absolute;background:rgba(255,255,255,0.06);border:none;color:#94a3b8;width:40px;height:40px;border-radius:50%;display:flex;justify-content:center;align-items:center;cursor:pointer;backdrop-filter:blur(4px);transition:all 0.3s ease;opacity:0.5;z-index:10}.button:hover{background:rgba(255,255,255,0.12);transform:scale(1.05);opacity:1}.button svg{width:18px;height:18px;opacity:0.8}#toggle-bg{top:20px;right:20px}#open-timer{bottom:20px;right:20px}#toggle-fullscreen{top:20px;left:20px}.timer-container{position:absolute;top:0;right:-20%;width:20%;height:100%;background:rgba(0,0,0,0.3);backdrop-filter:blur(8px);overflow:hidden;transition:right 0.5s ease;z-index:5;border-left:1px solid rgba(255,255,255,0.1)}.timer-container.visible{right:0}iframe{width:100%;height:100%;border:none}.main-content{display:flex;justify-content:center;align-items:center;width:100%;height:100%;transition:width 0.5s ease}.timer-visible .main-content{width:80%}
-      .digit {
-      grid-template-columns: repeat(7, 14px);
-      grid-template-rows: repeat(9, 14px);
-      gap: 1px;
-      margin: 0 8px;
-    }
-    .dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 0;
-      opacity: 0.1;
-    }
+    html,body{margin:0;padding:0;height:100%;width:100%;overflow:hidden;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background-color:#121212;color:#cbd5e1;display:flex;justify-content:center;align-items:center;flex-direction:column;transition:background 0.8s ease}body.bg-gif{position:relative;background:url('bg.gif') no-repeat center center fixed;background-size:cover}body.bg-gif::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.4);z-index:1;backdrop-filter:blur(2px) contrast(0.8)}.container{position:relative;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:2}.clock{font-family:'Courier New',monospace;font-size:8rem;font-weight:400;letter-spacing:8px;color:#a0aec0;margin-bottom:1.5rem;transition:all 0.3s ease;user-select:none;display:flex;align-items:center;scale:1.8;justify-content:center;mix-blend-mode:normal}body.bg-gif .clock{color:rgba(255,255,255,1);text-shadow:0 0 12px rgba(255,255,255,0.4);mix-blend-mode:overlay}.digit{display:grid;grid-template-columns:repeat(7,12px);grid-template-rows:repeat(9,12px);gap:3px;margin:0 5px;position:relative}.dot{width:12px;height:12px;border-radius:2px;background-color:#94a3b8;opacity:0.1;transition:opacity 0.3s ease,transform 0.2s ease}body.bg-gif .dot{background-color:rgba(255,255,255,1);backdrop-filter:blur(10px)}.dot.active{opacity:0.95;transform:scale(1.1)}body.bg-gif .dot.active{box-shadow:0 0 8px 2px rgba(0,0,0,0.1)}.separator{display:flex;flex-direction:column;justify-content:space-around;height:150px;margin:0 18px}.separator-dot{width:15px;height:15px;border-radius:3px;background-color:#94a3b8;opacity:0.9}body.bg-gif .separator-dot{background-color:rgba(255,255,255,0.9);box-shadow:0 0 8px 2px rgba(255,255,255,0.3)}.button{position:absolute;background:rgba(255,255,255,0.06);border:none;color:#94a3b8;width:40px;height:40px;border-radius:50%;display:flex;justify-content:center;align-items:center;cursor:pointer;backdrop-filter:blur(4px);transition:all 0.3s ease;opacity:0.5;z-index:10}.button:hover{background:rgba(255,255,255,0.12);transform:scale(1.05);opacity:1}.button svg{width:18px;height:18px;opacity:0.8}#toggle-bg{top:20px;right:20px}#open-timer{bottom:20px;right:20px}#toggle-fullscreen{top:20px;left:20px}.timer-container{position:absolute;top:0;right:-25%;width:25%;height:75%;background:rgba(0,0,0,0.3);backdrop-filter:blur(8px);overflow:hidden;transition:right 0.5s ease;z-index:5;border-left:1px solid rgba(255,255,255,0.1)}.timer-container.visible{right:0}iframe{width:100%;height:100%;border:none}.main-content{display:flex;justify-content:center;align-items:center;width:100%;height:100%;transition:width 0.5s ease}.timer-visible .main-content{width:75%}
   </style>
 </head>
 <body>
@@ -49,32 +37,35 @@
   </div>
 
   <script>
-        const digitPatterns = [
-      // 0
-      [1,1,1,1,1,1,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,1,1,1,1,1,1],
-      // 1
-      [0,0,1,1,1,0,0, 0,0,0,0,1,0,0, 0,0,0,0,1,0,0, 0,0,0,0,1,0,0, 0,0,0,0,1,0,0, 0,0,0,0,1,0,0, 0,0,1,1,1,1,1],
-      // 2
-      [1,1,1,1,1,1,1, 0,0,0,0,0,0,1, 0,0,0,0,0,0,1, 1,1,1,1,1,1,1, 1,0,0,0,0,0,0, 1,0,0,0,0,0,0, 1,1,1,1,1,1,1],
-      // 3
-      [1,1,1,1,1,1,1, 0,0,0,0,0,0,1, 0,0,0,0,0,0,1, 1,1,1,1,1,1,1, 0,0,0,0,0,0,1, 0,0,0,0,0,0,1, 1,1,1,1,1,1,1],
-      // 4
-      [1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,1,1,1,1,1,1, 0,0,0,0,0,0,1, 0,0,0,0,0,0,1, 0,0,0,0,0,0,1],
-      // 5
-      [1,1,1,1,1,1,1, 1,0,0,0,0,0,0, 1,0,0,0,0,0,0, 1,1,1,1,1,1,1, 0,0,0,0,0,0,1, 0,0,0,0,0,0,1, 1,1,1,1,1,1,1],
-      // 6
-      [1,1,1,1,1,1,1, 1,0,0,0,0,0,0, 1,0,0,0,0,0,0, 1,1,1,1,1,1,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,1,1,1,1,1,1],
-      // 7
-      [1,1,1,1,1,1,1, 0,0,0,0,0,0,1, 0,0,0,0,0,1,0, 0,0,0,0,1,0,0, 0,0,0,1,0,0,0, 0,0,1,0,0,0,0, 0,1,0,0,0,0,0],
-      // 8
-      [1,1,1,1,1,1,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,1,1,1,1,1,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,1,1,1,1,1,1],
-      // 9
-      [1,1,1,1,1,1,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,1,1,1,1,1,1, 0,0,0,0,0,0,1, 0,0,0,0,0,0,1, 1,1,1,1,1,1,1]
-    ];
+    const digitPatterns=[
+  [1,1,1,1,1,1,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,1,1,1,1,1,1],
+  [0,0,0,0,0,1,0, 0,0,0,0,1,1,0, 0,0,0,0,0,1,0, 0,0,0,0,0,1,0, 0,0,0,0,0,1,0, 0,0,0,0,0,1,0, 0,0,0,1,1,1,0],
+  [1,1,1,1,1,1,1, 0,0,0,0,0,0,1, 0,0,0,0,0,0,1, 1,1,1,1,1,1,1, 1,0,0,0,0,0,0, 1,0,0,0,0,0,0, 1,1,1,1,1,1,1],
+  [1,1,1,1,1,1,1, 0,0,0,0,0,0,1, 0,0,0,0,0,0,1, 1,1,1,1,1,1,1, 0,0,0,0,0,0,1, 0,0,0,0,0,0,1, 1,1,1,1,1,1,1],
+  [1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,1,1,1,1,1,1, 0,0,0,0,0,0,1, 0,0,0,0,0,0,1, 0,0,0,0,0,0,1],
+  [1,1,1,1,1,1,1, 1,0,0,0,0,0,0, 1,0,0,0,0,0,0, 1,1,1,1,1,1,1, 0,0,0,0,0,0,1, 0,0,0,0,0,0,1, 1,1,1,1,1,1,1],
+  [1,1,1,1,1,1,1, 1,0,0,0,0,0,0, 1,0,0,0,0,0,0, 1,1,1,1,1,1,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,1,1,1,1,1,1],
+  [1,1,1,1,1,1,1, 0,0,0,0,0,0,1, 0,0,0,0,0,1,0, 0,0,0,0,1,0,0, 0,0,0,1,0,0,0, 0,0,1,0,0,0,0, 0,1,0,0,0,0,0],
+  [1,1,1,1,1,1,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,1,1,1,1,1,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,1,1,1,1,1,1],
+  [1,1,1,1,1,1,1, 1,0,0,0,0,0,1, 1,0,0,0,0,0,1, 1,1,1,1,1,1,1, 0,0,0,0,0,0,1, 0,0,0,0,0,0,1, 1,1,1,1,1,1,1]
+];
 
-    function createClockDisplay(){const e=document.getElementById("clock");e.innerHTML="";const t=document.createElement("div");t.className="hours",t.style.display="flex";const n=document.createElement("div");n.className="digit hour-digit-1";const o=document.createElement("div");o.className="digit hour-digit-2";for(let e=0;e<35;e++){const e=document.createElement("div");e.className="dot",n.appendChild(e.cloneNode()),o.appendChild(e.cloneNode())}t.appendChild(n),t.appendChild(o);const d=document.createElement("div");d.className="separator";const l=document.createElement("div");l.className="separator-dot";const c=document.createElement("div");c.className="separator-dot",d.appendChild(l),d.appendChild(c);const i=document.createElement("div");i.className="minutes",i.style.display="flex";const s=document.createElement("div");s.className="digit minute-digit-1";const a=document.createElement("div");a.className="digit minute-digit-2";for(let e=0;e<35;e++){const e=document.createElement("div");e.className="dot",s.appendChild(e.cloneNode()),a.appendChild(e.cloneNode())}i.appendChild(s),i.appendChild(a),e.appendChild(t),e.appendChild(d),e.appendChild(i)}
+    function createClockDisplay(){const e=document.getElementById("clock");e.innerHTML="";const t=document.createElement("div");t.className="hours",t.style.display="flex";const n=document.createElement("div");n.className="digit hour-digit-1";const o=document.createElement("div");o.className="digit hour-digit-2";for(let e=0;e<63;e++){const e=document.createElement("div");e.className="dot",n.appendChild(e.cloneNode()),o.appendChild(e.cloneNode())}t.appendChild(n),t.appendChild(o);const d=document.createElement("div");d.className="separator";const l=document.createElement("div");l.className="separator-dot";const c=document.createElement("div");c.className="separator-dot",d.appendChild(l),d.appendChild(c);const i=document.createElement("div");i.className="minutes",i.style.display="flex";const s=document.createElement("div");s.className="digit minute-digit-1";const a=document.createElement("div");a.className="digit minute-digit-2";for(let e=0;e<63;e++){const e=document.createElement("div");e.className="dot",s.appendChild(e.cloneNode()),a.appendChild(e.cloneNode())}i.appendChild(s),i.appendChild(a),e.appendChild(t),e.appendChild(d),e.appendChild(i)}
 
-    function updateClock(){const e=new Date,t=String(e.getHours()).padStart(2,"0"),n=String(e.getMinutes()).padStart(2,"0"),o=[parseInt(t[0]),parseInt(t[1]),parseInt(n[0]),parseInt(n[1])];for(let e=0;e<4;e++){const t=o[e],n=digitPatterns[t],d=0===e?".hour-digit-1":1===e?".hour-digit-2":2===e?".minute-digit-1":".minute-digit-2",l=document.querySelector(d).querySelectorAll(".dot");for(let e=0;e<n.length;e++)n[e]?l[e].classList.add("active"):l[e].classList.remove("active")}}
+    function updateClock(){
+  const e=new Date,
+        t=String(e.getHours()).padStart(2,"0"),
+        n=String(e.getMinutes()).padStart(2,"0"),
+        o=[parseInt(t[0]),parseInt(t[1]),parseInt(n[0]),parseInt(n[1])];
+  for(let e=0;e<4;e++){
+    const t=o[e],
+          n=digitPatterns[t],
+          d=0===e?".hour-digit-1":1===e?".hour-digit-2":2===e?".minute-digit-1":".minute-digit-2",
+          l=document.querySelector(d).querySelectorAll(".dot");
+    for(let e=0;e<Math.min(n.length,l.length);e++)
+      n[e]?l[e].classList.add("active"):l[e].classList.remove("active");
+  }
+}
 
     createClockDisplay(),updateClock();const now=new Date;setTimeout(()=>{updateClock(),setInterval(updateClock,6e4)},(60-now.getSeconds())*1e3),document.getElementById("toggle-bg").addEventListener("click",()=>{document.body.classList.toggle("bg-gif")}),document.getElementById("open-timer").addEventListener("click",()=>{const e=document.getElementById("timer-container"),t=document.getElementById("timer-frame");""===t.src||t.src===window.location.href&&(t.src="./pt.html"),e.classList.toggle("visible"),document.querySelector(".container").classList.toggle("timer-visible")});const toggleFullscreen=document.getElementById("toggle-fullscreen");toggleFullscreen.addEventListener("click",()=>{document.fullscreenElement||document.mozFullScreenElement||document.webkitFullscreenElement||document.msFullscreenElement?(document.exitFullscreen&&document.exitFullscreen(),document.msExitFullscreen&&document.msExitFullscreen(),document.mozCancelFullScreen&&document.mozCancelFullScreen(),document.webkitExitFullscreen&&document.webkitExitFullscreen(),toggleFullscreen.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>'):(document.documentElement.requestFullscreen?document.documentElement.requestFullscreen():document.documentElement.msRequestFullscreen?document.documentElement.msRequestFullscreen():document.documentElement.mozRequestFullScreen?document.documentElement.mozRequestFullScreen():document.documentElement.webkitRequestFullscreen&&document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT),toggleFullscreen.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>')}),document.addEventListener("fullscreenchange",updateFullscreenButton),document.addEventListener("webkitfullscreenchange",updateFullscreenButton),document.addEventListener("mozfullscreenchange",updateFullscreenButton),document.addEventListener("MSFullscreenChange",updateFullscreenButton);function updateFullscreenButton(){document.fullscreenElement||document.mozFullScreenElement||document.webkitFullscreenElement||document.msFullscreenElement?toggleFullscreen.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>':toggleFullscreen.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>'}
   </script>
