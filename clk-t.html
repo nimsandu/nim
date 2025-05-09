@@ -353,6 +353,15 @@
     .page-indicator.completed {
       background-color: rgba(111, 78, 55, 0.5);
     }
+
+    .timer-container {
+      width: 43%;
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      padding: 12px;
+      margin-top: -20px;
+      background-color: rgba(69,69,69,0.4);
+    }
   </style>
 </head>
 <body>
@@ -369,7 +378,8 @@
         <div class="clock-unit" id="minutes-ones"></div>
       </div>
     </div>
-    
+
+    <div class="timer-container>
     <div class="timer-display" id="timer-display">
       <div class="timer-time" id="timer-time">00:00</div>
       <div class="timer-label">Remaining Time</div>
@@ -414,6 +424,7 @@
         </svg>
       </button>
     </div>
+  </div>
     
     <div class="timer-setup" id="timer-setup">
       <div class="timer-title">Study Timer</div>
