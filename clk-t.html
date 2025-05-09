@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coffee-Themed Dot Matrix Study Clock</title>
-  <!-- Added Square Font (Azeret Mono is a square/monospace font) -->
+  <title>Clock</title>
   <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@200;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-color: #0f0f13;
-      /* Changed accent color to coffee brown */
       --text-color: #ffffff;
       --accent-color: #B894CF;
       --neutral-color: #2a2c3d;
@@ -22,7 +20,6 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      /* Changed default font to Azeret Mono for squarish look */
       font-family: 'Azeret Mono', monospace;
     }
     
@@ -35,13 +32,11 @@
       justify-content: center;
       align-items: center;
       position: relative;
-      /* Added background image */
       background-image: url('./bg.gif');
       background-size: cover;
       background-position: center;
     }
     
-    /* Black overlay with 60% opacity */
     body::before {
       content: '';
       position: absolute;
