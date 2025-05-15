@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Calendar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .clock-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-right: 1px solid #333;
+            position: relative;
+        }
+        
+        .time {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 0.9;
+        }
+        
+        .hours {
+            font-size: 12rem;
+            font-weight: 700;
+        }
+        
+        .minutes {
+            font-size: 12rem;
+            font-weight: 700;
+        }
+        
+        .calendar-container {
+            flex: 1;
+            height: 100%;
+        }
+        
+        .calendar-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        .fullscreen-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            opacity: 0.3;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .fullscreen-btn:hover {
+            opacity: 0.8;
+        }
+
+        .fullscreen-btn svg {
+            width: 100%;
+            height: 100%;
+            fill: #fff;
+        }
+        
+        /* Media queries for mobile devices */
+        @media (max-width: 768px) {
+            body {
+                zoom: 0.7;
+                -moz-transform: scale(0.7);
+                -moz-transform-origin: 0 0;
+                -o-transform: scale(0.7);
+                -o-transform-origin: 0 0;
+                -webkit-transform: scale(0.7);
+                -webkit-transform-origin: 0 0;
+                transform: scale(0.7);
+                transform-origin: 0 0;
+                width: 142.85%; /* 100% / 0.7 to maintain full content */
+                height: 142.85%; /* 100% / 0.7 to maintain full content */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="clock-container">
+        <div class="time">
+            <div class="hours" id="hours">00</div>
+            <div class="minutes" id="minutes">00</div>
+        </div>
+        <div class="fullscreen-btn" id="fullscreen-btn">
+            <svg viewBox="0 0 24 24">
+                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+            </svg>
+        </div>
+    </div>
+    
+    <div class="calendar-container">
+        <iframe class="calendar-iframe" src="https://calendar.google.com/calendar/embed?height=800&wkst=2&ctz=Asia%2FColombo&showPrint=0&mode=AGENDA&showTz=0&showCalendars=0&src=bmltc2FuZHVrb3R0YWdlMjFAZ21haWwuY29t&color=%23039BE5" frameborder="0"></iframe>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            
+            // Update time - hours and minutes only
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            
+            // Call this function again in 10 seconds (less frequent updates)
+            setTimeout(updateClock, 10000);
+        }
+        
+        // Start the clock
+        updateClock();
+
+        // Fullscreen functionality
+        document.getElementById('fullscreen-btn').addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        });
+        
+        // Force desktop mode when in fullscreen
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                // Force desktop layout in fullscreen
+                document.body.style.flexDirection = 'row';
+                document.querySelector('.clock-container').style.width = '50%';
+                document.querySelector('.clock-container').style.height = '100%';
+                document.querySelector('.calendar-container').style.width = '50%';
+                document.querySelector('.calendar-container').style.height = '100%';
+            } else {
+                // Reset to responsive layout
+                document.body.style.flexDirection = '';
+                document.querySelector('.clock-container').style.width = '';
+                document.querySelector('.clock-container').style.height = '';
+                document.querySelector('.calendar-container').style.width = '';
+                document.querySelector('.calendar-container').style.height = '';
+            }
+        });
+        
+        // Force desktop view on mobile by zooming out
+        function enforceDeskTopView() {
+            // Already handled by CSS, this function now only handles fullscreen
+            if (document.fullscreenElement) {
+                // Force desktop layout in fullscreen
+                document.body.style.flexDirection = 'row';
+                document.querySelector('.clock-container').style.width = '50%';
+                document.querySelector('.clock-container').style.height = '100%';
+                document.querySelector('.calendar-container').style.width = '50%';
+                document.querySelector('.calendar-container').style.height = '100%';
+            } 
+        }
+        
+        // Run initially and on fullscreen change
+        document.addEventListener('fullscreenchange', enforceDeskTopView);
+        window.addEventListener('resize', () => {
+            if (document.fullscreenElement) {
+                enforceDeskTopView();
+            }
+        });
+    </script>
+</body>
+</html>
