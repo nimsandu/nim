@@ -55,7 +55,7 @@
             height: 100%;
         }
         
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 768px) and (orientation: portrait) {
             body {
                 flex-direction: column;
             }
@@ -72,6 +72,25 @@
             
             .calendar-container {
                 height: 60vh;
+            }
+        }
+        
+        @media screen and (max-width: 768px) and (orientation: landscape) {
+            body {
+                flex-direction: row; /* Horizontal layout in landscape */
+            }
+            
+            .clock-container {
+                border-right: 1px solid #333;
+                width: 40%;
+            }
+            
+            .hours, .minutes {
+                font-size: 6rem; /* Smaller font in landscape */
+            }
+            
+            .calendar-container {
+                width: 60%;
             }
         }
         
