@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1.0, user-scalable=yes">
+    <title>Calendar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: #fff;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Background image for entire page */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('./bg1-c.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+        
+        .clock-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            /* Add a subtle text shadow to make time more readable on the background */
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .time {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 0.9;
+        }
+        
+        .hours {
+            font-size: 12rem;
+            font-weight: 700;
+        }
+        
+        .minutes {
+            font-size: 12rem;
+            font-weight: 700;
+        }
+        
+        .calendar-container {
+            flex: 1;
+            height: 100%;
+            position: relative;
+        }
+        
+        /* Overlay for the calendar side to blur the background */
+        .calendar-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 0;
+        }
+        
+        @media screen and (max-width: 768px) and (orientation: portrait) {
+            body {
+                flex-direction: column;
+            }
+            
+            .clock-container {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                height: 40vh;
+            }
+            
+            .hours, .minutes {
+                font-size: 8rem;
+            }
+            
+            .calendar-container {
+                height: 60vh;
+            }
+        }
+        
+        @media screen and (max-width: 768px) and (orientation: landscape) {
+            body {
+                flex-direction: row; /* Horizontal layout in landscape */
+            }
+            
+            .clock-container {
+                border-right: 1px solid rgba(255, 255, 255, 0.2);
+                width: 40%;
+            }
+            
+            .hours, .minutes {
+                font-size: 6rem; /* Smaller font in landscape */
+            }
+            
+            .calendar-container {
+                width: 60%;
+            }
+        }
+        
+        /* Force desktop mode for calendar on mobile */
+        .calendar-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: invert(1) hue-rotate(180deg);
+            opacity: 0.85; /* Make the calendar slightly transparent */
+            position: relative;
+            z-index: 1;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .calendar-container {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .calendar-iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 125%; /* Compensate for the scaling (1/0.8 = 1.25) */
+                height: 125%;
+                transform: scale(0.8);
+                transform-origin: top left;
+            }
+        }
+
+        .fullscreen-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            opacity: 0.3;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            z-index: 2;
+        }
+
+        .fullscreen-btn:hover {
+            opacity: 0.8;
+        }
+
+        .fullscreen-btn svg {
+            width: 100%;
+            height: 100%;
+            fill: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock-container">
+        <div class="time">
+            <div class="hours" id="hours">00</div>
+            <div class="minutes" id="minutes">00</div>
+        </div>
+        <div class="fullscreen-btn" id="fullscreen-btn">
+            <svg viewBox="0 0 24 24">
+                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+            </svg>
+        </div>
+    </div>
+    
+    <div class="calendar-container">
+        <iframe class="calendar-iframe" src="https://calendar.google.com/calendar/embed?height=800&wkst=2&ctz=Asia%2FColombo&showPrint=0&showTitle=0&showCalendars=0&showTz=0&mode=AGENDA&src=bmltc2FuZHVrb3R0YWdlMjFAZ21haWwuY29t&color=%23039BE5" frameborder="0" scrolling="no"></iframe>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            
+            // Update time - hours and minutes only
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            
+            // Call this function again in 10 seconds (less frequent updates)
+            setTimeout(updateClock, 10000);
+        }
+        
+        // Start the clock
+        updateClock();
+
+        // Fullscreen functionality
+        document.getElementById('fullscreen-btn').addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
