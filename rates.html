@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rates & Policies</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #666666;
+      --border: #e6e6e6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+    h1 { font-size: 28px; font-weight: 500; margin-bottom: 8px; }
+    h2 { font-size: 20px; font-weight: 500; margin-top: 56px; }
+    h3 { font-size: 16px; font-weight: 500; margin-top: 32px; }
+    p { color: var(--muted); max-width: 720px; }
+    hr { border: none; border-top: 1px solid var(--border); margin: 56px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 14px;
+    }
+    th, td {
+      text-align: left;
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th { color: var(--muted); font-weight: 500; }
+    .note { font-size: 13px; color: var(--muted); max-width: 760px; }
+    .gate {
+      max-width: 420px;
+      margin: 140px auto;
+      text-align: center;
+    }
+    input {
+      width: 100%; padding: 12px 14px; font-size: 15px;
+      border: 1px solid var(--border); border-radius: 6px; margin-top: 16px;
+    }
+    button {
+      margin-top: 16px; padding: 12px 18px; font-size: 14px;
+      background: #111; color: #fff; border: none; border-radius: 6px; cursor: pointer;
+    }
+    .error { color: #c0392b; margin-top: 12px; font-size: 14px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+<div id="gate" class="gate">
+  <h1>Rates & Policies</h1>
+  <p>Enter your client ID to view the detailed rate structure.</p>
+  <input id="clientId" type="text" placeholder="Client ID" />
+  <button onclick="unlock()">Continue</button>
+  <div id="error" class="error hidden">Invalid client ID</div>
+</div>
+
+<div id="content" class="wrap hidden">
+  <h1>Rates & Policies</h1>
+  <p>All rates are in Sri Lankan Rupees (LKR). This document fully reflects the agreed rate base, fair usage, and post‑delivery policies.</p>
+
+  <h2>A.1.0 — Short Videos (Vertical)</h2>
+  <table>
+    <tr><th>Item</th><th>Rate</th><th>Notes</th></tr>
+    <tr><td>A.1.1 — ≤30s (Basic)</td><td>1800</td><td>Includes Ref. Z1 · Type‑2 · Z3 Applicable</td></tr>
+    <tr><td>A.1.2 — Each additional &lt;10s</td><td>200</td><td>Includes Ref. Z1 · Type‑2 · Z3 Applicable</td></tr>
+  </table>
+  <p class="note">3D / animated elements created solely upon client request are charged at 200 per element (e.g. map animations, logo intros, characters under 10s).</p>
+
+  <h2>A.2.0 — Graphics (Digital)</h2>
+  <table>
+    <tr><th>Item</th><th>Rate</th><th>Notes</th></tr>
+    <tr><td>1 Canvas</td><td>1300</td><td>Includes Ref. Z1 · Type‑1 · Z3 Applicable</td></tr>
+    <tr><td>Each additional variation</td><td>100</td><td>Same base design adapted to another size/platform</td></tr>
+  </table>
+
+  <h2>A.3.0 — Graphics (Booklets)</h2>
+  <table>
+    <tr><th>Item</th><th>Rate</th><th>Notes</th></tr>
+    <tr><td>Per unique design</td><td>1000</td><td>Recurring inner pages charged once</td></tr>
+    <tr><td>Special inner page</td><td>500</td><td>Unique design different from recurring pages</td></tr>
+  </table>
+  <p class="note">Multiple pages sharing the same recurring design are charged once for the base design. Typesetting or content inclusion fees may apply as agreed.</p>
+
+  <h2>A.4.0 — Graphics (Posters & Handbills)</h2>
+  <table>
+    <tr><th>Item</th><th>Rate</th><th>Notes</th></tr>
+    <tr><td>Single‑side print</td><td>1300</td><td>One side only</td></tr>
+    <tr><td>Additional design</td><td>500</td><td>Per extra design or double‑sided layout</td></tr>
+  </table>
+
+  <h2>A.5.0 — Graphics (Cards & Stickers)</h2>
+  <table>
+    <tr><th>Item</th><th>Rate</th><th>Notes</th></tr>
+    <tr><td>Each side</td><td>900</td><td>Each side is treated as a separate design</td></tr>
+  </table>
+
+  <h2>A.6.0 — Videos (Horizontal)</h2>
+  <table>
+    <tr><th>Item</th><th>Rate</th><th>Notes</th></tr>
+    <tr><td>≤120s (Basic)</td><td>2500</td><td>Max total duration 10 minutes</td></tr>
+    <tr><td>Each additional +60s</td><td>250</td><td>Includes Ref. Z1 · Type‑2 · Z3 Applicable</td></tr>
+  </table>
+
+  <h2>B.2.0 — Production + Editing (Vertical)</h2>
+  <table>
+    <tr><th>Item</th><th>Rate</th><th>Notes</th></tr>
+    <tr><td>1 minute</td><td>2500 – 3500</td><td>Base price varies by complexity</td></tr>
+  </table>
+
+  <h2>B.1.0 — Mass‑Scale Videos (&gt;10 minutes)</h2>
+  <p>Quotation only. A basic project valuation must be agreed upon at inception. A 10% advance (minimum 1000) is required to initiate the project.</p>
+
+  <hr />
+
+  <h2>Z — Policies & References</h2>
+
+  <h3>Z.1 — Additional Costs</h3>
+  <p class="note">Any travel, courier, or third‑party assets purchased upon client request will be added to the final amount with prior client agreement.</p>
+
+  <h3>Z.2 — Payment Types</h3>
+  <p class="note">Type‑1: Payments are non‑refundable after delivery.<br>Type‑2: Copyright issues after publishing are eligible for a free remake or a refund up to 90% if a remake is not requested.</p>
+
+  <h3>Z.3 — Fair Usage & Revisions</h3>
+  <p class="note">Clients may request changes without limitation. Abuse of this facility may result in immediate project termination with a refund up to 100% for affected sub‑projects.</p>
+
+</div>
+
+<script>
+  const VALID_ID = "PC05D";
+  function unlock() {
+    const v = document.getElementById("clientId").value.trim();
+    if (v === VALID_ID) {
+      document.getElementById("gate").classList.add("hidden");
+      document.getElementById("content").classList.remove("hidden");
+    } else {
+      document.getElementById("error").classList.remove("hidden");
+    }
+  }
+</script>
+
+</body>
+</html>
