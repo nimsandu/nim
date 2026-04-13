@@ -1,488 +1,868 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nimsandu Kottage</title>
-    <link rel="icon" href="./img/favicon.png">
-    <style>
-        :root {
-            --theme-orange: #ff7b00;
-            --theme-dark-blue: #0a1a2a;
-            --glow-orange: rgba(255, 123, 0, 0.5);
-            --cozy-brown: #412613;
-            --sunset-pink: #ff6e7f;
-            --sunset-orange: #ff9966;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Courier New', monospace;
-        }
-        
-        body {
-            background-color: #121212;
-            color: white;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .bg-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-        
-        .bg-image {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 100%;
-            filter: brightness(1) contrast(1.1) saturate(2);
-            z-index: -1;
-        }
-        
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, 
-                rgba(10, 26, 42, 0.85), 
-                rgba(18, 18, 18, 0.7),
-                rgba(65, 38, 19, 0.8));
-            z-index: -1;
-        }
-        
-        .rain {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-        
-        .pixel-effect {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVQIW2NkYGD4z8DAwMjIAAUADigBA/wvB6cAAAAASUVORK5CYII=");
-            opacity: 0.3;
-            pointer-events: none;
-            z-index: 5;
-        }
-        
-        .content {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 10% 10%;
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-        }
-        
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 25px;
-            background: linear-gradient(to right, var(--sunset-orange), var(--sunset-pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 15px rgba(255, 123, 0, 0.6), 0 0 25px rgba(255, 123, 0, 0.4);
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-        
-        .email {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            color: rgba(255, 255, 255, 0.9);
-            transition: all 0.3s ease;
-            padding: 8px 0;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .email::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--sunset-orange);
-            transition: all 0.3s ease;
-        }
-        
-        .email:hover {
-            color: var(--sunset-orange);
-        }
-        
-        .email:hover::after {
-            width: 100%;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        .email:link {
-            text-decoration: none;
-        }
-        
-        .buttons-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 15px;
-            margin-bottom: 40px;
-            width: 100%;
-            max-width: 300px;
-        }
-        
-        .button {
-            padding: 12px 20px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
-        }
-        
-        .button:hover {
-            transform: translateX(5px);
-        }
-        
-        .tpc-button {
-            background: rgba(10, 26, 42, 0.7);
-            color: var(--sunset-orange);
-            border-color: var(--sunset-orange);
-        }
-        
-        .coffee-button {
-            background: rgba(255, 123, 0, 0.7);
-            color: #121212;
-            border-color: #121212;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-        
-        .social-link {
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 3px;
-            background: rgba(255, 255, 255, 0.08);
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .social-link:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 123, 0, 0.2);
-            box-shadow: 0 0 10px rgba(255, 123, 0, 0.3);
-        }
-        
-        .coming-soon {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 30px;
-            letter-spacing: 1px;
-            font-style: italic;
-            position: relative;
-            padding-left: 20px;
-        }
-        
-        .coming-soon::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            width: 10px;
-            height: 1px;
-            background: var(--sunset-orange);
-        }
-        
-        #particles-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .email {
-                font-size: 1rem;
-            }
-            
-            .content {
-                padding: 10% 8%;
-            }
-        }
-        
-        /* Raindrop effect */
-        .raindrop {
-            position: absolute;
-            pointer-events: none;
-            width: 2px;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
-            border-radius: 0 0 5px 5px;
-        }
-    </style>
+  <!-- ── PRIMARY META ───────────────────────────────────────── -->
+  <title>Nimsandu Kottage — Designer, Developer & Mechanical Engineer</title>
+  <meta name="description" content="Nimsandu Kottage is a Mechanical Engineering student, software developer, and graphic designer based in Sri Lanka. Building at the intersection of engineering, design, and code." />
+  <meta name="author" content="Nimsandu Kottage" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nimaat.top/" />
+
+  <!-- ── OPEN GRAPH (Facebook, LinkedIn, WhatsApp, etc.) ────── -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://nimaat.top/" />
+  <meta property="og:title"       content="Nimsandu Kottage — Designer, Developer & Mechanical Engineer" />
+  <meta property="og:description" content="Mechanical Engineering student, software developer, and graphic designer based in Sri Lanka. Building at the intersection of engineering, design, and code." />
+  <meta property="og:image"       content="https://nimaat.top/img/hero.jpg" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name"   content="Nimsandu Kottage" />
+  <meta property="og:locale"      content="en_US" />
+
+  <!-- ── TWITTER / X CARD ──────────────────────────────────── -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:url"         content="https://nimaat.top/" />
+  <meta name="twitter:title"       content="Nimsandu Kottage — Designer, Developer & Mechanical Engineer" />
+  <meta name="twitter:description" content="Mechanical Engineering student, software developer, and graphic designer based in Sri Lanka. Building at the intersection of engineering, design, and code." />
+  <meta name="twitter:image"       content="https://nimaat.top/img/hero.jpg" />
+
+  <!-- ── JSON-LD STRUCTURED DATA ───────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Nimsandu Kottage",
+    "url": "https://nimaat.top",
+    "image": "https://nimaat.top/img/hero.jpg",
+    "jobTitle": "Mechanical Engineering Student, Software Developer & Graphic Designer",
+    "description": "Mechanical Engineering student at SLIIT, software developer, and graphic designer based in Sri Lanka. Building at the intersection of engineering, design, and code.",
+    "alumniOf": [
+      {
+        "@type": "University",
+        "name": "Sri Lanka Institute of Information Technology",
+        "sameAs": "https://www.sliit.lk"
+      },
+      {
+        "@type": "CollageOrHighSchool",
+        "name": "Ananda College"
+        "sameAs": "https://www.anandacollege.edu.lk"
+      }
+    ],
+    "knowsAbout": [
+      "Mechanical Engineering",
+      "Software Development",
+      "Graphic Design",
+      "Cloud Services",
+      "Mobile App Development",
+      "UI Design"
+    ],
+    "sameAs": [
+      "https://github.com/nimsandu",
+      "https://linkedin.com/in/nimsandu",
+      "https://buymeacoffee.com/nimsandu"
+    ]
+  }
+  </script>
+
+  <!-- ── FAVICON ────────────────────────────────────────────── -->
+  <link rel="icon" href="./img/favicon.png" type="image/png" />
+
+  <!-- ── FONTS ──────────────────────────────────────────────── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="index.css" />
 </head>
 <body>
-    <div class="bg-wrapper">
-        <img src="./img/hero.jpg" alt="Background" class="bg-image">
-        <div class="overlay"></div>
-        <div class="rain" id="rain"></div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">NK<span class="logo-mark">.</span></a>
+      <ul class="nav-links">
+        <li><a href="#about"      class="nav-link">About</a></li>
+        <li><a href="#work"       class="nav-link">Work</a></li>
+        <li><a href="#opensource" class="nav-link">Open Source</a></li>
+        <li><a href="#closedwork" class="nav-link">VisionProjects</a></li>
+        <li><a href="#creative"   class="nav-link">Creative</a></li>
+        <li><a href="#contact"    class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="./rates.html" target="_blank" rel="noopener" class="nav-cta">Rates ↗</a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span>
+        </button>
+      </div>
     </div>
-    
-    <canvas id="particles-canvas"></canvas>
-    <div class="pixel-effect"></div>
-    
-    <div class="content">
-        <h1>Nimsandu Kottage</h1>
-        
-        <a href="mailto:nimsandukottage21@gmail.com" class="email">
-            nimsandukottage21@gmail.com
-        </a>
-        
-        <div class="buttons-container">
-            <a href="http://tpc.nimaat.top" class="button tpc-button">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M3 10H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                The Project TPCalendar
-            </a>
-            
-            <a href="http://buymeacoffee.com/nimsandu" class="button coffee-button">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 8H19C20.0609 8 21.0783 8.42143 21.8284 9.17157C22.5786 9.92172 23 10.9391 23 12C23 13.0609 22.5786 14.0783 21.8284 14.8284C21.0783 15.5786 20.0609 16 19 16H18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M2 8H18V17C18 18.0609 17.5786 19.0783 16.8284 19.8284C16.0783 20.5786 15.0609 21 14 21H6C4.93913 21 3.92172 20.5786 3.17157 19.8284C2.42143 19.0783 2 18.0609 2 17V8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M6 1V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M10 1V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M14 1V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Buy Me A Coffee
-            </a>
-        </div>
-        
-        <div class="social-links">
-            <a href="https://linkedin.com/in/nimsandu" class="social-link" aria-label="LinkedIn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 8C17.5913 8 19.1174 8.63214 20.2426 9.75736C21.3679 10.8826 22 12.4087 22 14V21H18V14C18 13.4696 17.7893 12.9609 17.4142 12.5858C17.0391 12.2107 16.5304 12 16 12C15.4696 12 14.9609 12.2107 14.5858 12.5858C14.2107 12.9609 14 13.4696 14 14V21H10V14C10 12.4087 10.6321 10.8826 11.7574 9.75736C12.8826 8.63214 14.4087 8 16 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M6 9H2V21H6V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M4 6C5.10457 6 6 5.10457 6 4C6 2.89543 5.10457 2 4 2C2.89543 2 2 2.89543 2 4C2 5.10457 2.89543 6 4 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </a>
-            
-            <a href="https://instagram.com/nimsandu.k" class="social-link" aria-label="Instagram">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17 2H7C4.23858 2 2 4.23858 2 7V17C2 19.7614 4.23858 22 7 22H17C19.7614 22 22 19.7614 22 17V7C22 4.23858 19.7614 2 17 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M16 11.37C16.1234 12.2022 15.9813 13.0522 15.5938 13.799C15.2063 14.5458 14.5931 15.1514 13.8416 15.5297C13.0901 15.9079 12.2384 16.0396 11.4078 15.9059C10.5771 15.7723 9.80976 15.3801 9.21484 14.7852C8.61991 14.1902 8.22773 13.4229 8.09406 12.5922C7.9604 11.7615 8.09206 10.9099 8.47032 10.1584C8.84858 9.40685 9.45418 8.79374 10.201 8.40624C10.9478 8.01874 11.7978 7.87658 12.63 8C13.4789 8.12588 14.2648 8.52146 14.8717 9.12831C15.4785 9.73515 15.8741 10.5211 16 11.37Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M17.5 6.5H17.51" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </a>
-        </div>
-        
-        <p class="coming-soon">something better is coming...</p>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu-inner">
+      <a href="#about"      class="m-link">About</a>
+      <a href="#work"       class="m-link">Work</a>
+      <a href="#opensource" class="m-link">Open Source</a>
+      <a href="#closedwork" class="m-link">VisionProjects</a>
+      <a href="#creative"   class="m-link">Creative</a>
+      <a href="#contact"    class="m-link">Contact</a>
+      <a href="./rates.html" target="_blank" class="m-link m-link--accent">Rates &amp; Policies ↗</a>
     </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Flying particles animation
-            const canvas = document.getElementById('particles-canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            const particles = [];
-            const particleCount = 50;
-            
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.size = Math.random() * 2 + 1;
-                    this.speedX = Math.random() * 1 - 0.5;
-                    this.speedY = Math.random() * 1 - 0.5;
-                    this.color = `rgba(${Math.random() * 100 + 155}, ${Math.random() * 100 + 155}, ${Math.random() * 50}, ${Math.random() * 0.5 + 0.3})`;
-                }
-                
-                update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    
-                    if (this.x > canvas.width) {
-                        this.x = 0;
-                    } else if (this.x < 0) {
-                        this.x = canvas.width;
-                    }
-                    
-                    if (this.y > canvas.height) {
-                        this.y = 0;
-                    } else if (this.y < 0) {
-                        this.y = canvas.height;
-                    }
-                }
-                
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = this.color;
-                    ctx.fill();
-                    
-                    ctx.shadowColor = this.color;
-                    ctx.shadowBlur = 10;
-                    ctx.shadowOffsetX = 0;
-                    ctx.shadowOffsetY = 0;
-                }
-            }
-            
-            function init() {
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push(new Particle());
-                }
-            }
-            
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                for (let i = 0; i < particles.length; i++) {
-                    particles[i].update();
-                    particles[i].draw();
-                }
-                
-                // Connect particles with lines
-                connectParticles();
-                
-                requestAnimationFrame(animate);
-            }
-            
-            function connectParticles() {
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance < 100) {
-                            ctx.beginPath();
-                            ctx.strokeStyle = `rgba(255, 123, 0, ${0.2 - distance/500})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.stroke();
-                        }
-                    }
-                }
-            }
-            
-            window.addEventListener('resize', function() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            });
-            
-            init();
-            animate();
-            
-            // Create rain effect
-            const rainContainer = document.getElementById('rain');
-            
-            function createRaindrops() {
-                const dropCount = 100;
-                
-                for (let i = 0; i < dropCount; i++) {
-                    const drop = document.createElement('div');
-                    drop.classList.add('raindrop');
-                    
-                    // Set random starting position
-                    drop.style.left = `${Math.random() * 100}%`;
-                    drop.style.top = `${Math.random() * 100}%`;
-                    drop.style.animationDuration = `${Math.random() * 2 + 1}s`;
-                    drop.style.opacity = Math.random() * 0.3;
-                    
-                    // Add animation
-                    drop.style.animation = `rainfall ${Math.random() * 1 + 0.5}s linear infinite`;
-                    
-                    rainContainer.appendChild(drop);
-                }
-            }
-            
-            // Add animation for raindrops
-            const styleSheet = document.createElement('style');
-            styleSheet.type = 'text/css';
-            styleSheet.innerText = `
-                @keyframes rainfall {
-                    0% {
-                        transform: translateY(0);
-                    }
-                    100% {
-                        transform: translateY(100vh);
-                    }
-                }
-            `;
-            document.head.appendChild(styleSheet);
-            
-            createRaindrops();
-            
-            // Periodically animate raindrops
-            function animateRain() {
-                const raindrops = document.querySelectorAll('.raindrop');
-                
-                raindrops.forEach(drop => {
-                    // Reset position when drop reaches bottom
-                    const top = parseInt(drop.style.top);
-                    if (top > 100) {
-                        drop.style.top = '0%';
-                        drop.style.left = `${Math.random() * 100}%`;
-                    } else {
-                        drop.style.top = `${top + Math.random() * 0.5}%`;
-                    }
-                });
-                
-                requestAnimationFrame(animateRain);
-            }
-            
-            animateRain();
-        });
-    </script>
+  </div>
+
+  <!-- HERO -->
+  <main id="main-content">
+  <section class="hero" id="home">
+    <div class="geo-coord geo-coord--tl" aria-hidden="true"><span>6.9271°N</span><span>79.8612°E</span></div>
+    <div class="geo-coord geo-coord--tr" aria-hidden="true"><span>nimaat.top</span><span>v2.0</span></div>
+
+    <div class="hero-body">
+      <div class="hero-left">
+        <div class="hero-badge reveal">
+          <span class="badge-pulse"></span>Available for new projects
+        </div>
+        <div class="hero-os-badge reveal">
+          <span class="os-badge-icon">⬡</span>
+          <span class="os-badge-text">Open Source Advocate</span>
+          <span class="os-badge-dot">·</span>
+          <span class="os-badge-count">5 of 7 Dev projects public</span>
+        </div>
+        <h1 class="hero-name">
+          <span class="hn-1 reveal">Nimsandu</span>
+          <span class="hn-2 reveal">Kottage<span class="hn-mark">.</span></span>
+        </h1>
+        <div class="hero-sub reveal">
+          <p class="hero-roles">Designer &nbsp;·&nbsp; Developer &nbsp;·&nbsp; Engineer</p>
+          <p class="hero-blurb">Crafting at the intersection of three worlds.<br>Always figures a way out.</p>
+        </div>
+        <div class="hero-counters reveal">
+          <div class="hc-item"><span class="hc-n">100+</span><span class="hc-l">Projects</span></div>
+          <div class="hc-div"></div>
+          <div class="hc-item"><span class="hc-n">03</span><span class="hc-l">Disciplines</span></div>
+          <div class="hc-div"></div>
+          <div class="hc-item"><span class="hc-n">∞</span><span class="hc-l">Curiosity</span></div>
+        </div>
+      </div>
+      <div class="hero-right reveal-img">
+        <figure class="hero-fig">
+          <span class="fig-corner fig-corner--tl" aria-hidden="true"></span>
+          <span class="fig-corner fig-corner--tr" aria-hidden="true"></span>
+          <span class="fig-corner fig-corner--bl" aria-hidden="true"></span>
+          <span class="fig-corner fig-corner--br" aria-hidden="true"></span>
+          <div class="hero-img-wrap">
+            <img src="./img/hero.jpg" alt="Nimsandu Kottage — Mechanical Engineering student, developer and designer based in Sri Lanka" class="hero-img bw-img" />
+          </div>
+          <figcaption class="hero-caption">
+            <span>Nimsandu Kottage</span><span>SLIIT — BSC.ME</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="hero-foot">
+      <div class="scroll-hint">
+        <div class="scroll-track"><div class="scroll-thumb"></div></div>
+        <span><a href="#about">There's More Down Here</a></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-band" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="mq-item">Mechanical Engineering</span><span class="mq-sep">◆</span>
+      <span class="mq-item">Software Development</span><span class="mq-sep">◆</span>
+      <span class="mq-item">Graphic Design</span><span class="mq-sep">◆</span>
+      <span class="mq-item">SLIIT</span><span class="mq-sep">◆</span>
+      <span class="mq-item">Ananda College</span><span class="mq-sep">◆</span>
+      <span class="mq-item">Cloud Services</span><span class="mq-sep">◆</span>
+      <span class="mq-item">AI Technologies</span><span class="mq-sep">◆</span>
+      <span class="mq-item">ICT Education</span><span class="mq-sep">◆</span>
+      <span class="mq-item">nimaat.top</span><span class="mq-sep">◆</span>
+      <span class="mq-item">Mechanical Engineering</span><span class="mq-sep">◆</span>
+      <span class="mq-item">Software Development</span><span class="mq-sep">◆</span>
+      <span class="mq-item">Graphic Design</span><span class="mq-sep">◆</span>
+      <span class="mq-item">SLIIT</span><span class="mq-sep">◆</span>
+      <span class="mq-item">Ananda College</span><span class="mq-sep">◆</span>
+      <span class="mq-item">Cloud Services</span><span class="mq-sep">◆</span>
+      <span class="mq-item">AI Technologies</span><span class="mq-sep">◆</span>
+      <span class="mq-item">ICT Education</span><span class="mq-sep">◆</span>
+      <span class="mq-item">nimaat.top</span><span class="mq-sep">◆</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="section section--about" id="about">
+    <div class="container">
+
+      <div class="about-philosophy reveal">
+        <div class="ap-tag-row">
+          <span class="geo-plus" aria-hidden="true">✛</span>
+          <span class="s-tag">01 — About</span>
+        </div>
+        <div class="ap-headline-wrap">
+          <h2 class="ap-headline">
+            <span class="ap-h1">Most people</span>
+            <span class="ap-h2">pick a lane.</span>
+            <span class="ap-h3"><em>I picked an ocean.</em></span>
+          </h2>
+          <p class="ap-sub">Mechanical engineering. Design. Development.<br>Three fields that look nothing alike — until you build something real.</p>
+        </div>
+      </div>
+
+      <!-- Discipline schematic -->
+      <div class="disciplines-viz reveal">
+        <div class="dv-node">
+          <div class="dv-ring"></div>
+          <span class="dv-letter">M</span>
+          <div class="dv-info">
+            <span class="dv-name">Mechanical<br>Engineering</span>
+            <span class="dv-inst">SLIIT — UG</span>
+          </div>
+        </div>
+        <div class="dv-connector"><div class="dv-line"></div><div class="dv-inters"><span>+</span></div><div class="dv-line"></div></div>
+        <div class="dv-node">
+          <div class="dv-ring"></div>
+          <span class="dv-letter">D</span>
+          <div class="dv-info">
+            <span class="dv-name">Design &amp;<br>Visual Arts</span>
+            <span class="dv-inst">Brand · Print · Motion</span>
+          </div>
+        </div>
+        <div class="dv-connector"><div class="dv-line"></div><div class="dv-inters"><span>+</span></div><div class="dv-line"></div></div>
+        <div class="dv-node">
+          <div class="dv-ring"></div>
+          <span class="dv-letter">S</span>
+          <div class="dv-info">
+            <span class="dv-name">Software<br>Development</span>
+            <span class="dv-inst">Web · Mobile · API</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-main">
+        <div class="about-narrative reveal">
+          <p class="ab-p ab-p--lead">There's a thread connecting circuits and steel, pixels and physics. I found it early, and refused to let go.</p>
+          <p class="ab-p">I'm Nimsandu, currently reading for a BSc. Engineering (Hons) in Mechanical Engineering at the Sri Lanka Institute of Information Technology. My path started at Ananda College, where I ran ICT workshops, led events, and fell deep into the craft of software — as an active member of the Ananda College ICT Society.</p>
+          <p class="ab-p">The obsession grew sideways into CAD models and stress simulations, into brand identities and motion graphics, into cloud-oriented service management and AI systems. The best engineers design. The best designers think in systems. The best developers understand constraints. These aren't different fields. They're the same field, wearing different clothes.</p>
+          <p class="ab-p">I've taught ICT workshops to curious young Sri Lankans, managed large-scale events, and shipped software — all while chasing a degree in things that spin, stress, and bend. That's not a contradiction. That's the point.</p>
+          <a href="https://buymeacoffee.com/nimsandu" target="_blank" rel="noopener" class="bmc-btn">
+            <img class="bmc-icon" src="./img/coffee.svg" alt="Buy Me a Coffee" class="bmc-logo" />
+            <span>Buy me a coffee</span>
+            <span class="bmc-arrow">↗</span>
+          </a>
+        </div>
+
+        <div class="about-creds reveal">
+          <div class="cred-block">
+            <span class="cred-label"><span class="cred-plus" aria-hidden="true">+</span> Education</span>
+            <div class="cred-inst-row">
+              <div class="cred-logo-wrap">
+                <img src="./img/st.png" alt="SLIIT" class="cred-logo bw-img" />
+              </div>
+              <div>
+                <p class="cred-title">Sri Lanka Institute of<br>Information Technology</p>
+                <p class="cred-detail">BSc. Engineering (Hons)<br>Mechanical Engineering — Undergraduate</p>
+              </div>
+            </div>
+          </div>
+          <div class="cred-block">
+            <span class="cred-label"><span class="cred-plus" aria-hidden="true">+</span> Background</span>
+            <div class="cred-inst-row">
+              <div class="cred-logo-wrap">
+                <img src="./img/ac.png" alt="Ananda College" class="cred-logo bw-img" />
+              </div>
+              <div>
+                <p class="cred-title">Ananda College</p>
+                <p class="cred-detail">Alumnus · ICT Society Member<br>Event Management &amp; Leadership</p>
+              </div>
+            </div>
+          </div>
+          <div class="cred-block">
+            <span class="cred-label"><span class="cred-plus" aria-hidden="true">+</span> Expertise</span>
+            <div class="cred-tags">
+              <span class="c-tag">Cloud Services</span>
+              <span class="c-tag">AI Technologies</span>
+              <span class="c-tag">ICT Education</span>
+              <span class="c-tag">Event Management</span>
+              <span class="c-tag">Workshop Facilitation</span>
+              <span class="c-tag">Systems Thinking</span>
+            </div>
+          </div>
+          <div class="cred-block">
+            <a href="./rates.html" target="_blank" rel="noopener" class="rates-btn">
+              <span>Rates &amp; Project Policies</span>
+              <span class="rates-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section" id="work">
+    <div class="container">
+      <header class="section-head reveal">
+        <div class="sh-tag-row"><span class="geo-plus" aria-hidden="true">✛</span><span class="s-tag">02 — Development</span></div>
+        <h2 class="s-title">Built Things</h2>
+      </header>
+      <div class="proj-grid">
+
+        <!-- PROJECT 01 — VisionTPC FEATURED (full width) -->
+        <article class="proj-card proj-card--featured proj-card--wide reveal">
+          <a href="https://tpcalen.vercel.app" target="_blank" rel="noopener" class="proj-link proj-link--wide">
+            <div class="proj-img-shell proj-img-shell--wide">
+              <img src="./img/pro1.png" alt="VisionTPC — The Poet's Calendar, a Flutter and Firebase poetry journaling app" class="proj-img bw-img" style="margin-top: -20%;" loading="lazy" />
+              <div class="proj-overlay">
+                <div class="proj-overlay-inner">
+                  <span class="proj-overlay-title">View Project ↗</span>
+                  <p class="proj-overlay-desc">A sanctuary for poets. Write freely, without judgment.</p>
+                </div>
+              </div>
+              <span class="proj-num-badge">01</span>
+              <!-- Wide info panel -->
+              <div class="proj-wide-panel">
+                <div class="pwp-inner">
+                  <div class="pwp-left">
+                    <span class="pwp-num">Project 01</span>
+                    <h3 class="pwp-title">The Poet's<br>Calendar</h3>
+                    <p class="pwp-tagline"><em>"Because poetry isn't just written. It's lived."</em></p>
+                  </div>
+                  <div class="pwp-right">
+                    <p class="pwp-desc">A space created for those who find solace in poetry. Whether you're capturing fleeting thoughts, penning down emotions, or weaving stories through verse — your words are safe, organized, and always within reach.</p>
+                    <div class="pwp-tags"><span>React</span><span>Firebase</span><span>PWA</span><span>Poetry</span></div>
+                    <a href="#" class="pwp-cta">View Project ↗</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="proj-foot">
+              <div class="pf-text">
+                <h3 class="pf-title">Project VisionTPC</h3>
+                <p class="pf-subtitle">The Poet's Calendar</p>
+                <p class="pf-stack">React · JavaScript · Firebase</p>
+              </div>
+              <span class="pf-arrow">↗</span>
+            </div>
+          </a>
+        </article>
+
+        <article class="proj-card reveal">
+          <a href="./pro/clk-t.html" class="proj-link" target="_blank" rel="noopener">
+            <div class="proj-img-shell">
+              <img src="./img/pro2.png" alt="CozyClock V02 — CSS and JavaScript" class="proj-img bw-img" loading="lazy" />
+              <div class="proj-overlay"><div class="proj-overlay-inner"><span class="proj-overlay-title">View Project ↗</span></div></div>
+              <span class="proj-num-badge">02</span>
+              <a href="https://github.com/nimsandu/nim/blob/26d1014c9335d98c5bbcb4239dfcf76e65c7d352/clk-t.html" class="proj-os-link" target="_blank" rel="noopener">
+              <span class="proj-os-pill">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                </svg>View Source</span>
+              </a>
+            </div>
+            <div class="proj-foot">
+              <div class="pf-text"><h3 class="pf-title">CozyClock V02</h3><p class="pf-stack">HTML · JavaScript · CSS</p></div>
+              <span class="pf-arrow">↗</span>
+            </div>
+          </a>
+          <div class="proj-hover-card proj-hover-card--std">
+            <div class="phc-inner">
+              <span class="phc-num">02</span>
+              <h4 class="phc-title">CozyClock V02</h4>
+              <p class="phc-desc">A sleek and intuitive clock application built with modern web technologies. Features a clean design and smooth user experience with an inbuilt Page Timer ideal for cozy reading sessions.</p>
+              <div class="phc-tags"><span>CSS</span><span>JavaScript</span><span>HTML</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card reveal">
+          <a href="./pro/pt.html" class="proj-link" target="_blank" rel="noopener">
+            <div class="proj-img-shell">
+              <img src="./img/pro3.png" alt="PageTimer V02 — CSS and JavaScript" class="proj-img bw-img" loading="lazy" />
+              <div class="proj-overlay"><div class="proj-overlay-inner"><span class="proj-overlay-title">View Project ↗</span></div></div>
+              <span class="proj-num-badge">03</span>
+              <a href="https://github.com/nimsandu/nim/blob/26d1014c9335d98c5bbcb4239dfcf76e65c7d352/clk-t.html" class="proj-os-link" target="_blank" rel="noopener">
+              <span class="proj-os-pill"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>View Source</span>
+              </a>
+            </div>
+            <div class="proj-foot">
+              <div class="pf-text"><h3 class="pf-title">PageTimer V02</h3><p class="pf-stack">HTML · JavaScript · CSS</p></div>
+              <span class="pf-arrow">↗</span>
+            </div>
+          </a>
+          <div class="proj-hover-card proj-hover-card--std">
+            <div class="phc-inner">
+              <span class="phc-num">03</span>
+              <h4 class="phc-title">PageTimer V02</h4>
+              <p class="phc-desc">Web platform built with JavaScripts with the purpose of providing a simple timer that help users to assign individual timers for each page they complete, boosting productivity.</p>
+              <div class="phc-tags"><span>CSS</span><span>JavaScript</span><span>HTML</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card reveal">
+          <a href="./pro/cal2.html" class="proj-link" target="_blank" rel="noopener">
+            <div class="proj-img-shell">
+              <img src="./img/pro4.png" alt="CalendarClock — The Productivity Clock intigrated with Google Calendar" class="proj-img bw-img" loading="lazy" />
+              <div class="proj-overlay"><div class="proj-overlay-inner"><span class="proj-overlay-title">View Project ↗</span></div></div>
+              <span class="proj-num-badge">04</span>
+                <a href="https://github.com/nimsandu/nim/blob/26d1014c9335d98c5bbcb4239dfcf76e65c7d352/clk-t.html" class="proj-os-link" target="_blank" rel="noopener">
+                    <span class="proj-os-pill"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>View Source</span>
+                </a>
+            </div>
+            <div class="proj-foot">
+              <div class="pf-text"><h3 class="pf-title">CalendarClock</h3><p class="pf-stack">Google Calendar · JS · CSS</p></div>
+              <span class="pf-arrow">↗</span>
+            </div>
+          </a>
+          <div class="proj-hover-card proj-hover-card--std">
+            <div class="phc-inner">
+              <span class="phc-num">04</span>
+              <h4 class="phc-title">CalendarClock</h4>
+              <p class="phc-desc">Cross-platform Responsive WebApp That combines a Clock with the your own Google Calendar and a customizable background which even goole does not provide for their calendar.</p>
+              <div class="phc-tags"><span>Google Calendar</span><span>JS</span><span>CSS</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card reveal">
+          <a href="./pro/clock.html" class="proj-link" target="_blank" rel="noopener">
+            <div class="proj-img-shell">
+              <img src="./img/pro5.png" alt="CozyClock V01 — CSS and JavaScript" class="proj-img bw-img" loading="lazy" />
+              <div class="proj-overlay"><div class="proj-overlay-inner"><span class="proj-overlay-title">View Project ↗</span></div></div>
+              <span class="proj-num-badge">05</span>
+              <a href="https://github.com/nimsandu/nim/blob/26d1014c9335d98c5bbcb4239dfcf76e65c7d352/clk-t.html" class="proj-os-link" target="_blank" rel="noopener">
+              <span class="proj-os-pill"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>View Source</span>
+              </a>
+            </div>
+            <div class="proj-foot">
+              <div class="pf-text"><h3 class="pf-title">CozyClock V01</h3><p class="pf-stack">HTML · JavaScript · CSS</p></div>
+              <span class="pf-arrow">↗</span>
+            </div>
+          </a>
+          <div class="proj-hover-card proj-hover-card--std">
+            <div class="phc-inner">
+              <span class="phc-num">05</span>
+              <h4 class="phc-title">CozyClock V01</h4>
+              <p class="phc-desc">A minimal clock application built with modern web technologies. Features a clean design and an inbuilt Page Timer ideal for OLED Screens.</p>
+              <div class="phc-tags"><span>CSS</span><span>JavaScript</span><span>HTML</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card reveal">
+          <a href="./pro/pgt.html" class="proj-link" target="_blank" rel="noopener">
+            <div class="proj-img-shell">
+              <img src="./img/pro6.png" alt="PageTimer V02 — CSS and JavaScript" class="proj-img bw-img" loading="lazy" />
+              <div class="proj-overlay"><div class="proj-overlay-inner"><span class="proj-overlay-title">View Project ↗</span></div></div>
+              <span class="proj-num-badge">06</span>
+                  <a href="https://github.com/nimsandu/nim/blob/26d1014c9335d98c5bbcb4239dfcf76e65c7d352/clk-t.html" class="proj-os-link" target="_blank" rel="noopener">
+              <span class="proj-os-pill"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>View Source</span>
+              </a>
+            </div>
+            <div class="proj-foot">
+              <div class="pf-text"><h3 class="pf-title">PageTimer V01</h3><p class="pf-stack">HTML · JavaScript · CSS</p></div>
+              <span class="pf-arrow">↗</span>
+            </div>
+          </a>
+          <div class="proj-hover-card proj-hover-card--std">
+            <div class="phc-inner">
+              <span class="phc-num">06</span>
+              <h4 class="phc-title">PageTimer V01</h4>
+              <p class="phc-desc">Web platform built with JavaScripts with the purpose of providing a simple timer that help users to assign individual timers for each page they complete, boosting productivity.</p>
+              <div class="phc-tags"><span>CSS</span><span>JavaScript</span><span>HTML</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card reveal">
+          <a href="https://countexp-sk.vercel.app" class="proj-link" target="_blank" rel="noopener">
+            <div class="proj-img-shell">
+              <img src="./img/pro7.png" alt="Countries Explorer" class="bw-img proj-img proj-img--contain bw-img" loading="lazy" />
+              <div class="proj-overlay"><div class="proj-overlay-inner"><span class="proj-overlay-title">View Project ↗</span></div></div>
+              <span class="proj-num-badge">07</span>
+              <span class="proj-closed-pill">⬛ Closed Source</span>
+            </div>
+            <div class="proj-foot">
+              <div class="pf-text"><h3 class="pf-title">Countries Explorer</h3><p class="pf-stack">Web · React · Clerk · Firebase</p></div>
+              <span class="pf-arrow">↗</span>
+            </div>
+          </a>
+          <div class="proj-hover-card proj-hover-card--std">
+            <div class="phc-inner">
+              <span class="phc-num">07</span>
+              <h4 class="phc-title">Countries Explorer</h4>
+              <p class="phc-desc">A full-stack web platform integrating Clerk auth, Firebase, and Axios for a rich country data experience. Part of VisionProjects.</p>
+              <div class="phc-tags"><span>React</span><span>Clerk</span><span>Firebase</span><span>Axios</span></div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+            <div class="vp-footer-note reveal">
+        <span class="geo-plus" aria-hidden="true">✛</span>
+        <p>An Open-Learning Initiative is currently under development. with the vision to make educational content accessible to everyone, with contributions from the community. Check back soon to contribute.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPEN SOURCE -->
+  <section class="section section--os" id="opensource">
+    <div class="container">
+      <header class="section-head reveal">
+        <div class="sh-tag-row"><span class="geo-plus" aria-hidden="true">✛</span><span class="s-tag">03 — Open Source</span></div>
+        <h2 class="s-title os-title">Built in the<br><em>Open</em></h2>
+        <p class="os-intro reveal">5 of 7 projects are publicly available. Open source isn't a checkbox - it's a commitment to the community that shaped these skills.</p>
+      </header>
+
+      <!-- SPICETIFY BLOOM HERO CARD -->
+      <div class="bloom-hero reveal">
+        <div class="bloom-bg-grid" aria-hidden="true"></div>
+        <div class="bloom-noise" aria-hidden="true"></div>
+        <div class="bloom-content">
+          <div class="bloom-left">
+            <div class="bloom-eyebrow">
+              <span class="bloom-tag">Flagship Open Source Project</span>
+              <span class="bloom-sep">·</span>
+              <span class="bloom-stat"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 670 stars</span>
+              <span class="bloom-sep">·</span>
+              <span class="bloom-stat">52 forks</span>
+            </div>
+            <h3 class="bloom-title">Spicetify<br>Bloom</h3>
+            <p class="bloom-desc">A Spotify theme inspired by Microsoft's Fluent Design. Always up-to-date. A powerful theme to calm your eyes while listening to your favorite beats.</p>
+            <div class="bloom-topics">
+              <span>CSS</span><span>Windows</span><span>Spotify</span><span>Fluent Design</span><span>UI Customization</span><span>Spicetify</span><span>Responsive</span><span>Calmness</span>
+            </div>
+            <div class="bloom-actions">
+              <a href="https://github.com/nimsandu/spicetify-bloom" target="_blank" rel="noopener" class="bloom-btn bloom-btn--primary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                View on GitHub
+              </a>
+              <a href="https://github.com/nimsandu/spicetify-bloom?tab=MIT-1-ov-file#readme" target="_blank" rel="noopener" class="bloom-btn bloom-btn--secondary">MIT Licensed ↗</a>
+            </div>
+          </div>
+          <div class="bloom-right">
+            <div class="bloom-stats-grid">
+              <div class="bloom-stat-card">
+                <span class="bsc-n">670</span>
+                <span class="bsc-l">GitHub Stars</span>
+              </div>
+              <div class="bloom-stat-card">
+                <span class="bsc-n">52</span>
+                <span class="bsc-l">Forks</span>
+              </div>
+              <div class="bloom-stat-card">
+                <span class="bsc-n">8</span>
+                <span class="bsc-l">Watchers</span>
+              </div>
+              <div class="bloom-stat-card">
+                <span class="bsc-n">MIT</span>
+                <span class="bsc-l">License</span>
+              </div>
+            </div>
+            <div class="bloom-fluent-demo" aria-hidden="true">
+              <div class="bfd-bar">
+                <div class="bfd-dot bfd-dot--r"></div>
+                <div class="bfd-dot bfd-dot--y"></div>
+                <div class="bfd-dot bfd-dot--g"></div>
+                <span class="bfd-title">Spotify — Spicetify Bloom</span>
+              </div>
+              <div class="bfd-track">
+                <div class="bfd-album"></div>
+                <div class="bfd-info">
+                  <div class="bfd-song"></div>
+                  <div class="bfd-artist"></div>
+                </div>
+                <div class="bfd-controls">
+                  <div class="bfd-btn"></div>
+                  <div class="bfd-btn bfd-btn--play"></div>
+                  <div class="bfd-btn"></div>
+                </div>
+              </div>
+              <div class="bfd-progress">
+                <div class="bfd-prog-bar"><div class="bfd-prog-fill"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OTHER OS CONTRIBUTIONS -->
+      <div class="os-contributions reveal">
+        <div class="os-contrib-head">
+          <h4 class="os-contrib-title">Also Contributing To</h4>
+        </div>
+        <div class="os-contrib-grid">
+          <div class="os-contrib-card">
+            <div class="occ-top">
+              <span class="occ-icon">◈</span>
+              <span class="occ-badge">Digital Designer</span>
+            </div>
+            <h5 class="occ-name">FractalX Framework</h5>
+            <p class="occ-desc">Contributing as a Digital Designer to the FractalX open-source framework. Shaping the visual language and UI components of a modern design system.</p>
+            <a href="https://fractalx.org" target="_blank" rel="noopener" class="occ-link">fractalx.org ↗</a>
+          </div>
+          <div class="os-contrib-card">
+            <div class="occ-top">
+              <span class="occ-icon">⬡</span>
+              <span class="occ-badge">5 of 7 Projects Public</span>
+            </div>
+            <h5 class="occ-name">Personal Projects</h5>
+            <p class="occ-desc">All major personal projects — from mobile apps to web tools — are publicly available on GitHub. Code that's built to be shared, studied, and built upon.</p>
+            <a href="https://github.com/nimsandu" target="_blank" rel="noopener" class="occ-link">github.com/nimsandu ↗</a>
+          </div>
+          <div class="os-contrib-card os-contrib-card--cta">
+            <div class="occ-top">
+              <span class="occ-icon os-heart">♥</span>
+            </div>
+            <h5 class="occ-name">The Philosophy</h5>
+            <p class="occ-desc">Open source is the thread between curiosity and community. Every line pushed publicly is a lesson shared, a tool freed, a door opened.</p>
+            <div class="occ-os-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              Open Source Advocate
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CLOSED SOURCE / VISION PROJECTS -->
+  <section class="section section--closed" id="closedwork">
+    <div class="container">
+      <header class="section-head reveal">
+        <div class="sh-tag-row"><span class="geo-plus" aria-hidden="true">✛</span><span class="s-tag">04 — VisionProjects</span></div>
+        <h2 class="s-title">Built in the<br><em>Dark</em></h2>
+        <p class="cs-intro reveal">Closed-source initiatives under the VisionProjects umbrella — where a simple surface hides layers of experimental architecture, security research, and feature engineering pushed as far as possible.</p>
+      </header>
+
+      <!-- VISION PROJECTS HERO CARD -->
+      <div class="vp-hero reveal">
+        <div class="vp-bg-grid" aria-hidden="true"></div>
+        <div class="vp-eyebrow">
+          <span class="vp-tag">Closed Source Initiative</span>
+          <span class="bloom-sep">·</span>
+          <span class="vp-stat">⬛ Proprietary</span>
+        </div>
+        <div class="vp-headline-row">
+          <div class="vp-left">
+            <h3 class="vp-title">Vision<br>Projects</h3>
+            <p class="vp-desc">An umbrella of experimental builds — each project starts as a deceptively simple idea and evolves into a stress-test of what modern stacks can carry. Complex auth layers, edge-case security, non-standard feature sets. Simple on the surface. Engineered underneath.</p>
+          </div>
+          <div class="vp-right">
+            <div class="vp-stat-grid">
+              <div class="vp-stat-card"><span class="vps-n">2</span><span class="vps-l">Active Projects</span></div>
+              <div class="vp-stat-card"><span class="vps-n">∞</span><span class="vps-l">Features Pushed</span></div>
+              <div class="vp-stat-card"><span class="vps-n">⬛</span><span class="vps-l">Closed Source</span></div>
+              <div class="vp-stat-card"><span class="vps-n">EXP</span><span class="vps-l">Architecture</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISION PROJECTS CARDS -->
+      <div class="vp-grid reveal">
+
+        <!-- VisionTPC -->
+        <div class="vp-card">
+          <div class="vp-card-img-shell">
+            <img src="./img/pro1.png" alt="VisionTPC" class="vp-card-img bw-img" loading="lazy" />
+            <span class="vp-locked-badge">⬛ Closed Source</span>
+          </div>
+          <div class="vp-card-body">
+            <div class="vp-card-head">
+              <span class="vp-card-num">VP — 01</span>
+              <h4 class="vp-card-title">VisionTPC</h4>
+              <p class="vp-card-sub"><em>The Poet's Calendar</em></p>
+            </div>
+            <p class="vp-card-desc">A sanctuary for poets — built with Flutter and Firebase. On the surface, a simple poetry journaling app. Underneath: experimental sync architecture, end-to-end encrypted verse storage, multi-layer auth, and a feature set that keeps growing far beyond what a "notes app" should carry.</p>
+            <div class="vp-card-tags">
+              <span>Flutter</span><span>Firebase</span><span>E2E Encryption</span><span>Mobile</span><span>Experimental</span>
+            </div>
+            <div class="vp-card-complexity">
+              <span class="vp-complexity-label">Complexity Index</span>
+              <div class="vp-complexity-bar"><div class="vp-complexity-fill" style="width:88%"></div></div>
+              <span class="vp-complexity-val">88 / 100</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Countries Explorer -->
+        <div class="vp-card">
+          <div class="vp-card-img-shell">
+            <img src="./img/vp2.png" alt="Countries Explorer" class="vp-card-img vp-card-img--contain bw-img" loading="lazy" />
+            <span class="vp-locked-badge">⬛ Closed Source</span>
+          </div>
+          <div class="vp-card-body">
+            <div class="vp-card-head">
+              <span class="vp-card-num">VP — 02</span>
+              <h4 class="vp-card-title">Countries Explorer</h4>
+              <p class="vp-card-sub"><em>Simple idea. Complex stack.</em></p>
+            </div>
+            <p class="vp-card-desc">A countries data explorer platform. Simple premise — browse world countries. Complex reality: Clerk authentication layered with Firebase Auth, Axios-driven API orchestration, advanced caching, role-based access layers, and an over-engineered feature set that turns a browse page into an engineering showcase.</p>
+            <div class="vp-card-tags">
+              <span>React</span><span>Clerk</span><span>Firebase Auth</span><span>Axios</span><span>REST APIs</span>
+            </div>
+            <div class="vp-card-complexity">
+              <span class="vp-complexity-label">Complexity Index</span>
+              <div class="vp-complexity-bar"><div class="vp-complexity-fill" style="width:76%"></div></div>
+              <span class="vp-complexity-val">76 / 100</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /vp-grid -->
+
+      <div class="vp-footer-note reveal">
+        <span class="geo-plus" aria-hidden="true">✛</span>
+        <p>VisionProjects are intentionally closed-source. The goal is to explore how far a simple idea can be pushed without the constraints of open development. These projects serve as personal engineering laboratories.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CREATIVE -->
+  <section class="section section--ink" id="creative">
+    <div class="container">
+      <header class="section-head reveal">
+        <div class="sh-tag-row"><span class="geo-plus ink-mode" aria-hidden="true">✛</span><span class="s-tag">05 — Creative</span></div>
+        <h2 class="s-title">Designed Things</h2>
+      </header>
+
+      <div class="cr-row reveal">
+        <div class="cr-label"><span class="cr-letter">A</span><h3 class="cr-cat">Digital Design</h3><p class="cr-desc">UI, brand identity &amp; digital graphics</p></div>
+        <div class="cr-items">
+          <div class="cr-item cr-item--photo" data-lightbox="./img/des1.png" data-caption="Brand Identity">
+            <div class="cr-img-shell"><img src="./img/des1.png" alt="Brand Identity" class="cr-img cr-img--centered bw-img" loading="lazy" /></div>
+            <div class="cr-item-overlay"><span class="cr-item-label">Digital Design</span><span class="cr-item-title">Brand Identity</span><span class="cr-expand-hint">Click to expand ↗</span></div>
+          </div>
+          <div class="cr-item cr-item--photo" data-lightbox="./img/des2.jpg" data-caption="Info Graphics">
+            <div class="cr-img-shell"><img src="./img/des2.jpg" alt="Digital design work — Info Graphics by Nimsandu Kottage" class="cr-img bw-img" loading="lazy" style="padding: 16px;" /></div>
+            <div class="cr-item-overlay"><span class="cr-item-label">Digital Design</span><span class="cr-item-title">Info Graphics</span><span class="cr-expand-hint">Click to expand ↗</span></div>
+          </div>
+          <div class="cr-item cr-item--photo" data-lightbox="./img/des3.jpg" data-caption="Digital Graphics">
+            <div class="cr-img-shell cr-img-shell--sample"><img src="./img/des3.jpg" alt="Digital graphics work by Nimsandu Kottage" class="cr-img cr-img--centered bw-img" loading="lazy" /></div>
+            <div class="cr-item-overlay"><span class="cr-item-label">Digital Design</span><span class="cr-item-title">Digital Graphics</span><span class="cr-expand-hint">Click to expand ↗</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="cr-divider"></div>
+
+      <div class="cr-row reveal">
+        <div class="cr-label"><span class="cr-letter">B</span><h3 class="cr-cat">Print Design</h3><p class="cr-desc">Posters, publications &amp; collateral</p></div>
+        <div class="cr-items">
+          <div class="cr-item cr-item--photo" data-lightbox="./img/des6.png" data-caption="Poster / Publication">
+            <div class="cr-img-shell"><img src="./img/des6.png" alt="Print design work — poster and publication design by Nimsandu Kottage" class="cr-img bw-img" loading="lazy" style="padding: 16px;" /></div>
+            <div class="cr-item-overlay"><span class="cr-item-label">Print Design</span><span class="cr-item-title">Poster / Publication</span><span class="cr-expand-hint">Click to expand ↗</span></div>
+          </div>
+          <div class="cr-item cr-item--photo" data-lightbox="./img/des4.png" data-caption="Collateral">
+            <div class="cr-img-shell cr-img-shell--sample"><img src="./img/des4.png" alt="Print Collateral" class="cr-img cr-img--centered bw-img" loading="lazy" /></div>
+            <div class="cr-item-overlay"><span class="cr-item-label">Print Design</span><span class="cr-item-title">Collateral</span><span class="cr-expand-hint">Click to expand ↗</span></div>
+          </div>
+          <div class="cr-item cr-item--photo" data-lightbox="./img/des5.png" data-caption="Editorial">
+            <div class="cr-img-shell cr-img-shell--sample"><img src="./img/des5.png" alt="Editorial" class="cr-img cr-img--centered bw-img" loading="lazy" /></div>
+            <div class="cr-item-overlay"><span class="cr-item-label">Print Design</span><span class="cr-item-title">Editorial</span><span class="cr-expand-hint">Click to expand ↗</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="cr-divider"></div>
+
+      <div class="cr-row reveal">
+        <div class="cr-label"><span class="cr-letter">C</span><h3 class="cr-cat">Video Creation</h3><p class="cr-desc">Editing, motion &amp; visual storytelling</p></div>
+        <div class="cr-items">
+          <div class="cr-item cr-item--video" data-video-url="https://www.linkedin.com/posts/fractalx-org_it-is-a-great-pleasure-to-announce-that-fractalx-activity-7437115318335987712-YU72?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC7fK3cBaDge7N1HRnyaZgXP6TU7iEHw-Xw">
+            <div class="cr-img-shell cr-img-shell--sample">
+              <img src="./img/vid1.png" alt="visual storytelling" class="cr-img cr-img--centered bw-img" loading="lazy" />
+              <div class="cr-play-btn" aria-hidden="true"><span>▷</span></div>
+            </div>
+            <div class="cr-item-overlay"><span class="cr-item-label">Video Creation</span><span class="cr-item-title">Visual Storytelling</span><span class="cr-expand-hint">Click to watch ↗</span></div>
+          </div>
+          <div class="cr-item cr-item--video" data-video-url="https://youtu.be/vPuxunvZaWU">
+            <div class="cr-img-shell cr-img-shell--sample">
+              <img src="./img/vid2.png" alt="Motion Graphics & Loops" class="cr-img cr-img--centered bw-img" loading="lazy" />
+              <div class="cr-play-btn" aria-hidden="true"><span>▷</span></div>
+            </div>
+            <div class="cr-item-overlay"><span class="cr-item-label">Video Creation</span><span class="cr-item-title">Motion Graphics & Loops</span><span class="cr-expand-hint">Click to watch ↗</span></div>
+          </div>
+          <div class="cr-item cr-item--video" data-video-url="https://youtube.com/shorts/fvOSpTRKzzw">
+            <div class="cr-img-shell">
+              <img src="./img/vid3.png" alt="Edited Reel" class="cr-img bw-img" loading="lazy" style="padding: 16px;"/>
+              <div class="cr-play-btn" aria-hidden="true"><span>▷</span></div>
+            </div>
+            <div class="cr-item-overlay"><span class="cr-item-label">Video Creation</span><span class="cr-item-title">Edited Reel</span><span class="cr-expand-hint">Click to watch ↗</span></div>
+        </div>
+        </div>
+      </div>
+    </div>
+          <div class="vp-footer-note reveal" style=" background: var(--ink); border-color: rgba(46, 46, 46, 0); padding-left: 17vw; padding-top: -20px;">
+        <span class="geo-plus" aria-hidden="true">✛</span>
+        <p>Above are some of the delivered projects. A few of many...</p>
+      </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section section--ink section--contact" id="contact">
+    <div class="container">
+      <div class="contact-geo-rule reveal" aria-hidden="true">
+        <span class="cgr-dot"></span><div class="cgr-line"></div><span class="cgr-dot"></span>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-l reveal">
+          <div class="sh-tag-row"><span class="geo-plus ink-mode" aria-hidden="true">✛</span><span class="s-tag">06 — Contact</span></div>
+          <h2 class="contact-title">Let's make<br><em>something</em><br>real.</h2>
+          <p class="contact-sub">Open for freelance, collaboration,<br>and interesting problems.</p>
+        </div>
+        <div class="contact-r reveal">
+          <a href="mailto:hello@nimaat.top" class="c-row">
+            <div class="c-row-l"><span class="c-label">Email</span><span class="c-val"><span class="__cf_email__" data-cfemail="d6beb3babab996b8bfbbb7b7a2f8a2b9a6">hello@nimaat.top</span></span></div>
+            <span class="c-arrow">↗</span>
+          </a>
+          <a href="https://linkedin.com/in/nimsandu" target="_blank" rel="noopener" class="c-row">
+            <div class="c-row-l"><span class="c-label">LinkedIn</span><span class="c-val">Nimsandu Kottage</span></div>
+            <span class="c-arrow">↗</span>
+          </a>
+          <a href="https://github.com/nimsandu" target="_blank" rel="noopener" class="c-row">
+            <div class="c-row-l"><span class="c-label">GitHub</span><span class="c-val">nimsandu</span></div>
+            <span class="c-arrow">↗</span>
+          </a>
+          <a href="https://buymeacoffee.com/nimsandu" target="_blank" rel="noopener" class="c-row c-row--bmc">
+            <div class="c-row-l"><span class="c-label">Support</span><span class="c-val">Buy me a coffee</span></div>
+            <span class="c-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="ft-logo">NK.</span>
+      <span class="ft-copy">© 2025 Nimsandu Kottage · nimaat.top · Made by Nimsandu · Refined with AI</span>
+      <a href="./rates.html" target="_blank" class="ft-rates">Rates &amp; Policies ↗</a>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog">
+    <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close image">✕</button>
+      <div class="lightbox-img-wrap">
+        <img src="" alt="" class="lightbox-img" id="lightboxImg" />
+      </div>
+      <span class="lightbox-caption" id="lightboxCaption"></span>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
 </body>
 </html>
