@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Illuminating the Margins — Project Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0a0c14;
+    --grid:     rgba(90,120,200,0.07);
+    --center:   #7c5cbf;
+    --center-g: #a87de8;
+    --c1:       #e07090; /* People */
+    --c2:       #e8a030; /* Economy */
+    --c3:       #48b87a; /* Environment */
+    --c4:       #4a9fd4; /* SDG */
+    --c5:       #d46090; /* Project Design */
+    --c6:       #8fc860; /* Benefits */
+    --glow1:    rgba(124,92,191,0.35);
+    --glow2:    rgba(168,125,232,0.2);
+    --text:     #e8eaf6;
+    --sub:      #8890b0;
+    --mono:     'Share Tech Mono', monospace;
+    --sans:     'Outfit', sans-serif;
+    --serif:    'Playfair Display', serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: var(--sans);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* ── Grid background ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Ambient glow orbs ── */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(80px);
+  }
+  .orb-1 { width: 500px; height: 500px; top: -100px; left: -100px; background: radial-gradient(circle, rgba(124,92,191,0.18), transparent 70%); }
+  .orb-2 { width: 400px; height: 400px; bottom: -80px; right: -80px; background: radial-gradient(circle, rgba(72,184,122,0.14), transparent 70%); }
+  .orb-3 { width: 300px; height: 300px; top: 50%; right: 10%; background: radial-gradient(circle, rgba(74,159,212,0.12), transparent 70%); }
+
+  /* ── Header ── */
+  header {
+    position: relative; z-index: 10;
+    padding: 2.5rem 3rem 1rem;
+    display: flex; align-items: flex-end; gap: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .header-tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--center);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid rgba(124,92,191,0.35);
+    border-radius: 2px;
+    margin-bottom: 0.3rem;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--center-g);
+  }
+  .header-right {
+    margin-left: auto;
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--sub);
+    line-height: 1.7;
+  }
+
+  /* ── Canvas wrapper ── */
+  #map-container {
+    position: relative; z-index: 5;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    min-height: calc(100vh - 110px);
+  }
+
+  #canvas-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── Nodes ── */
+  .node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  }
+  .node:hover { transform: translate(-50%,-50%) scale(1.07); }
+
+  /* Center node */
+  .node-center .inner {
+    width: 170px; height: 170px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #a87de8, #5a3a9a);
+    box-shadow:
+      0 0 0 1px rgba(168,125,232,0.4),
+      0 0 40px rgba(124,92,191,0.6),
+      0 0 80px rgba(124,92,191,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.15);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 1rem;
+    position: relative; overflow: hidden;
+  }
+  .node-center .inner::before {
+    content: '';
+    position: absolute; inset: -50%;
+    background: conic-gradient(from 0deg, transparent 0%, rgba(255,255,255,0.04) 25%, transparent 50%);
+    animation: spin 12s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .node-center .inner::after {
+    content: '';
+    position: absolute; top: 12px; left: 12px; right: 12px; bottom: 12px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255,255,255,0.12);
+    animation: spin 20s linear infinite reverse;
+  }
+  .node-center .label-main {
+    font-family: var(--serif); font-weight: 700;
+    font-size: 0.88rem; line-height: 1.25;
+    position: relative; z-index: 2;
+  }
+  .node-center .label-sub {
+    font-family: var(--mono); font-size: 0.55rem;
+    color: rgba(255,255,255,0.55); margin-top: 0.35rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    position: relative; z-index: 2;
+  }
+
+  /* Branch nodes */
+  .node-branch .inner {
+    width: 152px;
+    border-radius: 8px;
+    padding: 0.8rem 0.9rem 0.85rem;
+    position: relative; overflow: hidden;
+    transition: box-shadow 0.3s ease;
+  }
+  .node-branch:hover .inner {
+    box-shadow: 0 0 30px var(--node-glow), 0 8px 32px rgba(0,0,0,0.4) !important;
+  }
+  .node-branch .inner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--node-shine);
+    pointer-events: none;
+  }
+  .node-icon {
+    font-size: 1.2rem; margin-bottom: 0.35rem; display: block;
+    filter: drop-shadow(0 0 6px var(--node-color));
+  }
+  .node-title {
+    font-family: var(--sans); font-weight: 700; font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--node-color); line-height: 1.2; margin-bottom: 0.3rem;
+  }
+  .node-desc {
+    font-family: var(--sans); font-size: 0.62rem; font-weight: 300;
+    color: rgba(255,255,255,0.65); line-height: 1.45;
+  }
+  /* Corner bracket accent */
+  .node-branch .inner::after {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 18px; height: 18px;
+    border-top: 2px solid var(--node-color);
+    border-right: 2px solid var(--node-color);
+    opacity: 0.5;
+  }
+
+  /* Sub-nodes */
+  .node-sub .inner {
+    border-radius: 4px;
+    padding: 0.45rem 0.65rem;
+    position: relative;
+  }
+  .node-sub .inner::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--node-color);
+    border-radius: 2px 0 0 2px;
+  }
+  .node-sub-text {
+    font-family: var(--mono); font-size: 0.6rem;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.4;
+  }
+
+  /* ── Connector decorators (small circles at junction points) ── */
+  .junction {
+    position: absolute;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+    z-index: 8;
+  }
+
+  /* ── Legend ── */
+  #legend {
+    position: fixed; bottom: 1.8rem; left: 2.5rem;
+    z-index: 20;
+    font-family: var(--mono); font-size: 0.58rem;
+    color: var(--sub);
+    display: flex; gap: 1.2rem; align-items: center;
+  }
+  .leg-item { display: flex; align-items: center; gap: 0.35rem; }
+  .leg-dot { width: 7px; height: 7px; border-radius: 50%; }
+
+  /* ── Top-right schema label ── */
+  #schema-label {
+    position: fixed; top: 1.2rem; right: 2.2rem;
+    font-family: var(--mono); font-size: 0.58rem;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: 0.08em;
+    z-index: 20;
+  }
+
+  /* ── Entrance animations ── */
+  .node { opacity: 0; animation: fadeUp 0.6s forwards; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translate(-50%,-50%) scale(0.82); }
+    to   { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+  }
+  .node-center { animation-delay: 0.1s; }
+
+  /* SVG line animation */
+  .connector-line {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: drawLine 0.9s ease forwards;
+  }
+  @keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+  /* Pulse ring on center */
+  .pulse-ring {
+    position: absolute; inset: -20px;
+    border-radius: 50%;
+    border: 1px solid rgba(168,125,232,0.2);
+    animation: pulseRing 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .pulse-ring:nth-child(2) { inset: -36px; animation-delay: 1s; border-color: rgba(168,125,232,0.1); }
+  @keyframes pulseRing {
+    0%,100% { opacity: 0.4; transform: scale(1); }
+    50%      { opacity: 0.15; transform: scale(1.06); }
+  }
+
+  /* Hover tooltip */
+  #tooltip {
+    position: fixed;
+    background: rgba(10,12,20,0.95);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    font-size: 0.72rem;
+    max-width: 240px;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.2s;
+    backdrop-filter: blur(8px);
+    line-height: 1.55;
+    color: rgba(255,255,255,0.85);
+  }
+  #tooltip .tt-title {
+    font-weight: 700; font-size: 0.68rem;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 0.35rem;
+  }
+
+  /* Scan line effect */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none; z-index: 1000;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    #map-container { min-height: 100vh; overflow: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<header>
+  <div>
+    <div class="header-tag">CE1913 — Group 19 — Y1S1 2026</div>
+    <h1>Illuminating <em>the Margins</em></h1>
+  </div>
+  <div class="header-right">
+    Solar-Powered Street Lighting<br>
+    Rural Sri Lanka · Project Framework<br>
+    <span style="color:rgba(124,92,191,0.7)">▸ OVERVIEW MIND MAP</span>
+  </div>
+</header>
+
+<div id="map-container">
+  <svg id="canvas-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+  <!-- Nodes injected by JS -->
+</div>
+
+<div id="legend">
+  <span style="opacity:0.5;margin-right:0.3rem">LEGEND</span>
+  <div class="leg-item"><div class="leg-dot" style="background:#e07090"></div>People</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#e8a030"></div>Economy</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#48b87a"></div>Environment</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#4a9fd4"></div>SDG Alignment</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#d46090"></div>Project Design</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#8fc860"></div>Benefits</div>
+</div>
+
+<div id="schema-label">
+  REV 1.0 · SCHEMATIC VIEW · GROUP 19
+</div>
+
+<div id="tooltip">
+  <div class="tt-title" id="tt-title"></div>
+  <div id="tt-body"></div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────────────────────────────────────
+const CENTER = {
+  id: 'center',
+  label: 'Solar-Powered\nStreet Lighting',
+  sub: 'Rural Sri Lanka'
+};
+
+const BRANCHES = [
+  {
+    id: 'sdg',
+    icon: '🌐',
+    title: 'SDG Alignment',
+    desc: 'UN 2030 Agenda\nGlobal targets',
+    color: '#4a9fd4',
+    glow: 'rgba(74,159,212,0.5)',
+    shine: 'linear-gradient(135deg,rgba(255,255,255,0.07) 0%,transparent 60%)',
+    bg: 'linear-gradient(145deg,#0e2030,#0a1828)',
+    border: 'rgba(74,159,212,0.45)',
+    subs: [
+      { text: 'SDG 7 · Clean Energy\nOff-grid solar access' },
+      { text: 'SDG 11 · Safe Communities\nRoad safety & mobility' },
+      { text: 'SDG 13 · Climate Action\nZero-emission operation' },
+    ],
+    tooltip: 'Directly addresses SDG 7 (clean energy), SDG 11 (sustainable communities), and SDG 13 (climate action) under the UN 2030 Agenda for Sustainable Development.'
+  },
+  {
+    id: 'people',
+    icon: '👥',
+    title: 'People Impact',
+    desc: 'Residents · Students\nWomen · Healthcare',
+    color: '#e07090',
+    glow: 'rgba(224,112,144,0.5)',
+    shine: 'linear-gradient(135deg,rgba(255,255,255,0.07) 0%,transparent 60%)',
+    bg: 'linear-gradient(145deg,#200e18,#160a12)',
+    border: 'rgba(224,112,144,0.45)',
+    subs: [
+      { text: 'Rural Residents\nSafety & mobility' },
+      { text: 'School Children\nEvening study access' },
+      { text: 'Women & Vulnerable\nSecurity & freedom' },
+      { text: 'Healthcare Workers\nNight emergency response' },
+    ],
+    tooltip: 'Four key people stakeholders: rural residents, school children & students, women & vulnerable groups, and healthcare workers & patients — all directly impacted by the absence of street lighting.'
+  },
+  {
+    id: 'economy',
+    icon: '💹',
+    title: 'Economy Impact',
+    desc: 'Businesses · Gov\nLivelihood & finance',
+    color: '#e8a030',
+    glow: 'rgba(232,160,48,0.5)',
+    shine: 'linear-gradient(135deg,rgba(255,255,255,0.07) 0%,transparent 60%)',
+    bg: 'linear-gradient(145deg,#1e1400,#160e00)',
+    border: 'rgba(232,160,48,0.45)',
+    subs: [
+      { text: 'Small Businesses\nExtended trading hours' },
+      { text: 'Municipal Authorities\nReduced grid costs' },
+    ],
+    tooltip: 'Economic stakeholders include local small businesses & vendors (forced to close at sunset) and municipal authorities facing expensive grid extension costs. Solar lighting directly addresses both.'
+  },
+  {
+    id: 'environment',
+    icon: '🌿',
+    title: 'Environment',
+    desc: 'Air · Ecosystems\nCarbon reduction',
+    color: '#48b87a',
+    glow: 'rgba(72,184,122,0.5)',
+    shine: 'linear-gradient(135deg,rgba(255,255,255,0.07) 0%,transparent 60%)',
+    bg: 'linear-gradient(145deg,#0a1e10,#06140b)',
+    border: 'rgba(72,184,122,0.45)',
+    subs: [
+      { text: 'Natural Environment\nCO₂ & NOx reduction' },
+      { text: 'Wildlife & Ecosystems\nReduced smoke & wildfire' },
+    ],
+    tooltip: 'Environmental stakeholders: the natural environment (affected by kerosene emissions & battery leaching) and local wildlife & ecosystems. Solar lighting eliminates combustion pollution entirely.'
+  },
+  {
+    id: 'design',
+    icon: '⚙️',
+    title: 'Project Design',
+    desc: 'Off-grid LEDs\nCommunity maintained',
+    color: '#d46090',
+    glow: 'rgba(212,96,144,0.5)',
+    shine: 'linear-gradient(135deg,rgba(255,255,255,0.07) 0%,transparent 60%)',
+    bg: 'linear-gradient(145deg,#1e0818,#160512)',
+    border: 'rgba(212,96,144,0.45)',
+    subs: [
+      { text: 'Standalone solar panels\n+ LED lamp units' },
+      { text: 'Community installation\nPole placing & wiring' },
+      { text: 'Affordable & scalable\nNo grid dependency' },
+    ],
+    tooltip: 'System design: standalone solar LED units installed and maintained by community members. No grid connection required. Proven to extend system longevity when locals participate in setup (IRENA, 2020).'
+  },
+  {
+    id: 'benefits',
+    icon: '✦',
+    title: 'Key Benefits',
+    desc: 'Evidence-backed\nStakeholder gains',
+    color: '#8fc860',
+    glow: 'rgba(143,200,96,0.5)',
+    shine: 'linear-gradient(135deg,rgba(255,255,255,0.07) 0%,transparent 60%)',
+    bg: 'linear-gradient(145deg,#0e1a04,#081200)',
+    border: 'rgba(143,200,96,0.45)',
+    subs: [
+      { text: 'Night safety restored\nAccident reduction' },
+      { text: 'Income increase\nExtended commerce' },
+      { text: 'Zero emissions\nClean air & soil' },
+      { text: 'Academic improvement\nLit study spaces' },
+    ],
+    tooltip: 'Benefits validated by IEA (2022), UN Women (2021), UN (2015), and Cinzano et al. (2001): improved night safety, economic uplift, zero carbon footprint, and better educational outcomes.'
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// LAYOUT LOGIC
+// ─────────────────────────────────────────────────────────────────────────────
+function getContainerDims() {
+  const c = document.getElementById('map-container');
+  return { W: c.offsetWidth, H: c.offsetHeight };
+}
+
+// Place branches in a hexagonal arrangement
+function branchPositions(W, H, r) {
+  // 6 branches at 60° intervals starting from top
+  const angles = [270, 330, 30, 90, 150, 210].map(d => d * Math.PI / 180);
+  return angles.map(a => ({
+    x: W / 2 + r * Math.cos(a),
+    y: H / 2 + r * Math.sin(a)
+  }));
+}
+
+// Sub-node positions: spread radially outward from branch
+function subPositions(bx, by, cx, cy, subs) {
+  const dx = bx - cx, dy = by - cy;
+  const len = Math.sqrt(dx*dx + dy*dy);
+  const nx = dx/len, ny = dy/len;
+  const perp = { x: -ny, y: nx };
+  const spread = 90;
+  const stepOut = 145;
+  const count = subs.length;
+  return subs.map((_, i) => {
+    const t = count === 1 ? 0 : (i / (count - 1) - 0.5);
+    return {
+      x: bx + nx * stepOut + perp.x * t * spread,
+      y: by + ny * stepOut + perp.y * t * spread,
+    };
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────────────────────────────────────
+function render() {
+  const { W, H } = getContainerDims();
+  const R = Math.min(W, H) * 0.285;
+  const positions = branchPositions(W, H, R);
+  const container = document.getElementById('map-container');
+  const svg = document.getElementById('canvas-svg');
+
+  // Clear previous
+  container.querySelectorAll('.node,.junction').forEach(el => el.remove());
+  svg.innerHTML = '';
+
+  // Defs
+  svg.innerHTML = `
+    <defs>
+      <filter id="glow-purple"><feGaussianBlur stdDeviation="3" result="blur"/>
+        <feComposite in="SourceGraphic" in2="blur" operator="over"/></filter>
+      ${BRANCHES.map(b => `
+        <filter id="glow-${b.id}">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+        </filter>
+      `).join('')}
+    </defs>
+  `;
+
+  const svgNS = 'http://www.w3.org/2000/svg';
+  let delay = 0.3;
+
+  // Draw center → branch connectors
+  BRANCHES.forEach((branch, i) => {
+    const bp = positions[i];
+    const cx = W / 2, cy = H / 2;
+
+    // Compute a control point for gentle curve
+    const midX = (cx + bp.x) / 2;
+    const midY = (cy + bp.y) / 2;
+    const perpX = -(bp.y - cy) * 0.12;
+    const perpY =  (bp.x - cx) * 0.12;
+
+    // Main branch line
+    const path = document.createElementNS(svgNS, 'path');
+    path.setAttribute('d', `M${cx},${cy} Q${midX+perpX},${midY+perpY} ${bp.x},${bp.y}`);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', branch.color);
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('stroke-opacity', '0.5');
+    path.setAttribute('stroke-dasharray', '600');
+    path.setAttribute('stroke-dashoffset', '600');
+    path.style.animation = `drawLine 0.8s ${delay}s ease forwards`;
+    svg.appendChild(path);
+
+    // Sub-connectors
+    const spos = subPositions(bp.x, bp.y, cx, cy, branch.subs);
+    spos.forEach((sp, si) => {
+      const sDelay = delay + 0.4 + si * 0.07;
+      const line = document.createElementNS(svgNS, 'line');
+      line.setAttribute('x1', bp.x); line.setAttribute('y1', bp.y);
+      line.setAttribute('x2', sp.x); line.setAttribute('y2', sp.y);
+      line.setAttribute('stroke', branch.color);
+      line.setAttribute('stroke-width', '1');
+      line.setAttribute('stroke-opacity', '0.3');
+      line.setAttribute('stroke-dasharray', '300');
+      line.setAttribute('stroke-dashoffset', '300');
+      line.style.animation = `drawLine 0.5s ${sDelay}s ease forwards`;
+      svg.appendChild(line);
+
+      // Junction dot at branch end
+      const circ = document.createElementNS(svgNS, 'circle');
+      circ.setAttribute('cx', sp.x); circ.setAttribute('cy', sp.y);
+      circ.setAttribute('r', '2.5');
+      circ.setAttribute('fill', branch.color);
+      circ.setAttribute('opacity', '0');
+      circ.style.animation = `fadeIn 0.3s ${sDelay+0.4}s forwards`;
+      svg.appendChild(circ);
+    });
+
+    // Junction dot at branch
+    const jDot = document.createElementNS(svgNS, 'circle');
+    jDot.setAttribute('cx', bp.x); jDot.setAttribute('cy', bp.y);
+    jDot.setAttribute('r', '3.5');
+    jDot.setAttribute('fill', branch.color);
+    jDot.setAttribute('opacity', '0');
+    jDot.style.animation = `fadeIn 0.3s ${delay+0.3}s forwards`;
+    svg.appendChild(jDot);
+
+    delay += 0.12;
+  });
+
+  // Add fade-in keyframe for svg elements
+  const style = document.createElement('style');
+  style.textContent = `@keyframes fadeIn { to { opacity: 0.9; } }`;
+  document.head.appendChild(style);
+
+  // ── Render CENTER node ──
+  const cn = document.createElement('div');
+  cn.className = 'node node-center';
+  cn.style.left = `${W/2}px`;
+  cn.style.top  = `${H/2}px`;
+  cn.style.animationDelay = '0.1s';
+  cn.innerHTML = `
+    <div class="inner">
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div>
+      <div class="label-main">${CENTER.label.replace('\n','<br>')}</div>
+      <div class="label-sub">${CENTER.sub}</div>
+    </div>
+  `;
+  container.appendChild(cn);
+
+  // ── Render BRANCH nodes ──
+  BRANCHES.forEach((branch, i) => {
+    const bp = positions[i];
+    const nodeDelay = 0.25 + i * 0.1;
+
+    const bn = document.createElement('div');
+    bn.className = 'node node-branch';
+    bn.style.left = `${bp.x}px`;
+    bn.style.top  = `${bp.y}px`;
+    bn.style.animationDelay = `${nodeDelay}s`;
+    bn.style.setProperty('--node-color', branch.color);
+    bn.style.setProperty('--node-glow', branch.glow);
+    bn.style.setProperty('--node-shine', branch.shine);
+    bn.innerHTML = `
+      <div class="inner" style="
+        background:${branch.bg};
+        box-shadow: 0 0 0 1px ${branch.border}, 0 4px 24px rgba(0,0,0,0.5), 0 0 20px ${branch.glow.replace('0.5','0.2')};
+      ">
+        <span class="node-icon">${branch.icon}</span>
+        <div class="node-title">${branch.title}</div>
+        <div class="node-desc">${branch.desc.replace('\n','<br>')}</div>
+      </div>
+    `;
+    bn.dataset.tooltip = branch.tooltip;
+    bn.dataset.title = branch.title;
+    container.appendChild(bn);
+
+    // ── Sub-nodes ──
+    const spos = subPositions(bp.x, bp.y, W/2, H/2, branch.subs);
+    branch.subs.forEach((sub, si) => {
+      const sp = spos[si];
+      const sDelay = nodeDelay + 0.4 + si * 0.08;
+
+      const sn = document.createElement('div');
+      sn.className = 'node node-sub';
+      sn.style.left = `${sp.x}px`;
+      sn.style.top  = `${sp.y}px`;
+      sn.style.animationDelay = `${sDelay}s`;
+      sn.style.setProperty('--node-color', branch.color);
+      const subW = 130;
+      sn.innerHTML = `
+        <div class="inner" style="
+          width:${subW}px;
+          background:rgba(255,255,255,0.03);
+          border:1px solid rgba(255,255,255,0.07);
+          box-shadow:inset 0 0 0 0 transparent;
+        ">
+          <div class="node-sub-text">${sub.text.replace('\n','<br>')}</div>
+        </div>
+      `;
+      container.appendChild(sn);
+    });
+  });
+
+  // ── Tooltip logic ──
+  const tooltip = document.getElementById('tooltip');
+  document.querySelectorAll('[data-tooltip]').forEach(el => {
+    el.addEventListener('mouseenter', e => {
+      document.getElementById('tt-title').textContent = el.dataset.title;
+      document.getElementById('tt-body').textContent  = el.dataset.tooltip;
+      tooltip.style.opacity = '1';
+    });
+    el.addEventListener('mousemove', e => {
+      tooltip.style.left = `${e.clientX + 16}px`;
+      tooltip.style.top  = `${e.clientY - 10}px`;
+    });
+    el.addEventListener('mouseleave', () => {
+      tooltip.style.opacity = '0';
+    });
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  render();
+  window.addEventListener('resize', () => {
+    // Debounce
+    clearTimeout(window._resizeTimer);
+    window._resizeTimer = setTimeout(render, 200);
+  });
+});
+</script>
+</body>
+</html>
