@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Illuminating the Margins — Schematic Overview</title>
-
+<title>Illuminating the Margins — Interactive Overview</title>
 <style>
 @font-face{font-family:'UberMove';font-weight:300;src:url('https://d1a3f4spazzrp4.cloudfront.net/kepler.gl/uber-fonts/4.0.0/superfamily/UberMoveText-Light.woff2') format('woff2')}
 @font-face{font-family:'UberMove';font-weight:400;src:url('https://d1a3f4spazzrp4.cloudfront.net/kepler.gl/uber-fonts/4.0.0/superfamily/UberMoveText-Regular.woff2') format('woff2')}
@@ -12,196 +11,319 @@
 @font-face{font-family:'UberMove';font-weight:700;src:url('https://d1a3f4spazzrp4.cloudfront.net/kepler.gl/uber-fonts/4.0.0/superfamily/UberMoveText-Bold.woff2') format('woff2')}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
-
 :root{
-  --f:  'UberMove','Manrope',sans-serif;
-  --fm: 'Share Tech Mono','Courier New',monospace;
-  --bg: #F8F6F0;
-  --surface: #FFFFFF;
-  --t1: #1A1916;
-  --t2: rgba(26,25,22,0.58);
-  --t3: rgba(26,25,22,0.32);
-  --border: rgba(26,25,22,0.1);
-  --border2: rgba(26,25,22,0.06);
+  --f:'UberMove','Manrope',sans-serif;
+  --fm:'Share Tech Mono','Courier New',monospace;
+  --bg:#F8F6F0;
+  --surface:#FFFFFF;
+  --t1:#1A1916;
+  --t2:rgba(26,25,22,0.58);
+  --t3:rgba(26,25,22,0.32);
+  --border:rgba(26,25,22,0.1);
+  --panel-w:420px;
 }
+body{font-family:var(--f);background:var(--bg);color:var(--t1);
+  background-image:radial-gradient(circle,rgba(26,25,22,0.12) 1px,transparent 1px);
+  background-size:26px 26px;}
 
-body{
-  font-family:var(--f);
-  background:var(--bg);
-  color:var(--t1);
-  background-image:radial-gradient(circle, rgba(26,25,22,0.12) 1px, transparent 1px);
-  background-size:26px 26px;
-}
-
-/* ─ Header ──────────────────────────────────────────────────────────────── */
+/* ── Header ─────────────────────────────────────────────────────────────── */
 #hdr{
-  position:fixed;top:0;left:0;right:0;z-index:80;
-  height:52px;
-  background:rgba(248,246,240,0.94);
-  border-bottom:1px solid rgba(26,25,22,0.1);
-  backdrop-filter:blur(14px);
-  display:flex;align-items:center;padding:0 24px;gap:12px;
+  position:fixed;top:0;left:0;right:0;z-index:80;height:52px;
+  background:rgba(248,246,240,0.94);border-bottom:1px solid rgba(26,25,22,0.1);
+  backdrop-filter:blur(14px);display:flex;align-items:center;padding:0 24px;gap:12px;
 }
 .hl{font-size:12.5px;font-weight:700;letter-spacing:-0.02em;color:var(--t1);white-space:nowrap}
 .hd{width:1px;height:15px;background:rgba(26,25,22,0.15);flex-shrink:0}
-.hs{font-size:10px;font-weight:400;color:var(--t3);font-family:var(--fm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hs{font-size:10px;color:var(--t3);font-family:var(--fm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hsp{flex:1}
-#tog{
+.hbtn{
   font-family:var(--f);font-size:11px;font-weight:600;cursor:pointer;
   padding:6px 15px;border-radius:99px;white-space:nowrap;
-  border:1.5px solid rgba(26,25,22,0.25);
-  background:rgba(26,25,22,0.04);color:var(--t1);
+  border:1.5px solid rgba(26,25,22,0.22);background:rgba(26,25,22,0.04);color:var(--t1);
   display:flex;align-items:center;gap:6px;
-  transition:background .18s,border-color .18s,color .18s;user-select:none;
+  transition:background .18s,color .18s;user-select:none;
 }
-#tog:hover{background:var(--t1);color:#fff;border-color:var(--t1)}
+.hbtn:hover{background:var(--t1);color:#fff}
 #tog-ico{transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
 #tog-ico.x{transform:rotate(45deg)}
 
-/* ─ Map area ─────────────────────────────────────────────────────────────── */
+/* ── Map area ────────────────────────────────────────────────────────────── */
 #area{
   position:fixed;top:52px;left:0;right:0;bottom:44px;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
+  overflow:hidden;transition:right .4s cubic-bezier(.25,.8,.25,1);
+  cursor:grab;user-select:none;
 }
+#area.panel-open{right:var(--panel-w)}
+#area.dragging{cursor:grabbing}
 #cv{
-  position:relative;
-  width:1600px;height:840px;
-  transform-origin:center center;
-  flex-shrink:0;
+  position:absolute;width:1600px;height:840px;
+  transform-origin:0 0;will-change:transform;
 }
-#sv{
-  position:absolute;inset:0;
-  width:100%;height:100%;
-  overflow:visible;pointer-events:none;z-index:1;
-}
+#sv{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1;}
 
-/* ─ Nodes ────────────────────────────────────────────────────────────────── */
-.node{
-  position:absolute;
-  transform:translate(-50%,-50%);
-  z-index:10;
+/* ── Zoom controls ───────────────────────────────────────────────────────── */
+#zoom-controls{
+  position:fixed;bottom:58px;left:50%;transform:translateX(-50%);
+  z-index:90;display:flex;align-items:center;gap:0;
+  background:rgba(248,246,240,0.96);border:1px solid rgba(26,25,22,0.12);
+  border-radius:99px;backdrop-filter:blur(14px);
+  box-shadow:0 2px 12px rgba(26,25,22,0.1);overflow:hidden;
 }
+.zc-btn{
+  font-family:var(--f);font-size:15px;font-weight:400;cursor:pointer;
+  width:34px;height:32px;display:flex;align-items:center;justify-content:center;
+  border:none;background:transparent;color:var(--t2);
+  transition:background .14s,color .14s;line-height:1;
+}
+.zc-btn:hover{background:rgba(26,25,22,0.07);color:var(--t1)}
+.zc-btn:active{background:rgba(26,25,22,0.13)}
+.zc-sep{width:1px;height:16px;background:rgba(26,25,22,0.1);flex-shrink:0}
+#zoom-label{
+  font-family:var(--fm);font-size:10px;color:var(--t3);
+  padding:0 10px;min-width:44px;text-align:center;cursor:default;
+  letter-spacing:0.04em;
+}
+.zc-fit-btn{
+  font-family:var(--fm);font-size:9px;font-weight:600;cursor:pointer;
+  padding:0 12px;height:32px;display:flex;align-items:center;
+  border:none;background:transparent;color:var(--t3);letter-spacing:0.06em;
+  text-transform:uppercase;transition:background .14s,color .14s;
+}
+.zc-fit-btn:hover{background:rgba(26,25,22,0.07);color:var(--t1)}
+
+/* ── Nodes ───────────────────────────────────────────────────────────────── */
+.node{position:absolute;transform:translate(-50%,-50%);z-index:10;}
 
 /* Center */
 .nc .ring{
-  width:152px;height:152px;border-radius:50%;
-  background:var(--t1);
+  width:152px;height:152px;border-radius:50%;background:var(--t1);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;padding:20px;
-  box-shadow:
-    0 0 0 9px rgba(26,25,22,0.05),
-    0 0 0 1px rgba(26,25,22,0.12),
-    0 8px 32px rgba(26,25,22,0.18);
-  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
-  cursor:default;position:relative;
+  box-shadow:0 0 0 9px rgba(26,25,22,0.05),0 0 0 1px rgba(26,25,22,0.12),0 8px 32px rgba(26,25,22,0.18);
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .2s;cursor:pointer;position:relative;
 }
-.nc:hover .ring{transform:scale(1.05)}
-.nc .ring::before{
-  content:'';position:absolute;inset:-10px;border-radius:50%;
-  border:1px dashed rgba(26,25,22,0.15);pointer-events:none;
-}
+.nc:hover .ring,.nc.active .ring{transform:scale(1.06);box-shadow:0 0 0 12px rgba(26,25,22,0.08),0 0 0 1px rgba(26,25,22,0.2),0 12px 40px rgba(26,25,22,0.25)}
+.nc .ring::before{content:'';position:absolute;inset:-10px;border-radius:50%;border:1px dashed rgba(255,255,255,0.15);pointer-events:none;}
 .nc-lbl{font-size:12px;font-weight:700;color:#fff;line-height:1.35;letter-spacing:-0.02em}
-.nc-sub{font-size:7.5px;font-weight:500;color:rgba(255,255,255,0.38);
-        margin-top:8px;text-transform:uppercase;letter-spacing:0.11em;font-family:var(--fm)}
+.nc-sub{font-size:7.5px;font-weight:500;color:rgba(255,255,255,0.38);margin-top:8px;text-transform:uppercase;letter-spacing:0.11em;font-family:var(--fm)}
 
 /* Branch */
-.nb{cursor:default}
+.nb{cursor:pointer}
 .nb .card{
-  width:150px;
-  background:var(--surface);
-  padding:11px 12px 12px 15px;
+  width:150px;background:var(--surface);padding:11px 12px 12px 15px;
   position:relative;
   box-shadow:0 1px 3px rgba(26,25,22,0.07),0 4px 16px rgba(26,25,22,0.06);
+  transition:box-shadow .2s,transform .25s cubic-bezier(.34,1.56,.64,1);
 }
-/* 4-corner bracket marks */
-.nb .card::before{content:'';position:absolute;top:-2px;left:-2px;width:9px;height:9px;
-  border-top:1.5px solid var(--acc);border-left:1.5px solid var(--acc)}
-.nb .card::after{content:'';position:absolute;top:-2px;right:-2px;width:9px;height:9px;
-  border-top:1.5px solid var(--acc);border-right:1.5px solid var(--acc)}
-.c3{position:absolute;bottom:-2px;left:-2px;width:9px;height:9px;
-    border-bottom:1.5px solid var(--acc);border-left:1.5px solid var(--acc)}
-.c4{position:absolute;bottom:-2px;right:-2px;width:9px;height:9px;
-    border-bottom:1.5px solid var(--acc);border-right:1.5px solid var(--acc)}
-.nb-cat{font-size:7.5px;font-weight:600;color:var(--acc);text-transform:uppercase;
-        letter-spacing:0.11em;margin-bottom:5px;font-family:var(--fm)}
+.nb:hover .card,.nb.active .card{
+  transform:scale(1.05);
+  box-shadow:0 0 0 2px var(--acc),0 6px 24px rgba(26,25,22,0.14);
+}
+.nb .card::before{content:'';position:absolute;top:-2px;left:-2px;width:9px;height:9px;border-top:1.5px solid var(--acc);border-left:1.5px solid var(--acc)}
+.nb .card::after{content:'';position:absolute;top:-2px;right:-2px;width:9px;height:9px;border-top:1.5px solid var(--acc);border-right:1.5px solid var(--acc)}
+.c3{position:absolute;bottom:-2px;left:-2px;width:9px;height:9px;border-bottom:1.5px solid var(--acc);border-left:1.5px solid var(--acc)}
+.c4{position:absolute;bottom:-2px;right:-2px;width:9px;height:9px;border-bottom:1.5px solid var(--acc);border-right:1.5px solid var(--acc)}
+.nb-cat{font-size:7.5px;font-weight:600;color:var(--acc);text-transform:uppercase;letter-spacing:0.11em;margin-bottom:5px;font-family:var(--fm)}
 .nb-name{font-size:13px;font-weight:700;color:var(--t1);letter-spacing:-0.02em;line-height:1.2;margin-bottom:4px}
 .nb-desc{font-size:9.5px;font-weight:400;color:var(--t2);line-height:1.46}
-.nb:hover .card{transform:scale(1.04);transition:transform .25s cubic-bezier(.34,1.56,.64,1);
-  box-shadow:0 4px 20px rgba(26,25,22,0.13)}
+.click-hint{font-size:7px;font-family:var(--fm);color:var(--acc);opacity:0;margin-top:5px;letter-spacing:0.08em;transition:opacity .2s;text-transform:uppercase}
+.nb:hover .click-hint{opacity:0.7}
 
 /* Sub */
-.ns{cursor:default}
+.ns{cursor:pointer}
 .ns .card{
-  width:126px;
-  background:var(--surface);
-  padding:7px 9px 8px 11px;
+  width:126px;background:var(--surface);padding:7px 9px 8px 11px;
   position:relative;
   box-shadow:0 1px 2px rgba(26,25,22,0.06),0 2px 8px rgba(26,25,22,0.04);
+  transition:box-shadow .2s,transform .25s cubic-bezier(.34,1.56,.64,1);
 }
-.ns .card::before{content:'';position:absolute;top:-2px;left:-2px;width:7px;height:7px;
-  border-top:1px solid var(--acc);border-left:1px solid var(--acc);opacity:.7}
-.ns .card::after{content:'';position:absolute;bottom:-2px;right:-2px;width:7px;height:7px;
-  border-bottom:1px solid var(--acc);border-right:1px solid var(--acc);opacity:.7}
+.ns:hover .card,.ns.active .card{
+  transform:scale(1.06);
+  box-shadow:0 0 0 1.5px var(--acc),0 4px 14px rgba(26,25,22,0.12);
+}
+.ns .card::before{content:'';position:absolute;top:-2px;left:-2px;width:7px;height:7px;border-top:1px solid var(--acc);border-left:1px solid var(--acc);opacity:.7}
+.ns .card::after{content:'';position:absolute;bottom:-2px;right:-2px;width:7px;height:7px;border-bottom:1px solid var(--acc);border-right:1px solid var(--acc);opacity:.7}
 .ns-name{font-size:9.5px;font-weight:700;color:var(--t1);line-height:1.3}
-.ns-det{font-size:8px;font-weight:400;color:var(--t3);line-height:1.35;margin-top:2px;font-family:var(--fm)}
-.ns:hover .card{transform:scale(1.05);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.ns-det{font-size:8px;color:var(--t3);line-height:1.35;margin-top:2px;font-family:var(--fm)}
 
-/* ─ Toggle transitions ───────────────────────────────────────────────────── */
+/* ── Detail Panel ────────────────────────────────────────────────────────── */
+#panel{
+  position:fixed;top:52px;right:0;bottom:44px;z-index:90;
+  width:var(--panel-w);
+  background:var(--surface);
+  border-left:1px solid rgba(26,25,22,0.1);
+  box-shadow:-8px 0 40px rgba(26,25,22,0.08);
+  transform:translateX(100%);
+  transition:transform .4s cubic-bezier(.25,.8,.25,1);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+#panel.open{transform:translateX(0)}
+
+#panel-head{
+  padding:20px 22px 18px;
+  border-bottom:1px solid rgba(26,25,22,0.07);
+  flex-shrink:0;position:relative;
+}
+#panel-cat{
+  font-size:8px;font-weight:600;font-family:var(--fm);
+  text-transform:uppercase;letter-spacing:0.13em;
+  margin-bottom:8px;opacity:0.7;
+}
+#panel-title{
+  font-size:20px;font-weight:700;letter-spacing:-0.025em;
+  line-height:1.2;margin-bottom:6px;
+}
+#panel-subtitle{font-size:11px;color:var(--t2);line-height:1.5}
+#panel-close{
+  position:absolute;top:18px;right:18px;
+  width:28px;height:28px;border-radius:50%;
+  border:1px solid rgba(26,25,22,0.12);background:rgba(26,25,22,0.03);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .15s;color:var(--t2);font-size:14px;line-height:1;
+}
+#panel-close:hover{background:rgba(26,25,22,0.08);color:var(--t1)}
+
+#panel-accent{height:3px;flex-shrink:0}
+
+#panel-body{
+  flex:1;overflow-y:auto;padding:20px 22px 28px;
+  scrollbar-width:thin;scrollbar-color:rgba(26,25,22,0.12) transparent;
+}
+#panel-body::-webkit-scrollbar{width:4px}
+#panel-body::-webkit-scrollbar-thumb{background:rgba(26,25,22,0.12);border-radius:2px}
+
+/* Panel content blocks */
+.pb-section{margin-bottom:22px}
+.pb-label{
+  font-size:7.5px;font-weight:600;font-family:var(--fm);
+  text-transform:uppercase;letter-spacing:0.13em;
+  color:var(--t3);margin-bottom:9px;
+  display:flex;align-items:center;gap:7px;
+}
+.pb-label::after{content:'';flex:1;height:1px;background:rgba(26,25,22,0.08)}
+.pb-text{font-size:12px;line-height:1.72;color:var(--t2);font-weight:400}
+.pb-text strong{color:var(--t1);font-weight:600}
+.pb-quote{
+  margin:14px 0;padding:12px 15px;
+  border-left:2.5px solid var(--panel-acc);
+  background:rgba(26,25,22,0.025);border-radius:0 6px 6px 0;
+  font-size:11.5px;line-height:1.65;color:var(--t2);font-style:italic;
+}
+.pb-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pb-chip{
+  font-size:9.5px;font-weight:500;font-family:var(--fm);
+  padding:4px 10px;border-radius:4px;
+  border:1px solid var(--panel-acc);
+  color:var(--panel-acc);
+  background:transparent;
+  letter-spacing:0.03em;
+}
+.pb-stat{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 14px;margin-top:8px;
+  background:rgba(26,25,22,0.025);border-radius:6px;
+  border:1px solid rgba(26,25,22,0.07);
+}
+.pb-stat-num{font-size:26px;font-weight:700;line-height:1;flex-shrink:0;letter-spacing:-0.03em}
+.pb-stat-txt{font-size:10.5px;line-height:1.55;color:var(--t2);margin-top:2px}
+.pb-bullets{list-style:none;margin-top:8px}
+.pb-bullets li{
+  font-size:11.5px;line-height:1.65;color:var(--t2);
+  padding:5px 0 5px 16px;position:relative;
+  border-bottom:1px solid rgba(26,25,22,0.05);
+}
+.pb-bullets li:last-child{border:none}
+.pb-bullets li::before{
+  content:'—';position:absolute;left:0;
+  color:var(--panel-acc);font-weight:700;font-size:10px;top:6px;
+}
+.pb-ref{
+  font-size:9px;line-height:1.6;color:var(--t3);
+  font-family:var(--fm);margin-top:5px;
+  padding:10px 12px;background:rgba(26,25,22,0.025);border-radius:5px;
+}
+.pb-subnav{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+.pb-subpill{
+  font-size:9.5px;font-weight:600;padding:5px 12px;border-radius:5px;
+  background:rgba(26,25,22,0.04);border:1px solid rgba(26,25,22,0.1);
+  cursor:pointer;color:var(--t2);transition:all .15s;font-family:var(--fm);
+  letter-spacing:0.03em;
+}
+.pb-subpill:hover{background:var(--panel-acc);border-color:var(--panel-acc);color:#fff}
+
+/* ── Toggle / sub toggle ─────────────────────────────────────────────────── */
 .ns,.sub-el{transition:opacity .35s ease,transform .35s cubic-bezier(.34,1.56,.64,1)}
 .ns.off{opacity:0!important;pointer-events:none;transform:translate(-50%,-50%) scale(0.78)!important}
 .sub-el.off{opacity:0!important}
 
-/* ─ Entry animations ─────────────────────────────────────────────────────── */
-@keyframes pop{
-  from{opacity:0;transform:translate(-50%,-50%) scale(0.6)}
-  to  {opacity:1;transform:translate(-50%,-50%) scale(1)}
-}
+/* ── Entrance animations ─────────────────────────────────────────────────── */
+@keyframes pop{from{opacity:0;transform:translate(-50%,-50%) scale(0.6)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 .pop{opacity:0;animation:pop .45s cubic-bezier(.34,1.56,.64,1) both}
 @keyframes dl{from{stroke-dashoffset:var(--d)}to{stroke-dashoffset:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .32s ease both}
 
-/* ─ Legend ────────────────────────────────────────────────────────────────── */
+/* ── Legend ──────────────────────────────────────────────────────────────── */
 #leg{
-  position:fixed;bottom:0;left:0;right:0;z-index:80;
-  height:44px;
-  background:rgba(248,246,240,0.94);
-  border-top:1px solid rgba(26,25,22,0.1);
+  position:fixed;bottom:0;left:0;right:0;z-index:80;height:44px;
+  background:rgba(248,246,240,0.94);border-top:1px solid rgba(26,25,22,0.1);
   backdrop-filter:blur(14px);
   display:flex;align-items:center;justify-content:center;gap:20px;padding:0 20px;
+  transition:right .4s cubic-bezier(.25,.8,.25,1);
 }
-.li{display:flex;align-items:center;gap:5px;font-size:9.5px;font-weight:500;
-    color:var(--t3);font-family:var(--fm);letter-spacing:0.04em;transition:color .15s}
-.li:hover{color:var(--t1)}
+.li{display:flex;align-items:center;gap:5px;font-size:9.5px;font-weight:500;color:var(--t3);font-family:var(--fm);letter-spacing:0.04em}
 .ld{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <div id="hdr">
   <span class="hl">Illuminating the Margins</span>
   <div class="hd"></div>
-  <span class="hs">SCHEMATIC OVERVIEW · GROUP 19 · CE1913 · Y1S1–2026 · SOLAR-POWERED STREET LIGHTING · RURAL SRI LANKA</span>
+  <span class="hs">SCHEMATIC OVERVIEW · GROUP 19 · CE1913 · Y1S1–2026 · CLICK ANY NODE TO EXPLORE</span>
   <div class="hsp"></div>
-  <button id="tog" onclick="toggle()">
-    <svg id="tog-ico" width="11" height="11" viewBox="0 0 11 11" fill="none"
-         stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-      <line x1="5.5" y1="1" x2="5.5" y2="10"/>
-      <line x1="1" y1="5.5" x2="10" y2="5.5"/>
+  <button class="hbtn" onclick="toggle()">
+    <svg id="tog-ico" width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <line x1="5.5" y1="1" x2="5.5" y2="10"/><line x1="1" y1="5.5" x2="10" y2="5.5"/>
     </svg>
     <span id="tog-lbl">Hide Details</span>
   </button>
 </div>
 
+<!-- MAP -->
 <div id="area">
-  <div id="cv" style="transform: scale(0.688125); scale: 1.2;">
-    <svg id="sv"></svg>
-  </div>
+  <div id="cv"><svg id="sv"></svg></div>
 </div>
 
+<!-- DETAIL PANEL -->
+<div id="panel">
+  <div id="panel-accent"></div>
+  <div id="panel-head">
+    <div id="panel-cat"></div>
+    <div id="panel-title"></div>
+    <div id="panel-subtitle"></div>
+    <div id="panel-close" onclick="closePanel()">✕</div>
+  </div>
+  <div id="panel-body"></div>
+</div>
+
+<!-- ZOOM CONTROLS -->
+<div id="zoom-controls">
+  <button class="zc-btn" onclick="zoomStep(1.25)" title="Zoom in">+</button>
+  <div class="zc-sep"></div>
+  <span id="zoom-label">100%</span>
+  <div class="zc-sep"></div>
+  <button class="zc-btn" onclick="zoomStep(0.8)" title="Zoom out">−</button>
+  <div class="zc-sep"></div>
+  <button class="zc-fit-btn" onclick="resetView()" title="Reset view">FIT</button>
+</div>
+
+<!-- LEGEND -->
 <div id="leg">
   <div class="li"><div class="ld" style="background:#2A6FD4"></div>SDG ALIGNMENT</div>
   <div class="li"><div class="ld" style="background:#C43858"></div>PEOPLE</div>
@@ -212,325 +334,631 @@ body{
 </div>
 
 <script>
-// ── Data ───────────────────────────────────────────────────────────────────────
-const LEFT = [
-  {
-    color:'#2A6FD4', cat:'SUSTAINABILITY', name:'SDG Alignment',
-    desc:'UN 2030 Agenda\nGlobal targets',
-    subs:[
-      {name:'SDG 7',  det:'Clean & affordable energy'},
-      {name:'SDG 11', det:'Sustainable communities'},
-      {name:'SDG 13', det:'Climate action'},
+// ═══════════════════════════════════════════════════════════════════════════════
+// CONTENT DATABASE
+// ═══════════════════════════════════════════════════════════════════════════════
+const CONTENT = {
+  center:{
+    cat:'PROJECT OVERVIEW', title:'Solar-Powered Street Lighting',
+    subtitle:'A sustainable, community-led off-grid lighting initiative for rural Sri Lanka.',
+    color:'#1A1916',
+    sections:[
+      {label:'The Core Idea', text:'Numerous remote regions in Sri Lanka lack connections to the national electrical grid — and even where the grid expands, <strong>street lighting is routinely omitted</strong>. This project proposes deploying off-grid solar LED street lights, maintained by the communities themselves, as an immediate and affordable solution.'},
+      {label:'The Problem in One Line', quote:'"It\'s 7 PM. The sun has set. The street outside? Pitch black. No lights. Nothing. This is not a rare situation — it is everyday life for millions across rural Sri Lanka."'},
+      {label:'Why This Matters', bullets:['Women face harassment and assault on unlit roads','Children abandon studies — they cannot read or commute after dark','Farmers and vendors lose income as businesses must close at sunset','Elderly and sick cannot safely access healthcare at night','Road accident rates are significantly higher on unlit roads']},
+      {label:'Our Solution', text:'Solar LED street lights installed by community members along key village roads. No grid connection required. Powered entirely by Sri Lanka\'s abundant solar irradiance. Batteries store energy for all-night illumination. Estimated <strong>50% reduction in household fuel costs</strong> versus kerosene alternatives.'},
+      {label:'Key Statistics', stats:[{n:'40%+',t:'of rural Sri Lanka lacks adequate street lighting (IEA, 2022)'},{n:'2×',t:'higher road accident risk on unlit rural roads at night (WHO, 2021)'},{n:'50%',t:'household fuel cost savings estimated from replacing kerosene with solar LEDs'}]},
+      {label:'Navigate the Project', text:'Click any node on the map to read about SDG alignment, stakeholder impacts, project design, and evidence-backed benefits. Use the sub-nodes for topic-level detail.'},
+      {label:'Source', ref:'IEA (2022) World Energy Outlook. WHO (2021) Road Traffic Injuries. United Nations (2015) 2030 Agenda for Sustainable Development.'}
     ]
   },
-  {
-    color:'#C43858', cat:'SOCIAL IMPACT', name:'People',
-    desc:'Residents · Students\nWomen · Healthcare',
-    subs:[
-      {name:'Rural Residents',     det:'Safety & mobility'},
-      {name:'School Children',     det:'Evening study access'},
-      {name:'Women & Vulnerable',  det:'Security & freedom'},
-      {name:'Healthcare Workers',  det:'Emergency response'},
+
+  sdg:{
+    cat:'SUSTAINABILITY', title:'SDG Alignment',
+    subtitle:'This project directly addresses three United Nations Sustainable Development Goals under the 2030 Agenda.',
+    color:'#2A6FD4',
+    sections:[
+      {label:'Overview', text:'The UN 2030 Agenda for Sustainable Development provides the global framework our project operates within. Solar-powered street lighting in rural Sri Lanka advances <strong>SDG 7, SDG 11, and SDG 13</strong> simultaneously — making it one of the most multi-dimensional interventions available at low cost.'},
+      {label:'Sub-topics', subnav:['SDG 7 — Clean Energy','SDG 11 — Sustainable Communities','SDG 13 — Climate Action']},
+      {label:'Why Three SDGs?', bullets:['Energy access (SDG 7) is the foundation — without light, nothing else improves','Community safety and mobility (SDG 11) are direct outcomes of street lighting','Zero-emission operation directly supports climate commitments (SDG 13)','The three are deeply interdependent in rural off-grid contexts']},
+      {label:'Source', ref:'United Nations (2015). Transforming our world: the 2030 Agenda for Sustainable Development. Available at: https://sdgs.un.org/2030agenda'}
     ]
   },
-  {
-    color:'#B07A10', cat:'ECONOMIC IMPACT', name:'Economy',
-    desc:'Businesses · Local Gov\nLivelihood & finance',
-    subs:[
-      {name:'Small Businesses', det:'Extended trading hours'},
-      {name:'Municipal Gov.',   det:'Reduced grid costs'},
+  sdg7:{
+    cat:'SDG 7 · CLEAN ENERGY', title:'Affordable & Clean Energy',
+    subtitle:'Target 7.1: Universal energy access. Target 7.2: Increase the share of renewable energy.',
+    color:'#2A6FD4',
+    sections:[
+      {label:'Relevance', text:'Sri Lanka has committed to national renewable energy targets, yet rural communities remain dependent on hazardous, expensive kerosene lamps and disposable batteries. Our project replaces fossil-fuel-based lighting with <strong>clean, off-grid solar power</strong> at zero operational carbon cost.'},
+      {label:'Targets Addressed', bullets:['Target 7.1 — Universal access to affordable, reliable, and modern energy services','Target 7.2 — Substantially increase the share of renewable energy in the global energy mix']},
+      {label:'Impact', text:'Each solar LED unit eliminates the need for kerosene combustion in that household\'s vicinity. With 50 units installed per village, this represents a measurable shift in the community\'s energy profile toward clean renewables.'},
+      {label:'Source', ref:'IEA (2022) World Energy Outlook 2022: Special Focus on Energy Access. Paris: IEA/OECD. | United Nations (2015) 2030 Agenda for Sustainable Development.'}
     ]
   },
+  sdg11:{
+    cat:'SDG 11 · COMMUNITIES', title:'Sustainable Cities & Communities',
+    subtitle:'Target 11.2: Road safety. Target 11.7: Safe and inclusive public spaces for all.',
+    color:'#2A6FD4',
+    sections:[
+      {label:'Relevance', text:'Rural Sri Lankan villages function as communities in every social sense — but without street lighting, they effectively cease to exist after sunset. SDG 11 calls for <strong>safe, accessible, and inclusive public spaces</strong> for all people, regardless of geography.'},
+      {label:'Targets Addressed', bullets:['Target 11.2 — Improve road safety and sustainable transport access','Target 11.7 — Provide universal access to safe, inclusive, accessible green and public spaces']},
+      {label:'Transformation', text:'A lit village road is not just safer — it is a <strong>social infrastructure asset</strong>. Markets can stay open. Families can gather. Children can study. Women can move freely. Our project restores night-time community life.'},
+      {label:'Source', ref:'United Nations (2015) 2030 Agenda. | WHO (2021) Road Traffic Injuries. | UN Women (2017) Safe Cities and Safe Public Spaces Global Initiative.'}
+    ]
+  },
+  sdg13:{
+    cat:'SDG 13 · CLIMATE', title:'Climate Action',
+    subtitle:'Target 13.2: Integrate climate change measures into national policies and planning.',
+    color:'#2A6FD4',
+    sections:[
+      {label:'Relevance', text:'Every kerosene lamp burned nightly releases CO₂, black carbon, and fine particulate matter into the atmosphere. Replacing them with solar LEDs represents a <strong>direct, measurable emissions reduction</strong> at the community scale.'},
+      {label:'Environmental Gains', bullets:['Zero operational carbon emissions across the system lifetime','Eliminates heavy metal leaching from disposable batteries into soil','Reduces indoor and outdoor air pollution from kerosene combustion','Demonstrates a replicable model for climate-conscious rural development']},
+      {label:'Sri Lanka Context', text:'Sri Lanka has pledged ambitious renewable energy targets under its Nationally Determined Contributions (NDC). Community-scale solar deployments directly support national climate commitments while bypassing slow grid expansion.'},
+      {label:'Source', ref:'United Nations (2015) 2030 Agenda. | IRENA (2020) Off-grid Renewable Energy Solutions. Abu Dhabi: IRENA.'}
+    ]
+  },
+
+  people:{
+    cat:'SOCIAL IMPACT', title:'People',
+    subtitle:'Four key stakeholder groups whose lives are directly shaped by the presence or absence of street lighting.',
+    color:'#C43858',
+    sections:[
+      {label:'Overview', text:'The absence of street lighting does not affect everyone equally. Women, children, the elderly, and patients bear a disproportionate burden of the darkness. Our stakeholder analysis identifies <strong>four core people-groups</strong> who stand to benefit most from this intervention.'},
+      {label:'Sub-topics', subnav:['Rural Residents','School Children','Women & Vulnerable','Healthcare Workers']},
+      {label:'Shared Experience', quote:'"Their sense of freedom is cut short — every single night. We are literally fading the future of an entire generation by keeping them in the dark."'},
+      {label:'Source', ref:'Task 02 Stakeholder Analysis — Group 19, 2026. | IEA (2022). | UN Women (2017).'}
+    ]
+  },
+  residents:{
+    cat:'PEOPLE · STAKEHOLDER', title:'Rural Residents',
+    subtitle:'The 40%+ of rural Sri Lankans who lack adequate public street lighting and lose their freedom of movement every night.',
+    color:'#C43858',
+    sections:[
+      {label:'Current Impact', bullets:['Complete loss of safe movement and mobility once the sun sets','Forced reliance on kerosene lamps — expensive, toxic, fire-prone','Restricted access to community events, markets, and social gatherings','Social isolation compounds economic hardship across generations','Entire communities become effectively housebound after dark']},
+      {label:'After Project', text:'With solar street lighting, residents gain <strong>safe, lit public space at night</strong> — extending their effective day by 4–6 hours. Community cohesion improves. Local events resume. The village becomes alive again after sunset.'},
+      {label:'Evidence', stat:{n:'2×', t:'higher likelihood of road accident on unlit rural roads vs lit ones (WHO, 2021)'}},
+      {label:'Source', ref:'WHO (2021) Road Traffic Injuries. | IEA (2022) World Energy Outlook: Energy Access.'}
+    ]
+  },
+  students:{
+    cat:'PEOPLE · STAKEHOLDER', title:'School Children & Students',
+    subtitle:'Children whose academic futures are constrained by the inability to study, travel, or attend classes safely after sunset.',
+    color:'#C43858',
+    sections:[
+      {label:'Current Impact', bullets:['Daily school commute is a genuine safety risk before dawn and after dusk','No safe communal spaces to study or gather with peers in the evening','Shortened effective study hours lead to measurably lower academic performance','Tuition classes and extracurricular activities become inaccessible','Entire generation\'s future shaped by the absence of a single street light']},
+      {label:'After Project', text:'Lit routes and communal spaces allow children to <strong>study, travel, and gather safely</strong> in the evening. Research shows direct correlations between evening lighting access and improved school attendance and performance.'},
+      {label:'Quote', quote:'"We are literally fading the future of an entire generation by keeping them in the dark."'},
+      {label:'Source', ref:'IEA (2022) World Energy Outlook. | Task 02 Stakeholder Analysis, Group 19, 2026.'}
+    ]
+  },
+  women:{
+    cat:'PEOPLE · STAKEHOLDER', title:'Women & Vulnerable Groups',
+    subtitle:'Women, girls, the elderly, and disabled individuals who face disproportionate risks in unlit public spaces.',
+    color:'#C43858',
+    sections:[
+      {label:'Current Impact', bullets:['Unlit public spaces create genuine threat of harassment and gender-based violence','Severe loss of freedom of movement — effectively imprisoned after sunset','Excluded from evening economic opportunities and social participation','Elderly cannot safely navigate uneven terrain without lighting','Disabled individuals face compounded barriers to access and safety']},
+      {label:'After Project', text:'UN Women (2017) demonstrates that <strong>public lighting is one of the highest-impact, lowest-cost interventions</strong> for improving women\'s safety and freedom in public spaces. Lit streets change behaviour — of both women (who move more freely) and perpetrators (who are deterred).'},
+      {label:'Quote', quote:'"No one should have to feel unsafe simply by stepping outside their own front door."'},
+      {label:'Source', ref:'UN Women (2017) Safe Cities and Safe Public Spaces for Women and Girls: Global Results Report. New York: UN Women.'}
+    ]
+  },
+  healthcare:{
+    cat:'PEOPLE · STAKEHOLDER', title:'Healthcare Workers & Patients',
+    subtitle:'Medical staff and patients for whom nighttime darkness can be a matter of life and death.',
+    color:'#C43858',
+    sections:[
+      {label:'Current Impact', bullets:['Dangerous and slower access to health facilities at night','Emergency response severely compromised by poor road visibility','Accident-related hospital admissions increase on unlit roads','Patients delay seeking care until daylight — worsening outcomes','Healthcare workers face personal safety risks during night travel']},
+      {label:'After Project', text:'Lit roads allow ambulances and individuals to <strong>reach facilities faster and more safely</strong>. The WHO notes that emergency response time is directly correlated with road lighting quality. Even a single well-lit route to the nearest clinic can be lifesaving.'},
+      {label:'Evidence', stat:{n:'30%', t:'reduction in road accidents associated with improved street lighting in rural contexts (WHO, 2021)'}},
+      {label:'Source', ref:'WHO (2021) Road Traffic Injuries. | United Nations (2015) 2030 Agenda for Sustainable Development.'}
+    ]
+  },
+
+  economy:{
+    cat:'ECONOMIC IMPACT', title:'Economy',
+    subtitle:'Local businesses and municipal authorities who bear the direct financial cost of inadequate public lighting.',
+    color:'#B07A10',
+    sections:[
+      {label:'Overview', text:'The economic consequences of darkness are underappreciated. Every hour after sunset that a business cannot operate, or that a government must spend on accident response, represents a <strong>direct financial loss</strong> attributable to missing street lighting.'},
+      {label:'Sub-topics', subnav:['Small Businesses','Municipal Government']},
+      {label:'The Economic Argument', text:'Solar LED lighting has a one-time installation cost and near-zero operational cost. The alternative — grid extension and conventional lighting — costs <strong>3–5× more</strong> per community and takes years to deliver.'},
+      {label:'Source', ref:'IEA (2022) World Energy Outlook. | World Bank (2017) Sri Lanka Energy Sector Development Policy.'}
+    ]
+  },
+  businesses:{
+    cat:'ECONOMY · STAKEHOLDER', title:'Small Businesses & Vendors',
+    subtitle:'Local shops, market stalls, and vendors whose trading hours — and livelihoods — end at sunset.',
+    color:'#B07A10',
+    sections:[
+      {label:'Current Impact', bullets:['Forced to close at sunset — losing the busiest potential trading hours','Fewer customers means lower revenue and constrained household income','Unable to compete with grid-connected urban and peri-urban businesses','Evening food vending, repair services, and markets entirely impossible','Community economic multiplier effect stunted across the board']},
+      {label:'After Project', text:'Extended trading hours translate directly into higher revenue. The IEA (2022) found that in communities where public lighting was introduced, <strong>average business revenue increased 20–35%</strong> due to extended operating hours and increased customer footfall in the evening.'},
+      {label:'Evidence', stat:{n:'20–35%', t:'average increase in small business revenue following introduction of street lighting (IEA, 2022)'}},
+      {label:'Source', ref:'IEA (2022) World Energy Outlook 2022: Special Focus on Energy Access. Paris: IEA/OECD Publishing.'}
+    ]
+  },
+  government:{
+    cat:'ECONOMY · STAKEHOLDER', title:'Municipal Government',
+    subtitle:'Local authorities who face the twin burden of costly grid expansion and the downstream costs of poor public safety.',
+    color:'#B07A10',
+    sections:[
+      {label:'Current Impact', bullets:['Grid extension to remote areas costs significantly more per km than solar alternatives','Street lighting routinely omitted from rural electrification plans due to budget','Accident and crime response costs rise when public spaces are unlit','Pressure from national renewable energy targets with slow local progress','Community dissatisfaction with service delivery undermines governance']},
+      {label:'After Project', text:'Solar LED systems require <strong>no grid infrastructure investment</strong> and have 10–15 year operational lifespans with minimal maintenance. Government saves capital expenditure while demonstrating progress on national renewable energy commitments.'},
+      {label:'Policy Alignment', text:'Sri Lanka\'s National Energy Policy and Action Plan (2022) targets 70% renewable electricity by 2030. Community solar lighting deployments count toward this target and build local technical capacity.'},
+      {label:'Source', ref:'World Bank (2017) Sri Lanka Energy Sector Development Policy. | United Nations (2015) 2030 Agenda.'}
+    ]
+  },
+
+  environment:{
+    cat:'ENVIRONMENTAL IMPACT', title:'Environment',
+    subtitle:'The natural systems — air, soil, water, and ecosystems — degraded by conventional rural lighting alternatives.',
+    color:'#1E8A4A',
+    sections:[
+      {label:'Overview', text:'Kerosene combustion and disposable battery disposal are not just inconvenient — they are <strong>environmental hazards</strong>. The cumulative impact across thousands of rural households is substantial, and largely invisible in national pollution statistics.'},
+      {label:'Sub-topics', subnav:['Natural Environment','Wildlife & Ecosystems']},
+      {label:'The Hidden Pollution', text:'Unlike grid electricity (where emissions are concentrated at power plants and counted), kerosene emissions are distributed across millions of households, making them <strong>systematically undercounted</strong> in national emissions inventories.'},
+      {label:'Source', ref:'WHO (2021). | Cinzano, Falchi & Elvidge (2001) Monthly Notices of the Royal Astronomical Society.'}
+    ]
+  },
+  naturalenv:{
+    cat:'ENVIRONMENT · IMPACT', title:'Natural Environment',
+    subtitle:'Air quality, soil health, and the broader atmospheric commons degraded by kerosene combustion and battery disposal.',
+    color:'#1E8A4A',
+    sections:[
+      {label:'Current Impact', bullets:['Kerosene combustion releases CO₂, black carbon, nitrogen oxides, and fine PM2.5 particulate matter','Disposable batteries leach lead, cadmium, and mercury into soil and groundwater near disposal sites','Indoor air pollution from kerosene smoke causes respiratory disease and eye damage','Children and the elderly are most vulnerable to chronic particulate exposure','Contributes measurably to regional climate burden through uncounted fossil fuel use']},
+      {label:'After Project', text:'Solar LED systems produce <strong>zero operational emissions</strong>. No combustion, no battery waste (the storage battery in each unit lasts 5–7 years and can be recycled). Air quality near replaced households improves immediately.'},
+      {label:'Evidence', stat:{n:'Zero', t:'operational CO₂ emissions across entire system lifetime for solar LED units'}},
+      {label:'Source', ref:'WHO (2021) Road Traffic Injuries & Air Quality Reports. | IRENA (2020) Off-grid Renewable Energy Solutions.'}
+    ]
+  },
+  wildlife:{
+    cat:'ENVIRONMENT · IMPACT', title:'Wildlife & Ecosystems',
+    subtitle:'Local biodiversity and ecosystem health affected by open flames, chemical contamination, and uncontrolled light pollution.',
+    color:'#1E8A4A',
+    sections:[
+      {label:'Current Impact', bullets:['Open kerosene flames near dry vegetation create real wildfire ignition risk','Airborne soot and smoke particles settle on local flora, disrupting photosynthesis and growth','Battery toxins in soil degrade microbial communities and root health','Uncontrolled light from kerosene lamps attracts and disorients nocturnal insects and pollinators','Cumulative chemical contamination reduces local biodiversity over time']},
+      {label:'After Project', text:'Directed LED fixtures with <strong>controlled beam angles</strong> eliminate the ambient scatter of open-flame lighting. Combined with zero chemical emissions, the net effect on local ecosystems is strongly positive.'},
+      {label:'Design Consideration', text:'Our project specifies warm-spectrum (2700–3000K) LEDs, which research shows are <strong>significantly less disruptive to nocturnal wildlife</strong> than cool-white alternatives.'},
+      {label:'Source', ref:'Cinzano, P., Falchi, F. & Elvidge, C.D. (2001) The first World Atlas of the artificial night sky brightness. Monthly Notices of the Royal Astronomical Society, 328(3), pp.689–707.'}
+    ]
+  },
+
+  design:{
+    cat:'SOLUTION DESIGN', title:'Project Design',
+    subtitle:'The technical and community architecture of our solar LED street lighting deployment.',
+    color:'#7040C8',
+    sections:[
+      {label:'System Overview', text:'Each unit consists of a <strong>monocrystalline solar panel</strong> (40–80W), a lithium iron phosphate battery bank (for 10–12 hours of overnight storage), and a high-efficiency LED luminaire (25–40W equivalent) mounted on a galvanised steel pole. No grid connection required.'},
+      {label:'Sub-topics', subnav:['Solar LED Units','Community Installation','Scalable & Affordable']},
+      {label:'Design Principles', bullets:['Off-grid — fully independent of national grid infrastructure','Community-maintained — no specialist technicians required for routine upkeep','Modular — individual units can be replaced or upgraded independently','Durable — rated for 10–15 year operational lifespan in tropical conditions','Affordable — total per-unit cost estimated at LKR 45,000–65,000 (USD 140–200)']},
+      {label:'Source', ref:'IRENA (2020) Off-grid Renewable Energy Solutions. | Radwan, Hanafy & El-Sayed (2022) Renewable and Sustainable Energy Reviews.'}
+    ]
+  },
+  solarunits:{
+    cat:'DESIGN · COMPONENT', title:'Solar LED Units',
+    subtitle:'The core hardware — standalone solar panels, battery storage, and LED luminaires — installed along village roads.',
+    color:'#7040C8',
+    sections:[
+      {label:'Components', bullets:['Monocrystalline solar panel: 40–80W peak output, angled for optimal Sri Lankan solar irradiance (5.5 kWh/m²/day average)','LiFePO4 battery bank: 10–12 hour storage capacity for full-night illumination','LED luminaire: 25–40W, warm-spectrum (2700–3000K), IP65 weatherproof rating','MPPT solar charge controller: maximises charging efficiency across irradiance conditions','Galvanised steel pole: 5–6m height, ground-anchored for tropical wind loads']},
+      {label:'Performance', text:'Sri Lanka averages <strong>5.5 peak solar hours per day</strong>, well above the 3.5 hours required to fully charge a typical unit\'s battery bank. The system is designed with a 1.8× safety factor for cloudy days.'},
+      {label:'Source', ref:'Radwan, A., Hanafy, A. & El-Sayed, M. (2022) Solar-powered LED street lighting. Renewable and Sustainable Energy Reviews, 157. | Chamberlin & Bhattacharyya (2014) Energy for Sustainable Development.'}
+    ]
+  },
+  communityinstall:{
+    cat:'DESIGN · PROCESS', title:'Community Installation',
+    subtitle:'A participatory deployment model where community members perform installation and ongoing maintenance.',
+    color:'#7040C8',
+    sections:[
+      {label:'Installation Process', bullets:['Community workshop: 1-day training for 4–6 local volunteers per village','Pole siting: community members identify key road sections and safety hotspots','Foundation and erection: manual installation with basic tools — no heavy machinery','Wiring and testing: simple DC connections, tested with multimeter — no licensed electrician required','Handover: full documentation, spare parts kit, and local maintenance rota established']},
+      {label:'Why Community-Led?', text:'IRENA (2020) found that community-installed solar systems have <strong>significantly higher long-term reliability</strong> than contractor-installed systems — because local owners understand, value, and maintain what they have built themselves.'},
+      {label:'Maintenance', text:'Routine maintenance: quarterly panel cleaning, annual battery health check. All tasks performable by trained community volunteers with no specialist equipment.'},
+      {label:'Source', ref:'IRENA (2020) Off-grid Renewable Energy Solutions to Expand Electricity Access. Abu Dhabi: IRENA.'}
+    ]
+  },
+  scalable:{
+    cat:'DESIGN · ECONOMICS', title:'Scalable & Affordable',
+    subtitle:'A financial and deployment model that makes widespread rural rollout achievable without grid investment.',
+    color:'#7040C8',
+    sections:[
+      {label:'Cost vs. Grid', text:'Extending the national grid to a remote village costs an estimated <strong>LKR 2–5 million per km</strong> of new infrastructure. A complete solar LED street lighting system for an entire village road network costs LKR 1–2 million total — with no ongoing utility bills.'},
+      {label:'Funding Pathways', bullets:['Government rural electrification grants (Ministry of Power & Energy, Sri Lanka)','World Bank rural energy access programmes','Asian Development Bank climate resilience financing','Local government municipal budgets — cost-shared across village clusters','NGO and development partner co-funding for pilot deployments']},
+      {label:'Scale-Up', text:'Each village deployment creates <strong>local technical knowledge</strong> that can train neighbouring communities. A single district-level master trainer programme could seed 50+ independent village installations.'},
+      {label:'Source', ref:'World Bank (2017) Sri Lanka Energy Sector Development Policy. | IRENA (2020).'}
+    ]
+  },
+
+  benefits:{
+    cat:'PROJECT OUTCOMES', title:'Key Benefits',
+    subtitle:'Evidence-backed benefits delivered to all six stakeholder groups by an effective solar street lighting system.',
+    color:'#0E8878',
+    sections:[
+      {label:'Overview', text:'The benefits of this project extend far beyond light itself. They cascade across safety, economics, education, health, and the environment — creating a <strong>virtuous cycle of development</strong> from a single infrastructure investment.'},
+      {label:'Sub-topics', subnav:['Night Safety','Income Growth','Zero Emissions','Better Education']},
+      {label:'Evidence Base', text:'All benefits are drawn from peer-reviewed research and international agency reports, not assumed. The IEA, WHO, UN Women, and IRENA all document these outcomes from comparable deployments globally.'},
+      {label:'Source', ref:'IEA (2022). WHO (2021). UN Women (2017). United Nations (2015). Cinzano et al. (2001). IRENA (2020).'}
+    ]
+  },
+  safety:{
+    cat:'BENEFIT', title:'Night Safety',
+    subtitle:'Reduced road accidents, lower crime rates, and safer movement for all community members after dark.',
+    color:'#0E8878',
+    sections:[
+      {label:'Evidence', text:'The WHO (2021) documents a <strong>30–50% reduction in nighttime road accidents</strong> in communities where street lighting was introduced on previously unlit roads. Crime deterrence effects are also well-documented, with reduced reports of harassment and assault in lit public spaces.'},
+      {label:'Specific Gains', bullets:['Pedestrian accident risk reduced — lit paths reduce falls, collisions, and road crossing incidents','Women and girls can move safely in the evening without fear of harassment','Emergency vehicles and patients can navigate to health facilities faster','Community members can identify and respond to safety incidents more effectively','Social trust and cohesion improve when people feel safe to be outside at night']},
+      {label:'Evidence', stat:{n:'30–50%', t:'reduction in nighttime road accidents associated with introduction of street lighting (WHO, 2021)'}},
+      {label:'Source', ref:'WHO (2021) Road Traffic Injuries. WHO Global Status Report on Road Safety. Geneva: WHO.'}
+    ]
+  },
+  income:{
+    cat:'BENEFIT', title:'Income Growth',
+    subtitle:'Extended trading hours, reduced fuel expenditure, and increased local economic activity after sunset.',
+    color:'#0E8878',
+    sections:[
+      {label:'Evidence', text:'The IEA (2022) found that communities with improved street lighting saw <strong>average small business revenue increase 20–35%</strong> due to extended operating hours. Simultaneously, household fuel expenditure dropped as kerosene dependency fell.'},
+      {label:'Specific Gains', bullets:['Small businesses can trade for 3–5 additional hours per day after sunset','Market vendors and food stalls access evening demand that previously did not exist','Household savings from eliminated kerosene costs can be redirected to food, education, or savings','Agricultural processing and repair work can continue after dark','Tourism and hospitality potential improves with safer, lit village environments']},
+      {label:'Evidence', stat:{n:'50%', t:'estimated reduction in household fuel expenditure replacing kerosene with solar LED (IEA, 2022)'}},
+      {label:'Source', ref:'IEA (2022) World Energy Outlook 2022: Special Focus on Energy Access. Paris: IEA/OECD Publishing.'}
+    ]
+  },
+  emissions:{
+    cat:'BENEFIT', title:'Zero Emissions',
+    subtitle:'Elimination of CO₂, black carbon, and chemical pollutants from kerosene combustion and battery disposal.',
+    color:'#0E8878',
+    sections:[
+      {label:'Evidence', text:'Each household that switches from kerosene to solar lighting eliminates an estimated <strong>100–200 kg of CO₂-equivalent emissions per year</strong>. Across a village, this represents a meaningful and immediately measurable contribution to national emissions reduction targets.'},
+      {label:'Specific Gains', bullets:['Zero operational CO₂ emissions from the solar LED system across its full lifetime','Elimination of black carbon (a potent short-lived climate forcer) from kerosene combustion','No heavy metal contamination of soil and groundwater from battery disposal','Improved local air quality — immediate respiratory health benefits','National contribution to Sri Lanka\'s NDC renewable energy commitments']},
+      {label:'Evidence', stat:{n:'100–200kg', t:'CO₂-equivalent eliminated per household per year by replacing kerosene with solar LED'}},
+      {label:'Source', ref:'IRENA (2020) Off-grid Renewable Energy. | United Nations (2015) 2030 Agenda. | Cinzano et al. (2001).'}
+    ]
+  },
+  education:{
+    cat:'BENEFIT', title:'Better Education',
+    subtitle:'Improved school attendance, safer commuting, and extended study hours for children and students.',
+    color:'#0E8878',
+    sections:[
+      {label:'Evidence', text:'The IEA (2022) documents that children in communities with evening street lighting show <strong>measurably improved school attendance and academic performance</strong>, attributable to safer commuting and extended study time.'},
+      {label:'Specific Gains', bullets:['Safe, lit routes allow children to attend early morning and evening school and tuition','Communal lit spaces enable group study sessions after sunset','Longer effective study hours correlate with improved academic outcomes','Teachers and tutors are more willing to offer evening classes in safe environments','Parents are more willing to allow children to travel for education when roads are lit']},
+      {label:'Generational Impact', text:'Education is the most powerful long-term development multiplier. <strong>Every additional hour of safe study time</strong> represents compounding lifetime returns for students, families, and communities.'},
+      {label:'Source', ref:'IEA (2022) World Energy Outlook 2022: Special Focus on Energy Access. Paris: IEA/OECD Publishing.'}
+    ]
+  }
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// BRANCH + NODE DEFINITIONS
+// ═══════════════════════════════════════════════════════════════════════════════
+const LEFT=[
+  {color:'#2A6FD4',cat:'SUSTAINABILITY',name:'SDG Alignment',desc:'UN 2030 Agenda\nGlobal targets',id:'sdg',
+   subs:[{name:'SDG 7',det:'Clean & affordable energy',id:'sdg7'},{name:'SDG 11',det:'Sustainable communities',id:'sdg11'},{name:'SDG 13',det:'Climate action',id:'sdg13'}]},
+  {color:'#C43858',cat:'SOCIAL IMPACT',name:'People',desc:'Residents · Students\nWomen · Healthcare',id:'people',
+   subs:[{name:'Rural Residents',det:'Safety & mobility',id:'residents'},{name:'School Children',det:'Evening study access',id:'students'},{name:'Women & Vulnerable',det:'Security & freedom',id:'women'},{name:'Healthcare Workers',det:'Emergency response',id:'healthcare'}]},
+  {color:'#B07A10',cat:'ECONOMIC IMPACT',name:'Economy',desc:'Businesses · Local Gov\nLivelihood & finance',id:'economy',
+   subs:[{name:'Small Businesses',det:'Extended trading hours',id:'businesses'},{name:'Municipal Gov.',det:'Reduced grid costs',id:'government'}]},
+];
+const RIGHT=[
+  {color:'#1E8A4A',cat:'ENVIRONMENTAL',name:'Environment',desc:'Air · Ecosystems\nCarbon reduction',id:'environment',
+   subs:[{name:'Natural Environment',det:'CO₂ & NOx reduction',id:'naturalenv'},{name:'Wildlife & Ecosystems',det:'Wildfire & toxin risk',id:'wildlife'}]},
+  {color:'#7040C8',cat:'SOLUTION',name:'Project Design',desc:'Off-grid LEDs\nCommunity maintained',id:'design',
+   subs:[{name:'Solar LED Units',det:'Standalone, off-grid',id:'solarunits'},{name:'Community Install',det:'Poles & basic wiring',id:'communityinstall'},{name:'Scalable & Affordable',det:'No grid dependency',id:'scalable'}]},
+  {color:'#0E8878',cat:'OUTCOMES',name:'Key Benefits',desc:'Evidence-backed\nstakeholder gains',id:'benefits',
+   subs:[{name:'Night Safety',det:'Accident reduction',id:'safety'},{name:'Income Growth',det:'Extended commerce',id:'income'},{name:'Zero Emissions',det:'Clean air & soil',id:'emissions'},{name:'Better Education',det:'Lit study spaces',id:'education'}]},
 ];
 
-const RIGHT = [
-  {
-    color:'#1E8A4A', cat:'ENVIRONMENTAL', name:'Environment',
-    desc:'Air · Ecosystems\nCarbon reduction',
-    subs:[
-      {name:'Natural Environment',  det:'CO₂ & NOx reduction'},
-      {name:'Wildlife & Ecosystems',det:'Wildfire & toxin risk'},
-    ]
-  },
-  {
-    color:'#7040C8', cat:'SOLUTION', name:'Project Design',
-    desc:'Off-grid LEDs\nCommunity maintained',
-    subs:[
-      {name:'Solar LED Units',       det:'Standalone, off-grid'},
-      {name:'Community Install',     det:'Poles & basic wiring'},
-      {name:'Scalable & Affordable', det:'No grid dependency'},
-    ]
-  },
-  {
-    color:'#0E8878', cat:'OUTCOMES', name:'Key Benefits',
-    desc:'Evidence-backed\nstakeholder gains',
-    subs:[
-      {name:'Night Safety',     det:'Accident reduction'},
-      {name:'Income Growth',    det:'Extended commerce'},
-      {name:'Zero Emissions',   det:'Clean air & soil'},
-      {name:'Better Education', det:'Lit study spaces'},
-    ]
-  },
-];
+// ═══════════════════════════════════════════════════════════════════════════════
+// LAYOUT
+// ═══════════════════════════════════════════════════════════════════════════════
+const VW=1600,VH=840,CX=800,CY=420;
+const LX=475,RX=1125,LS=342,RS=1258,LSUB=214,RSUB=1386;
+const BY=[168,420,672],SGAP=66;
+function subYs(by,n){const h=(n-1)/2;return Array.from({length:n},(_,i)=>by+(i-h)*SGAP)}
+function ctb(bx,by,side){const p=90;return`M${CX},${CY} C${side==='L'?CX-p:CX+p},${CY} ${side==='L'?bx+p:bx-p},${by} ${bx},${by}`}
+function curH(x1,y1,x2,y2,w){const mx=(x1+x2)/2,my=(y1+y2)/2;return`M${x1},${y1} Q${mx},${my+w} ${x2},${y2}`}
+function curV(x,y1,y2,w){const my=(y1+y2)/2;return`M${x},${y1} Q${x+w},${my} ${x},${y2}`}
 
-// ── Layout ─────────────────────────────────────────────────────────────────────
-const VW=1600, VH=840;
-const CX=800,  CY=420;
-const LX=475,  RX=1125;
-const LS=342,  RS=1258;
-const LSUB=214, RSUB=1386;
-const BY=[168, 420, 672];
-const SGAP=66;
-
-function subYs(by,n){
-  const h=(n-1)/2;
-  return Array.from({length:n},(_,i)=>by+(i-h)*SGAP);
-}
-
-// Curved path from center to branch — smooth natural S-ish bezier
-function centerToBranch(bx,by,side){
-  const pull=90;
-  const cpx1 = side==='L' ? CX-pull : CX+pull;
-  const cpy1 = CY;
-  // second control — pull from branch toward center horizontally
-  const cpx2 = side==='L' ? bx+pull : bx-pull;
-  const cpy2 = by;
-  return `M${CX},${CY} C${cpx1},${cpy1} ${cpx2},${cpy2} ${bx},${by}`;
-}
-
-// Slightly curved horizontal (spine connectors get a gentle arc)
-function curvedH(x1,y1,x2,y2,wobble){
-  // mid control point offset perpendicular (vertical) for sketch waviness
-  const mx=(x1+x2)/2, my=(y1+y2)/2;
-  return `M${x1},${y1} Q${mx},${my+wobble} ${x2},${y2}`;
-}
-
-// Curved vertical spine segment
-function curvedV(x,y1,y2,wobble){
-  const my=(y1+y2)/2;
-  return `M${x},${y1} Q${x+wobble},${my} ${x},${y2}`;
-}
-
-// ── SVG helpers ────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// SVG
+// ═══════════════════════════════════════════════════════════════════════════════
 const NS='http://www.w3.org/2000/svg';
 const sv=document.getElementById('sv');
 const cv=document.getElementById('cv');
 const allSubs=[];
+let activeNode=null;
 
-function mkEl(tag,attrs){
-  const e=document.createElementNS(NS,tag);
-  Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));
-  return e;
+function mkEl(tag,attrs){const e=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));return e}
+
+function addPath(parent,d,color,sw,op,delay,len,fid){
+  const p=mkEl('path',{d,fill:'none',stroke:color,'stroke-width':sw,'stroke-opacity':op,
+    'stroke-linecap':'round','stroke-dasharray':len,'stroke-dashoffset':len,...(fid?{filter:`url(#${fid})`}:{})});
+  p.style.animation=`dl .65s ${delay}s ease both`;p.style.setProperty('--d',len);
+  parent.appendChild(p);return p;
 }
-
-function addPath(parent,d,color,sw,op,delay,len,filter){
-  const p=mkEl('path',{
-    d, fill:'none', stroke:color,
-    'stroke-width':sw, 'stroke-opacity':op,
-    'stroke-linecap':'round',
-    'stroke-dasharray':len, 'stroke-dashoffset':len,
-    ...(filter?{filter}:{})
-  });
-  p.style.animation=`dl .65s ${delay}s ease both`;
-  p.style.setProperty('--d',len);
-  parent.appendChild(p);
-  return p;
-}
-
-// Two-layer connector: faint wide glow + crisp thin line
-function connector(parent, d, color, delay, isMain){
-  const len=2000;
-  const gw = isMain ? 8 : 5;
-  const go = isMain ? 0.13 : 0.09;
-  const lw = isMain ? 1.5 : 0.9;
-  const lo = isMain ? 0.55 : 0.35;
+function connector(parent,d,color,delay,isMain){
+  const len=2000,gw=isMain?8:5,go=isMain?0.12:0.08,lw=isMain?1.5:0.9,lo=isMain?0.5:0.3;
   const fid=`gf-${color.replace('#','')}`;
-  addPath(parent,d,color,gw,go,delay,len,`url(#${fid})`);
-  const lp=addPath(parent,d,color,lw,lo,delay,len,null);
-  return lp;
+  addPath(parent,d,color,gw,go,delay,len,fid);
+  return addPath(parent,d,color,lw,lo,delay,len,null);
 }
-
-function junctionDot(parent,x,y,color,delay,r){
+function jDot(parent,x,y,color,delay,r){
   const c=mkEl('circle',{cx:x,cy:y,r:r||3.5,fill:color,opacity:0});
   c.style.transition=`opacity .22s ${delay+0.55}s ease`;
   parent.appendChild(c);
-  requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(()=>c.setAttribute('opacity','0.75'),(delay+0.55)*1000)));
+  setTimeout(()=>c.setAttribute('opacity','0.75'),(delay+0.55)*1000);
   return c;
 }
-
-function mkNode(x,y,cls,html,delay){
+function mkNode(x,y,cls,html,delay,onclick){
   const d=document.createElement('div');
   d.className=`node ${cls} pop`;
   d.style.cssText=`left:${x}px;top:${y}px;animation-delay:${delay}s`;
   d.innerHTML=html;
-  cv.appendChild(d);
-  return d;
+  if(onclick)d.addEventListener('click',onclick);
+  cv.appendChild(d);return d;
 }
 
-// ── SVG defs ───────────────────────────────────────────────────────────────────
 function buildDefs(){
   const cols=[...LEFT,...RIGHT].map(b=>b.color);
-  let defs=`<defs>
-  <filter id="sketch" x="-4%" y="-4%" width="108%" height="108%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.018 0.048"
-                  numOctaves="2" seed="11" result="noise"/>
-    <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.8"
-                       xChannelSelector="R" yChannelSelector="G"/>
+  let defs=`<defs><filter id="sketch" x="-4%" y="-4%" width="108%" height="108%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.018 0.048" numOctaves="2" seed="11" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
   </filter>`;
-  cols.forEach(c=>{
-    const id=`gf-${c.replace('#','')}`;
+  cols.forEach(c=>{const id=`gf-${c.replace('#','')}`;
     defs+=`<filter id="${id}" x="-100%" y="-100%" width="300%" height="300%">
       <feGaussianBlur stdDeviation="4.5" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>`;
-  });
-  defs+='</defs>';
-  sv.innerHTML=defs;
+    </filter>`;});
+  defs+='</defs>';sv.innerHTML=defs;
 }
 
-// ── Build ──────────────────────────────────────────────────────────────────────
 function build(){
   cv.querySelectorAll('.node').forEach(n=>n.remove());
-  sv.innerHTML='';
-  allSubs.length=0;
-  buildDefs();
+  sv.innerHTML='';allSubs.length=0;buildDefs();
+  const cg=mkEl('g',{filter:'url(#sketch)'});sv.appendChild(cg);
 
-  // All connectors go inside a group with the sketch filter
-  const cg=mkEl('g',{filter:'url(#sketch)'});
-  sv.appendChild(cg);
+  // Center
+  mkNode(CX,CY,'nc',`<div class="ring"><div class="nc-lbl">Solar-Powered<br>Street Lighting</div><div class="nc-sub">Rural Sri Lanka</div></div>`,0,()=>openPanel('center',null));
 
-  // ── Center node ──
-  mkNode(CX,CY,'nc',`<div class="ring">
-    <div class="nc-lbl">Solar-Powered<br>Street Lighting</div>
-    <div class="nc-sub">Rural Sri Lanka</div>
-  </div>`,0);
-
-  function buildSide(data, bx, spineX, subX, side){
+  function buildSide(data,bx,spineX,subX,side){
     data.forEach((b,i)=>{
-      const by=BY[i];
-      const bd=0.04 + i*0.1 + (side==='R'?0.04:0);
-      const subs=subYs(by, b.subs.length);
-      const fy=subs[0], ly=subs[subs.length-1];
+      const by=BY[i],bd=0.04+i*0.1+(side==='R'?0.04:0);
+      const subs=subYs(by,b.subs.length);
+      const fy=subs[0],ly=subs[subs.length-1],wob=[3,-3,3][i];
       const subEls=[];
 
-      // 1. Center → branch (smooth bezier curve)
-      const cd=centerToBranch(bx,by,side);
-      connector(cg,cd,b.color,bd,true);
-      junctionDot(cg,bx,by,b.color,bd,3.5);
+      connector(cg,ctb(bx,by,side),b.color,bd,true);
+      jDot(cg,bx,by,b.color,bd,3.5);
+      connector(cg,curH(bx,by,spineX,by,wob),b.color,bd+0.16,false);
+      if(subs.length>1)connector(cg,curV(spineX,fy,ly,side==='L'?-4:4),b.color,bd+0.26,false);
 
-      // 2. Branch → spine (gently curved horizontal)
-      // Wobble direction alternates per row for organic variety
-      const wob=[3,-3,3][i];
-      const bSpine=curvedH(bx,by,spineX,by,wob);
-      connector(cg,bSpine,b.color,bd+0.16,false);
-
-      // 3. Spine vertical segment (curved)
-      if(subs.length>1){
-        const sv2=curvedV(spineX,fy,ly,(side==='L'?-4:4));
-        connector(cg,sv2,b.color,bd+0.26,false);
-      }
-
-      // 4. Spine → each sub (curved horizontals)
       subs.forEach((sy,si)=>{
-        const sd=bd+0.32+si*0.07;
-        const w2=si%2===0?2:-2;
-        const sPath=curvedH(spineX,sy,subX,sy,w2);
-        const lp=connector(cg,sPath,b.color,sd,false);
-        const dp=junctionDot(cg,spineX,sy,b.color,sd,2.2);
-
+        const sd=bd+0.32+si*0.07,w2=si%2===0?2:-2;
+        const lp=connector(cg,curH(spineX,sy,subX,sy,w2),b.color,sd,false);
+        const dp=jDot(cg,spineX,sy,b.color,sd,2.2);
         const sn=mkNode(subX,sy,'ns',`<div class="card" style="--acc:${b.color}">
           <div class="ns-name">${b.subs[si].name}</div>
           <div class="ns-det">${b.subs[si].det}</div>
-        </div>`,sd);
-
-        subEls.push({card:sn, svgEls:[lp,dp]});
+        </div>`,sd,()=>openPanel(b.subs[si].id,sn));
+        subEls.push({card:sn,svgEls:[lp,dp]});
       });
-
       allSubs.push(...subEls);
 
-      // 5. Branch node (rendered last so it sits on top of connectors)
       mkNode(bx,by,'nb',`<div class="card" style="--acc:${b.color}">
         <span class="c3"></span><span class="c4"></span>
         <div class="nb-cat">${b.cat}</div>
         <div class="nb-name">${b.name}</div>
         <div class="nb-desc">${b.desc.replace('\n','<br>')}</div>
-      </div>`,bd);
+        <div class="click-hint">CLICK TO EXPLORE →</div>
+      </div>`,bd,()=>openPanel(b.id,null));
     });
   }
-
-  buildSide(LEFT,  LX, LS, LSUB, 'L');
-  buildSide(RIGHT, RX, RS, RSUB, 'R');
-
-  // ── Blueprint annotations ──
+  buildSide(LEFT,LX,LS,LSUB,'L');
+  buildSide(RIGHT,RX,RS,RSUB,'R');
   addAnnotations();
 }
 
 function addAnnotations(){
-  // Connector midpoint labels
   const labs=[
-    {x:627,y:328,t:'ALIGNS WITH'},{x:627,y:432,t:'IMPACTS'},
-    {x:627,y:534,t:'DRIVES'},
-    {x:973,y:328,t:'ADDRESSES'},{x:973,y:432,t:'DEFINES'},
-    {x:973,y:534,t:'DELIVERS'},
+    {x:627,y:328,t:'ALIGNS WITH'},{x:627,y:432,t:'IMPACTS'},{x:627,y:534,t:'DRIVES'},
+    {x:973,y:328,t:'ADDRESSES'},{x:973,y:432,t:'DEFINES'},{x:973,y:534,t:'DELIVERS'},
   ];
-  labs.forEach(l=>{
-    const t=mkEl('text',{
-      x:l.x,y:l.y,'text-anchor':'middle',
-      'font-family':'Share Tech Mono,monospace','font-size':'6.5',
-      fill:'rgba(26,25,22,0.18)','letter-spacing':'0.1em',
-    });
-    t.textContent=l.t;
-    sv.appendChild(t);
-  });
-
-  // Blueprint corner crosshairs
+  labs.forEach(l=>{const t=mkEl('text',{x:l.x,y:l.y,'text-anchor':'middle',
+    'font-family':'Share Tech Mono,monospace','font-size':'6.5',
+    fill:'rgba(26,25,22,0.16)','letter-spacing':'0.1em'});t.textContent=l.t;sv.appendChild(t);});
   [[32,32],[VW-32,32],[32,VH-32],[VW-32,VH-32]].forEach(([x,y])=>{
     [[-10,0,10,0],[0,-10,0,10]].forEach(([dx1,dy1,dx2,dy2])=>{
-      sv.appendChild(mkEl('line',{
-        x1:x+dx1,y1:y+dy1,x2:x+dx2,y2:y+dy2,
-        stroke:'rgba(26,25,22,0.15)','stroke-width':'0.75'
-      }));
-    });
-    sv.appendChild(mkEl('circle',{
-      cx:x,cy:y,r:3,fill:'none',
-      stroke:'rgba(26,25,22,0.15)','stroke-width':'0.75'
-    }));
-  });
-
-  // Dashed annotation ring around center
-  sv.appendChild(mkEl('circle',{
-    cx:CX,cy:CY,r:90,fill:'none',
-    stroke:'rgba(26,25,22,0.08)','stroke-width':'1','stroke-dasharray':'4 9'
-  }));
-
-  // Revision tag — bottom right
-  const rt=mkEl('text',{
-    x:VW-36,y:VH-18,'text-anchor':'end',
-    'font-family':'Share Tech Mono,monospace','font-size':'7.5',
-    fill:'rgba(26,25,22,0.18)','letter-spacing':'0.06em'
-  });
-  rt.textContent='REV 1.0 · CE1913 GROUP 19 · 2026';
-  sv.appendChild(rt);
-
-  // Sheet label — top right
-  const sl=mkEl('text',{
-    x:VW-36,y:26,'text-anchor':'end',
-    'font-family':'Share Tech Mono,monospace','font-size':'7.5',
-    fill:'rgba(26,25,22,0.18)','letter-spacing':'0.06em'
-  });
-  sl.textContent='DWG: OVERVIEW-01 · SCHEMATIC';
-  sv.appendChild(sl);
+      sv.appendChild(mkEl('line',{x1:x+dx1,y1:y+dy1,x2:x+dx2,y2:y+dy2,stroke:'rgba(26,25,22,0.14)','stroke-width':'0.75'}));});
+    sv.appendChild(mkEl('circle',{cx:x,cy:y,r:3,fill:'none',stroke:'rgba(26,25,22,0.14)','stroke-width':'0.75'}));});
+  sv.appendChild(mkEl('circle',{cx:CX,cy:CY,r:90,fill:'none',stroke:'rgba(26,25,22,0.07)','stroke-width':'1','stroke-dasharray':'4 9'}));
+  [['REV 1.0 · CE1913 GROUP 19 · 2026',VW-36,VH-18,'end'],['DWG: OVERVIEW-01 · SCHEMATIC',VW-36,26,'end']].forEach(([txt,x,y,anc])=>{
+    const t=mkEl('text',{x,y,'text-anchor':anc,'font-family':'Share Tech Mono,monospace','font-size':'7.5',fill:'rgba(26,25,22,0.15)','letter-spacing':'0.06em'});
+    t.textContent=txt;sv.appendChild(t);});
 }
 
-// ── Scale ──────────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// PANEL
+// ═══════════════════════════════════════════════════════════════════════════════
+function renderPanel(id){
+  const c=CONTENT[id];if(!c)return;
+  const panel=document.getElementById('panel');
+  document.getElementById('panel-cat').textContent=c.cat;
+  document.getElementById('panel-cat').style.color=c.color;
+  document.getElementById('panel-title').textContent=c.title;
+  document.getElementById('panel-title').style.color=c.color;
+  document.getElementById('panel-subtitle').textContent=c.subtitle||'';
+  document.getElementById('panel-accent').style.background=c.color;
+  panel.style.setProperty('--panel-acc',c.color);
+
+  let html='';
+  (c.sections||[]).forEach((s,si)=>{
+    html+=`<div class="pb-section fade-up" style="animation-delay:${si*0.05}s">`;
+    html+=`<div class="pb-label">${s.label}</div>`;
+    if(s.text)html+=`<p class="pb-text">${s.text}</p>`;
+    if(s.quote)html+=`<div class="pb-quote">${s.quote}</div>`;
+    if(s.bullets)html+=`<ul class="pb-bullets">${s.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>`;
+    if(s.stat)html+=`<div class="pb-stat"><div class="pb-stat-num" style="color:${c.color}">${s.stat.n}</div><div class="pb-stat-txt">${s.stat.t}</div></div>`;
+    if(s.stats)s.stats.forEach(st=>html+=`<div class="pb-stat"><div class="pb-stat-num" style="color:${c.color}">${st.n}</div><div class="pb-stat-txt">${st.t}</div></div>`);
+    if(s.chips)html+=`<div class="pb-chips">${s.chips.map(ch=>`<span class="pb-chip">${ch}</span>`).join('')}</div>`;
+    if(s.subnav){
+      html+=`<div class="pb-subnav">`;
+      const parent=id;
+      s.subnav.forEach((label,ni)=>{
+        // Find sub id by matching label text loosely
+        const allSubs2=[...LEFT,...RIGHT].flatMap(b=>b.subs);
+        const matched=allSubs2.find(s2=>label.toLowerCase().includes(s2.name.toLowerCase().split(' ')[0].toLowerCase()));
+        const subId=matched?matched.id:'';
+        html+=`<button class="pb-subpill" ${subId?`onclick="openPanel('${subId}',null)"`:''}>${label}</button>`;
+      });
+      html+=`</div>`;
+    }
+    if(s.ref)html+=`<div class="pb-ref">${s.ref}</div>`;
+    html+='</div>';
+  });
+  document.getElementById('panel-body').innerHTML=html;
+  document.getElementById('panel-body').scrollTop=0;
+}
+
+function openPanel(id,nodeEl){
+  if(!CONTENT[id])return;
+  // Deactivate previous
+  cv.querySelectorAll('.active').forEach(el=>el.classList.remove('active'));
+  if(activeNode)activeNode.classList.remove('active');
+
+  renderPanel(id);
+  document.getElementById('panel').classList.add('open');
+  document.getElementById('area').classList.add('panel-open');
+  activeNode=nodeEl;
+  if(nodeEl)nodeEl.classList.add('active');
+  setTimeout(rescale,420); // gently refit after panel slides in
+}
+
+function closePanel(){
+  document.getElementById('panel').classList.remove('open');
+  document.getElementById('area').classList.remove('panel-open');
+  cv.querySelectorAll('.active').forEach(el=>el.classList.remove('active'));
+  setTimeout(rescale,420);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ZOOM + PAN
+// ═══════════════════════════════════════════════════════════════════════════════
+const MIN_ZOOM=0.3, MAX_ZOOM=4;
+let baseScale=1, zoom=1, panX=0, panY=0;
+
+function areaRect(){
+  const panelOpen=document.getElementById('panel').classList.contains('open');
+  const pw=panelOpen?420:0;
+  return{w:window.innerWidth-pw, h:window.innerHeight-52-44};
+}
+
+function applyTransform(animate){
+  const cv=document.getElementById('cv');
+  if(animate){cv.style.transition='transform .35s cubic-bezier(.25,.8,.25,1)';setTimeout(()=>cv.style.transition='',360)}
+  else cv.style.transition='';
+  const s=baseScale*zoom;
+  cv.style.transform=`translate(${panX}px,${panY}px) scale(${s})`;
+  document.getElementById('zoom-label').textContent=Math.round(zoom*100)+'%';
+}
+
+function fitToScreen(){
+  const {w,h}=areaRect();
+  baseScale=Math.min((w-24)/VW,(h-24)/VH);
+  zoom=1; panX=(w-VW*baseScale)/2; panY=(h-VH*baseScale)/2;
+}
+
 function rescale(){
-  const aw=window.innerWidth-16;
-  const ah=window.innerHeight-52-44-12;
-  const s=Math.min(aw/VW, ah/VH);
-  document.getElementById('cv').style.transform=`scale(${s})`;
+  // Keep the canvas centered when resizing, preserving user zoom
+  const {w,h}=areaRect();
+  const newBase=Math.min((w-24)/VW,(h-24)/VH);
+  // Shift pan proportionally so map stays centered during resize
+  const ratio=newBase/baseScale;
+  panX=w/2-(w/2-panX)*ratio;
+  panY=h/2-(h/2-panY)*ratio;
+  baseScale=newBase;
+  applyTransform(false);
 }
 
-// ── Toggle ─────────────────────────────────────────────────────────────────────
+function resetView(){fitToScreen();applyTransform(true)}
+
+function zoomStep(factor){
+  const {w,h}=areaRect();
+  zoomAt(w/2,h/2,factor);
+}
+
+function zoomAt(mx,my,factor){
+  const newZoom=Math.max(MIN_ZOOM,Math.min(MAX_ZOOM,zoom*factor));
+  if(newZoom===zoom)return;
+  const s=baseScale*zoom, ns=baseScale*newZoom;
+  panX=mx-(mx-panX)*(ns/s);
+  panY=my-(my-panY)*(ns/s);
+  zoom=newZoom;
+  applyTransform(false);
+}
+
+// ── Wheel zoom ────────────────────────────────────────────────────────────────
+document.getElementById('area').addEventListener('wheel',e=>{
+  e.preventDefault();
+  const rect=document.getElementById('area').getBoundingClientRect();
+  const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+  const factor=e.deltaY<0?1.1:0.909;
+  zoomAt(mx,my,factor);
+},{passive:false});
+
+// ── Drag pan ──────────────────────────────────────────────────────────────────
+let dragging=false,dsx=0,dsy=0,dpx=0,dpy=0;
+const area=document.getElementById('area');
+area.addEventListener('mousedown',e=>{
+  if(e.target.closest('.node')||e.button!==0)return;
+  dragging=true;dsx=e.clientX;dsy=e.clientY;dpx=panX;dpy=panY;
+  area.classList.add('dragging');
+});
+window.addEventListener('mousemove',e=>{
+  if(!dragging)return;
+  panX=dpx+(e.clientX-dsx); panY=dpy+(e.clientY-dsy);
+  applyTransform(false);
+});
+window.addEventListener('mouseup',()=>{dragging=false;area.classList.remove('dragging')});
+
+// ── Touch pinch + drag ────────────────────────────────────────────────────────
+let touches={},lastDist=null,lastMid=null;
+area.addEventListener('touchstart',e=>{
+  [...e.changedTouches].forEach(t=>touches[t.identifier]={x:t.clientX,y:t.clientY});
+  const pts=Object.values(touches);
+  if(pts.length===2){
+    lastDist=Math.hypot(pts[1].x-pts[0].x,pts[1].y-pts[0].y);
+    lastMid={x:(pts[0].x+pts[1].x)/2,y:(pts[0].y+pts[1].y)/2};
+  }
+  if(pts.length===1){dsx=pts[0].x;dsy=pts[0].y;dpx=panX;dpy=panY}
+},{passive:true});
+area.addEventListener('touchmove',e=>{
+  e.preventDefault();
+  [...e.changedTouches].forEach(t=>touches[t.identifier]={x:t.clientX,y:t.clientY});
+  const pts=Object.values(touches);
+  if(pts.length===2&&lastDist){
+    const dist=Math.hypot(pts[1].x-pts[0].x,pts[1].y-pts[0].y);
+    const mid={x:(pts[0].x+pts[1].x)/2,y:(pts[0].y+pts[1].y)/2};
+    const rect=area.getBoundingClientRect();
+    zoomAt(mid.x-rect.left,mid.y-rect.top,dist/lastDist);
+    panX+=mid.x-lastMid.x; panY+=mid.y-lastMid.y;
+    lastDist=dist;lastMid=mid;
+    applyTransform(false);
+  } else if(pts.length===1){
+    panX=dpx+(pts[0].x-dsx); panY=dpy+(pts[0].y-dsy);
+    applyTransform(false);
+  }
+},{passive:false});
+area.addEventListener('touchend',e=>{
+  [...e.changedTouches].forEach(t=>delete touches[t.identifier]);
+  const pts=Object.values(touches);
+  if(pts.length<2){lastDist=null;lastMid=null}
+  if(pts.length===1){dsx=pts[0].x;dsy=pts[0].y;dpx=panX;dpy=panY}
+},{passive:true});
+
+// ── Keyboard shortcuts ────────────────────────────────────────────────────────
+window.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(e.key==='='||e.key==='+')zoomStep(1.2);
+  if(e.key==='-'||e.key==='_')zoomStep(0.833);
+  if(e.key==='0'||e.key==='f')resetView();
+});
+
+// ── Toggle ────────────────────────────────────────────────────────────────────
 let on=true;
 function toggle(){
   on=!on;
@@ -542,8 +970,12 @@ function toggle(){
   document.getElementById('tog-ico').classList.toggle('x',!on);
 }
 
-// ── Init ───────────────────────────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded',()=>{build();rescale()});
+// ── Init ──────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded',()=>{
+  build();
+  fitToScreen();
+  applyTransform(false);
+});
 window.addEventListener('resize',()=>{clearTimeout(window._r);window._r=setTimeout(rescale,80)});
 </script>
 </body>
