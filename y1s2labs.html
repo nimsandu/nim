@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>GA-5C Lab Tracker</title>
+<style>
+:root{color-scheme:light;--bg:#f3f4f8;--sf:#fff;--bd:#e5e7ee;--tx:#1b1d2a;--mu:#7b8096;--tr:#e9ebf2;--ac:#4f46e5;--ok:#16a34a;--bad:#dc2626;--warn:#b45309;--sh:0 1px 2px rgba(20,24,50,.04),0 8px 22px rgba(20,24,50,.06);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button{font:inherit;color:inherit;cursor:pointer}button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.w{max-width:860px;margin:0 auto;padding:28px 16px 80px}
+.hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+h1{margin:0;font-size:21px;font-weight:650}.sub{color:var(--mu);font-size:13px}
+.lk{border:1px solid var(--bd);background:var(--sf);border-radius:10px;padding:7px 14px;font-size:13px;box-shadow:var(--sh)}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:16px;box-shadow:var(--sh)}
+.grid{display:grid;gap:12px;margin-bottom:12px}.g2{grid-template-columns:1fr 1fr}
+.pad{padding:16px 18px}
+small,.lbl{color:var(--mu);font-size:13px}
+.big{font-size:38px;font-weight:650;line-height:1;margin:6px 0 14px;color:var(--ac)}.big span{font-size:18px;color:var(--mu);font-weight:500;margin-left:2px}
+.pb{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;font-size:13px;margin-top:8px}.pb em{font-style:normal;color:var(--mu);font-variant-numeric:tabular-nums}
+.bar{height:8px;background:var(--tr);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;width:var(--w);background:var(--c,var(--ac));border-radius:9px;transition:width .5s}
+.nx b{display:block;font-size:17px;font-weight:600;margin:3px 0 2px}.nx .m{color:var(--mu);font-size:13.5px}.nx .bar{margin-top:12px;height:6px}.nx .cap{display:flex;justify-content:space-between;font-size:12px;color:var(--mu);margin-top:5px}
+.bad{color:var(--bad)!important}
+.sj{display:grid;grid-template-columns:100px 1fr 54px;gap:12px;align-items:center;width:100%;text-align:left;border:1px solid transparent;background:none;border-radius:10px;padding:7px 8px;font-size:14px}
+.sj:hover{background:var(--bg)}.sj.sel{border-color:var(--bd);background:var(--bg)}.sj i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:8px}.sj em{font-style:normal;color:var(--mu);font-size:13px;text-align:right}
+.card h2{margin:0 0 6px;font-size:14px;font-weight:600;padding:0 8px}
+.tabs{display:inline-flex;gap:2px;background:var(--tr);padding:3px;border-radius:12px;margin:18px 0 6px}
+.tabs button{border:0;background:none;padding:7px 14px;border-radius:9px;font-size:14px;color:var(--mu)}
+.tabs button.on{background:var(--sf);color:var(--tx);font-weight:500;box-shadow:0 1px 3px rgba(20,24,50,.1)}
+.mo{margin:20px 0 8px;font-size:13px;color:var(--mu);font-weight:500}
+.r{display:grid;grid-template-columns:50px 1fr auto;gap:14px;align-items:center;padding:13px 16px;margin-bottom:8px;position:relative;overflow:hidden}
+.r::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--k)}
+.r.done{box-shadow:none;background:#fafafc}.r.done .nm,.r.done .dt b{color:var(--mu)}.r.next{border-color:var(--ac);box-shadow:0 0 0 3px rgba(79,70,229,.1),var(--sh)}
+.dt{text-align:center;line-height:1.1}.dt b{display:block;font-size:22px;font-weight:650}.dt span{font-size:12px;color:var(--mu)}
+.nm{font-weight:600}.mt{color:var(--mu);font-size:13.5px}.nt{font-size:13px;color:var(--warn);margin-top:3px}
+.tag{display:inline-block;font-size:12px;padding:1px 9px;border-radius:99px;margin-right:6px;color:var(--k);background:color-mix(in srgb,var(--k) 12%,#fff)}
+.ac{display:flex;gap:8px}
+.p{display:flex;align-items:center;gap:7px;border:1px solid var(--bd);background:var(--sf);border-radius:10px;padding:7px 12px;font-size:13px;color:var(--mu);white-space:nowrap}
+.p::before{content:"";width:14px;height:14px;border:1.5px solid #c1c5d3;border-radius:5px;font-size:10px;line-height:11px;text-align:center;color:#fff}
+.p.on{color:var(--ok);border-color:#b7e3c7;background:#f1fbf5}.p.on::before{content:"✓";background:var(--ok);border-color:var(--ok)}
+.p.late{color:var(--bad);border-color:#f3b8b8;background:#fef5f5}.p.late::before{border-color:var(--bad)}
+.empty{text-align:center;color:var(--mu);padding:40px}
+.fn{color:var(--mu);font-size:12.5px;margin-top:28px;line-height:1.6}
+#lock{position:fixed;inset:0;z-index:9;overflow:auto;background:var(--bg);display:flex;padding:env(safe-area-inset-top,0px) 16px env(safe-area-inset-bottom,0px)}
+#lock.hide{display:none}
+.lw{margin:auto;width:min(340px,100%);padding:24px 0;text-align:center}
+.clk{font-size:clamp(56px,17vw,72px);font-weight:300;line-height:1;letter-spacing:-.02em}.dd{color:var(--mu);margin:8px 0 22px}
+.inf{text-align:left;padding:12px 16px;margin-bottom:10px}.inf b{display:block;font-weight:600}.inf span{display:block;color:var(--mu);font-size:14px}
+.dots{display:flex;justify-content:center;gap:14px;margin:22px 0 16px}.dots i{width:12px;height:12px;border-radius:50%;border:1.5px solid #c1c5d3}.dots i.f{background:var(--ac);border-color:var(--ac)}
+.lw.err .dots{animation:sk .4s}.lw.err .dots i{border-color:var(--bad);background:var(--bad)}
+@keyframes sk{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.keys{display:grid;grid-template-columns:repeat(3,62px);gap:12px;justify-content:center}
+.keys button{width:62px;height:62px;border-radius:50%;border:1px solid var(--bd);background:var(--sf);box-shadow:var(--sh);font-size:21px}.keys button:active{background:var(--tr)}
+@media(max-width:620px){.g2{grid-template-columns:1fr}.r{grid-template-columns:44px 1fr}.ac{grid-column:2}.sj{grid-template-columns:90px 1fr 48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body>
+<div id="lock"><div class="lw" id="lw">
+<div class="clk" id="clk">--:--</div><div class="dd" id="dd"></div>
+<div id="li"></div>
+<div class="dots" id="dots"><i></i><i></i><i></i><i></i></div>
+<div class="keys" id="keys"></div></div></div>
+<div class="w">
+<div class="hd"><div><h1>GA-5C Lab Tracker</h1><div class="sub">Year 1 · Semester 2 · Group A-5</div></div><button class="lk" id="lkb">Lock</button></div>
+<div class="card pad" id="ov" style="margin-bottom:12px"></div>
+<div class="grid g2" id="nx"></div>
+<div class="card pad" id="sj"></div>
+<div class="tabs" id="tabs"></div>
+<div id="list"></div>
+<div class="fn">Reports: Workshop due next day 5:00 pm · Materials &amp; Dynamics due 2 weeks after the lab (end of day) · Drawing has no report. Dates marked ⚠ need confirming with the lecturer. Progress saves in this browser.</div>
+</div>
+<script>
+const S={MAT:['Materials','#f97316'],DYN:['Dynamics','#3b82f6'],WS:['Workshop','#22c55e'],DRW:['Drawing','#a855f7']};
+const HD='Mr. Hiran Sameera, Ms. Mazhara Marzook',DS='Drawing Studio (Floor 2)',CAD='E405B Computer Lab',ML='Mechanics Lab (New)',DL='Mechanics Lab',EW='Engineering Workshop';
+const R=[
+['WS','2026-09-29','08:30','10:30','Welding',EW,'Mr Zakib','2026-09-30T17:00'],
+['MAT','2026-09-30','08:30','10:30','Hardness Testing',ML,'','2026-10-14T23:59'],
+['DYN','2026-10-09','10:30','12:30','Dynamics Lab 03',DL,'','2026-10-23T23:59','','⚠ Timetable prints 23-Oct for this lab; placed on 9 Oct. Confirm with lecturer.'],
+['MAT','2026-10-14','08:30','10:30','Impact Toughness',ML,'','2026-10-28T23:59'],
+['WS','2026-10-20','08:30','10:30','Lathe',EW,'Mr Yathurshan','2026-10-21T17:00'],
+['DRW','2026-10-20','15:30','17:30','AutoCAD Session 1',CAD,HD],
+['DRW','2026-10-27','15:30','17:30','Manual Drawing Session 1',DS,HD],
+['MAT','2026-10-28','08:30','10:30','Microstructural Examination',ML,'','2026-11-11T23:59'],
+['DYN','2026-10-30','10:30','12:30','Dynamics Lab 02',DL,'','2026-11-13T23:59'],
+['DRW','2026-11-03','15:30','17:30','AutoCAD Session 2',CAD,HD],
+['WS','2026-11-10','08:30','10:30','Nut & Bolt',EW,'Ms Thepuli','2026-11-11T17:00'],
+['DRW','2026-11-10','15:30','17:30','Manual Drawing Session 2',DS,HD],
+['MAT','2026-11-11','08:30','10:30','Tensile Testing',ML,'','2026-11-25T23:59'],
+['DRW','2026-11-17','15:30','17:30','AutoCAD Session 3',CAD,HD],
+['DYN','2026-11-20','10:30','12:30','Dynamics Lab 01',DL,'','2026-12-04T23:59'],
+['DRW','2026-12-01','15:30','17:30','Manual Drawing Session 3',DS,HD],
+['DRW','2026-12-08','15:30','17:30','AutoCAD Test',CAD,HD,null,'','Assessed test'],
+['DYN','2026-12-11','10:30','12:30','Dynamics Lab 04',DL,'','2026-12-25T23:59','','⚠ Timetable prints 12-Dec (a Saturday); placed on Fri 11 Dec. Report due falls in Christmas week.'],
+['DRW','2026-12-15','15:30','17:30','Manual Drawing Test',DS,HD,null,'','Assessed test']
+].map((r,i)=>({id:i,sub:r[0],s:new Date(r[1]+'T'+r[2]),e:new Date(r[1]+'T'+r[3]),name:r[4],loc:r[5],ins:r[6],due:r[7]?new Date(r[7]):null,note:r[9]||''}));
+const K='ga5c-tracker-v1';let st={};try{st=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(st))}catch(e){}};
+let tab='up',sub='all';
+const g=(i,k)=>!!(st[i]&&st[i][k]);
+const fin=x=>g(x.id,'a')&&(!x.due||g(x.id,'r'));
+const D=d=>d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
+const H=d=>d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+const dd=d=>{const n=new Date();return Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/864e5)};
+const pl=n=>n+(n==1?' day':' days');
+const rel=d=>{const k=dd(d);return k<0?pl(-k)+' ago':k==0?'today':k==1?'tomorrow':'in '+pl(k)};
+const over=x=>x.due<new Date();
+const dueTxt=x=>over(x)?pl(Math.max(1,-dd(x.due)))+' overdue':rel(x.due);
+const nextLab=()=>R.filter(x=>!g(x.id,'a')&&x.e>new Date()).sort((a,b)=>a.s-b.s)[0];
+const nextRep=()=>R.filter(x=>x.due&&!g(x.id,'r')).sort((a,b)=>a.due-b.due)[0];
+const labHtml=x=>x?`<b>${x.name}</b><span class="m">${D(x.s)}, ${H(x.s)} · ${rel(x.s)}</span><span class="m">${x.loc}${x.ins?' · '+x.ins:''}</span>`:'<b>All labs done 🎉</b>';
+const win=x=>Math.max(0,Math.min(100,Math.round((new Date()-x.e)/(x.due-x.e)*100)));
+const repHtml=(x,bar)=>x?`<b>${x.name} report</b><span class="m">Due ${D(x.due)}, ${x.sub=='WS'?'5:00 pm':'end of day'}</span><span class="m ${over(x)?'bad':''}">${dueTxt(x)}</span>${bar?`<div class="bar" style="--w:${over(x)?100:win(x)}%;--c:${over(x)?'var(--bad)':win(x)>70?'var(--warn)':'var(--ac)'}"><i></i></div><div class="cap"><span>Lab</span><span>Due</span></div>`:''}`:'<b>No reports pending 🎉</b>';
+
+/* lock */
+const PIN='4564';let buf='';
+const lock=document.getElementById('lock'),lw=document.getElementById('lw'),dots=[...document.querySelectorAll('#dots i')];
+try{if(sessionStorage.getItem('ga5c-ok')==='1')lock.classList.add('hide')}catch(e){}
+const kb=document.getElementById('keys');
+kb.innerHTML=[1,2,3,4,5,6,7,8,9,'',0,'⌫'].map(k=>k===''?'<span></span>':`<button data-p="${k}">${k}</button>`).join('');
+const paint=()=>dots.forEach((d,i)=>d.classList.toggle('f',i<buf.length));
+function key(k){
+ if(lock.classList.contains('hide')||lw.classList.contains('err'))return;
+ if(k==='⌫')buf=buf.slice(0,-1);else if(buf.length<4)buf+=k;
+ paint();
+ if(buf.length===4){
+  if(buf===PIN){try{sessionStorage.setItem('ga5c-ok','1')}catch(e){}lock.classList.add('hide');buf='';paint()}
+  else{lw.classList.add('err');setTimeout(()=>{lw.classList.remove('err');buf='';paint()},450)}
+ }
+}
+kb.addEventListener('click',e=>{const b=e.target.closest('button');if(b)key(b.dataset.p)});
+document.addEventListener('keydown',e=>{if(/^\d$/.test(e.key))key(e.key);else if(e.key==='Backspace')key('⌫')});
+document.getElementById('lkb').onclick=()=>{try{sessionStorage.removeItem('ga5c-ok')}catch(e){}buf='';paint();lockInfo();lock.classList.remove('hide')};
+function tick(){const n=new Date();document.getElementById('clk').textContent=n.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});document.getElementById('dd').textContent=n.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})}
+function lockInfo(){document.getElementById('li').innerHTML=`<div class="card inf nx"><small>Next lab</small>${labHtml(nextLab())}</div><div class="card inf nx"><small>Next report</small>${repHtml(nextRep(),1)}</div>`}
+tick();setInterval(tick,1000);setInterval(lockInfo,60000);
+
+/* dashboard */
+function render(){
+ lockInfo();
+ const now=new Date(),rep=R.filter(x=>x.due),da=R.filter(x=>g(x.id,'a')).length,dr=rep.filter(x=>g(x.id,'r')).length,pct=Math.round((da+dr)/(R.length+rep.length)*100);
+ const nl=nextLab(),nr=nextRep(),ov=rep.filter(x=>!g(x.id,'r')&&over(x)).length;
+ document.getElementById('ov').innerHTML=`<small>Overall progress</small><div class="big">${pct}<span>%</span></div>
+  <div class="bar" style="--w:${pct}%"><i></i></div>
+  <div class="pb"><span>Labs</span><div class="bar" style="--w:${Math.round(da/R.length*100)}%;--c:var(--ok)"><i></i></div><em>${da}/${R.length}</em></div>
+  <div class="pb"><span>Reports</span><div class="bar" style="--w:${Math.round(dr/rep.length*100)}%;--c:var(--ok)"><i></i></div><em class="${ov?'bad':''}">${dr}/${rep.length}${ov?' · '+ov+' overdue':''}</em></div>`;
+ document.getElementById('nx').innerHTML=`<div class="card pad nx"><small>Next lab</small>${labHtml(nl)}</div><div class="card pad nx"><small>Next report</small>${repHtml(nr,1)}</div>`;
+ document.getElementById('sj').innerHTML='<h2>By subject</h2>'+Object.entries(S).map(([k,v])=>{const L=R.filter(x=>x.sub==k),n=L.filter(fin).length;return `<button class="sj ${sub==k?'sel':''}" data-s="${k}" style="--c:${v[1]}"><span><i></i>${v[0]}</span><div class="bar" style="--w:${Math.round(n/L.length*100)}%"><i></i></div><em>${n}/${L.length}</em></button>`}).join('');
+ const T=[['up','Upcoming',x=>!fin(x)],['rep','Reports',x=>x.due&&!g(x.id,'r')],['all','All',x=>1],['done','Done',fin]];
+ document.getElementById('tabs').innerHTML=T.map(t=>`<button class="${tab==t[0]?'on':''}" data-t="${t[0]}">${t[1]}</button>`).join('');
+ const f=R.filter(x=>(sub=='all'||x.sub==sub)&&T.find(t=>t[0]==tab)[2](x));
+ let mo='',out='';
+ f.forEach(x=>{
+  const m=x.s.toLocaleDateString('en-GB',{month:'long',year:'numeric'});if(m!=mo){mo=m;out+=`<div class="mo">${m}</div>`}
+  const a=g(x.id,'a'),r=g(x.id,'r'),late=x.due&&!r&&over(x);
+  out+=`<div class="card r ${fin(x)?'done':''} ${nl&&x.id==nl.id?'next':''}" style="--k:${S[x.sub][1]}">
+  <div class="dt"><b>${x.s.getDate()}</b><span>${x.s.toLocaleDateString('en-GB',{weekday:'short'})}</span></div>
+  <div><div class="nm">${x.name}</div><div class="mt"><span class="tag">${S[x.sub][0]}</span>${H(x.s)} · ${x.loc}</div>${x.note?`<div class="nt">${x.note}</div>`:''}</div>
+  <div class="ac"><button class="p ${a?'on':''}" data-i="${x.id}" data-k="a">Lab</button>${x.due?`<button class="p ${r?'on':''} ${late?'late':''}" data-i="${x.id}" data-k="r">${late?'Overdue':'Report · '+x.due.toLocaleDateString('en-GB',{day:'numeric',month:'short'})}</button>`:''}</div></div>`});
+ document.getElementById('list').innerHTML=out||'<div class="empty">Nothing here. Try another tab.</div>';
+}
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.t)tab=b.dataset.t;
+ else if(b.dataset.s)sub=sub==b.dataset.s?'all':b.dataset.s;
+ else if(b.dataset.i){const i=b.dataset.i;st[i]=st[i]||{};st[i][b.dataset.k]=!st[i][b.dataset.k];save()}
+ else return;
+ render()});
+render();
+</script></body></html>
