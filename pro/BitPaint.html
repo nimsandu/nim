@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BitPaint</title>
+<title>BitPaint - By Nimsandu</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&display=swap">
 <style>
 :root{--bg:#dedbd7;--dot:#8f8f8f;--btn:#f4f4f4;--ink:#000;--paper:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -246,7 +246,7 @@ $('bOpt').onclick=e=>menu(e.currentTarget,[
  {l:T('rough'),on:rough,f:()=>{rough=!rough}}]);
 $('bFile').onclick=e=>menu(e.currentTarget,[{l:T('nw'),f:newDoc},{l:T('open'),f:()=>$('fileIn').click()},{l:T('save'),f:exportPng}]);
 $('bSur').onclick=surprise;
-$('bAbout').onclick=()=>modal('<h2>BitPaint</h2><div>A tiny 1-bit sketchpad for doodling.</div><p>Made by <b>Nimsandu Kottage</b></p><span class="tag">AI-assisted creation</span><p>Credit: designed and coded together with Claude, an AI assistant made by Anthropic.</p><div style="font-size:20px">Keys: 1–5 pens, B bucket, [ ] size, Ctrl+Z and Ctrl+Y for undo and redo.</div>',[[T('ok')]]);
+$('bAbout').onclick=()=>modal('<h2>BitPaint</h2><div>A tiny 1-bit sketchpad for doodling.</div><p>Made by <b>Nimsandu Kottage</b></p><span class="tag">AI-assisted creation</span><p>Credit: designed and coded together with Claude by Anthropic.</p><div style="font-size:20px">Keys: 1–5 pens, B bucket, [ ] size, Ctrl+Z and Ctrl+Y for undo and redo.</div>',[[T('ok')]]);
 $('bQc').onclick=()=>$('colIn').click();
 $('colIn').oninput=e=>{COLS[ci]=e.target.value;col=e.target.value;buildPal();ui()};
 $('bFull').onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}setTimeout(fit,200)};
