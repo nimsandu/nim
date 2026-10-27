@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/theme.js"></script>
+<meta name="theme-color" content="#0b0c0e">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MonoLyft: a spring-powered chair that helps people stand up</title>
@@ -265,9 +267,10 @@
   footer { padding-block: 2rem 3rem; border-top: 1px solid var(--hairline); }
   footer p { font-size: .92rem; color: var(--steel-soft); max-width: none; margin: 0; }
 </style>
-<link rel="stylesheet" href="/mission.css"/><link rel="stylesheet" href="/monolyft-mission.css"/></head>
+<link rel="stylesheet" href="/mission.css"/><link rel="stylesheet" href="/monolyft-mission.css"/><link rel="stylesheet" href="/theme.css">
+</head>
 <body class="mission-site monolyft-page"><a class="skip-link" href="#main-content">Skip to content</a><canvas id="starfield" aria-hidden="true"></canvas><div class="reading-progress" aria-hidden="true"></div>
-<header class="site-nav"><a class="wordmark" href="/" aria-label="Nimsandu Kottage home">NK<span>.</span></a><a class="nav-coordinate" href="/#home">EARTH / SRI LANKA</a><nav aria-label="Main navigation"><a href="/work.html" >Software</a><a href="/#engineering">Engineering</a><a href="/#creative">Creative</a><a href="/#about">About</a></nav><a class="nav-contact" href="/#contact">Let’s talk <span>↗</span></a><button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button></header>
+<header class="site-nav"><a class="wordmark" href="/" aria-label="Nimsandu Kottage home">NK<span>.</span></a><a class="nav-coordinate" href="/#home">EARTH / SRI LANKA</a><nav aria-label="Main navigation"><a href="/work.html" >Software</a><a href="/#engineering">Engineering</a><a href="/#creative">Creative</a><a href="/#about">About</a></nav><a class="nav-contact" href="/#contact">Let’s talk <span>↗</span></a><label class="theme-picker"><span class="sr-only">Colour theme</span><select data-theme-select aria-label="Colour theme"><option value="auto">◐ Auto</option><option value="light">☼ Light</option><option value="dark">◑ Dark</option></select></label><button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button></header>
 <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" hidden><a href="/work.html">Software <span>01</span></a><a href="/#engineering">Engineering <span>02</span></a><a href="/#creative">Creative <span>03</span></a><a href="/#about">About <span>04</span></a><a href="/#contact">Contact <span>↗</span></a><a href="/rates.html">Rates &amp; policies ↗</a></nav>
 
 
@@ -587,6 +590,6 @@
   draw(0);
 })();
 </script>
-<footer class="site-footer"><a href="/" class="wordmark">NK.</a><span>© 2026 Nimsandu Kottage</span><span class="footer-coordinate">DESIGNED ON EARTH. BUILT WITH CURIOSITY.</span><a href="/rates.html">Rates &amp; policies ↗</a><a href="#main-content">Back to top ↑</a></footer><div class="mission-status"><span><i></i> ALL SYSTEMS CURIOUS</span><span id="chapterStatus">00 / DEPARTURE</span><span class="status-time" data-local-time>COLOMBO / UTC +05:30</span><button id="motionToggle" aria-pressed="false" type="button">Pause motion</button></div>
+<footer class="site-footer refined-footer"><a href="/" class="wordmark" aria-label="Nimsandu Kottage home">NK.</a><span>© 2026 Nimsandu Kottage <span class="footer-location">/ Sri Lanka</span></span><a href="#main-content">Back to the beginning ↑</a></footer><div class="mission-status"><span><i></i> ALL SYSTEMS CURIOUS</span><span id="chapterStatus">00 / DEPARTURE</span><span class="status-time" data-local-time>COLOMBO / UTC +05:30</span><button id="motionToggle" aria-pressed="false" type="button">Pause motion</button></div>
 <dialog id="galleryDialog" class="gallery-dialog" aria-label="Creative work preview"><button type="button" class="dialog-close" aria-label="Close image">Close ×</button><img alt=""/><p></p></dialog><script src="/mission-config.js" defer></script><script src="/mission.js" defer></script></body>
 </html>

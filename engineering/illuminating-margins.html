@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script src="/theme.js"></script>
+    <meta name="theme-color" content="#0b0c0e">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- ── PRIMARY META ───────────────────────────────────────── -->
@@ -68,6 +70,7 @@
     <meta property="og:title" content="Illuminating the Margins — Nimsandu Kottage">
     <meta property="og:url" content="https://nimaat.top/engineering/illuminating-margins.html">
     <meta property="og:description" content="An A+ Year 1 Semester 1 sustainable engineering project proposing solar-powered street lighting for rural Sri Lankan communities.">
+    <link rel="stylesheet" href="/theme.css">
   </head>
   <body class="mission-site">
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -85,6 +88,14 @@
       </nav>
       <a class="nav-contact" href="/#contact">Let’s talk <span>↗</span>
       </a>
+      <label class="theme-picker">
+        <span class="sr-only">Colour theme</span>
+        <select data-theme-select aria-label="Colour theme">
+          <option value="auto">◐ Auto</option>
+          <option value="light">☼ Light</option>
+          <option value="dark">◑ Dark</option>
+        </select>
+      </label>
       <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu">
         <span></span>
         <span></span>
@@ -228,12 +239,11 @@
         </a>
       </section>
     </main>
-    <footer class="site-footer">
-      <a href="/" class="wordmark">NK.</a>
-      <span>© 2026 Nimsandu Kottage</span>
-      <span class="footer-coordinate">DESIGNED ON EARTH. BUILT WITH CURIOSITY.</span>
-      <a href="/rates.html">Rates &amp; policies ↗</a>
-      <a href="#main-content">Back to top ↑</a>
+    <footer class="site-footer refined-footer">
+      <a href="/" class="wordmark" aria-label="Nimsandu Kottage home">NK.</a>
+      <span>© 2026 Nimsandu Kottage <span class="footer-location">/ Sri Lanka</span>
+      </span>
+      <a href="#main-content">Back to the beginning ↑</a>
     </footer>
     <div class="mission-status">
       <span>

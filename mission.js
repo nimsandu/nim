@@ -168,12 +168,21 @@
   const forms = [], gridU = 124, gridV = 40;
   for (let u = 0; u < gridU; u++) for (let v = 0; v < gridV; v++) {
     const a = u / gridU * Math.PI * 2, b = v / gridV * Math.PI * 2;
-    const index = u * gridV + v, n = gridU * gridV;
-    const sy = 1 - (index / (n - 1)) * 2, radius = Math.sqrt(1 - sy * sy), angle = index * Math.PI * (3 - Math.sqrt(5));
-    forms.push({ u: a, v: b, orbit: [(1.02 + .10 * Math.cos(a * 3) + .32 * Math.cos(b)) * Math.cos(a), (1.02 + .10 * Math.cos(a * 3) + .32 * Math.cos(b)) * Math.sin(a), .32 * Math.sin(b) + .16 * Math.sin(a * 3)], core: [Math.cos(angle) * radius * 1.12, sy * 1.12, Math.sin(angle) * radius * 1.12], helix: [(.68 + .12 * Math.cos(b)) * Math.cos(a * 3), (u / gridU - .5) * 2.5 + .12 * Math.sin(b), (.68 + .12 * Math.cos(b)) * Math.sin(a * 3)] });
+    const index = u * gridV + v, face = index % 6;
+    const q = u / (gridU - 1) * 2 - 1, t = v / (gridV - 1) * 2 - 1;
+    const cube = [[1,q,t],[-1,q,t],[q,1,t],[q,-1,t],[q,t,1],[q,t,-1]][face];
+    const teeth = .13 * Math.tanh(Math.cos(a * 12) * 5);
+    const gearRadius = .88 + teeth + .25 * Math.cos(b);
+    const ribbonRadius = .8 + .3 * Math.cos(a * 3) + .14 * Math.cos(b);
+    forms.push({
+      u: a, v: b,
+      engineering: [gearRadius * Math.cos(a), gearRadius * Math.sin(a), .22 * Math.sin(b)],
+      development: cube.map(value => value * .82),
+      design: [ribbonRadius * Math.cos(a), ribbonRadius * Math.sin(a), .5 * Math.sin(a * 3) + .14 * Math.sin(b)]
+    });
   }
-  let from = 'orbit', current = 'orbit', blend = 1;
-  let positions = forms.map(p => [...p.orbit]), origins = positions;
+  let from = 'engineering', current = 'engineering', blend = 1;
+  let positions = forms.map(p => [...p.engineering]), origins = positions;
   let rx = .65, ry = .2, targetRx = .65, targetRy = .2, burst = 0, dragging = false, moved = false, dragX = 0, dragY = 0;
   const turn = (x, y, z, a, b) => {
     const yy = y * Math.cos(a) - z * Math.sin(a), zz = y * Math.sin(a) + z * Math.cos(a);
@@ -186,6 +195,8 @@
     if (sculpture && context) { const r = sculpture.getBoundingClientRect(); width = r.width; height = r.height; sculpture.width = width * dpr; sculpture.height = height * dpr; context.setTransform(dpr, 0, 0, dpr, 0, 0); }
     draw();
   }
+  const isLight = () => document.documentElement.dataset.theme === 'light';
+  const canvasInk = () => isLight() ? '35,39,43' : '230,232,232';
   function drawStars() {
     if (!starContext) return;
     starContext.clearRect(0, 0, sw, sh);
@@ -195,16 +206,16 @@
       const x = (p.x * sw + Math.sin(elapsed * .02 + p.phase) * 7 * p.z + sw) % sw;
       const y = (p.y * sh - scrollY * .015 * p.z + sh * 100) % sh;
       const alpha = .15 + p.z * .3 + Math.sin(elapsed * .4 + p.phase) * .07;
-      starContext.fillStyle = `rgba(210,215,220,${alpha})`;
+      starContext.fillStyle = `rgba(${canvasInk()},${alpha})`;
       starContext.fillRect(x, y, p.z > .8 ? 1.2 : .65, p.z > .8 ? 1.2 : .65);
       const distance = Math.hypot(pointer.x - x, pointer.y - y);
-      if (distance < 120 && !paused && fine.matches) { starContext.strokeStyle = `rgba(220,220,220,${(1 - distance / 120) * .12})`; starContext.beginPath(); starContext.moveTo(x, y); starContext.lineTo(pointer.x, pointer.y); starContext.stroke(); }
+      if (distance < 120 && !paused && fine.matches) { starContext.strokeStyle = `rgba(${canvasInk()},${(1 - distance / 120) * .12})`; starContext.beginPath(); starContext.moveTo(x, y); starContext.lineTo(pointer.x, pointer.y); starContext.stroke(); }
     }
   }
   function drawSculpture() {
     if (!context || !width || !sculptureVisible) return;
     context.clearRect(0, 0, width, height);
-    const scale = Math.min(width / 3.3, height / 3.25), ax = rx, ay = ry + elapsed * .13;
+    const scale = Math.min(width / 4.1, height / 3.9), ax = rx, ay = ry + elapsed * .13;
     const e = 1 - Math.pow(1 - blend, 3), rendered = [];
     const stride = width < 450 ? 2 : 1;
     for (let i = 0; i < forms.length; i += stride) {
@@ -219,12 +230,20 @@
     rendered.sort((a, b) => b.z - a.z);
     for (const p of rendered) {
       const alpha = Math.max(.06, Math.min(.95, (.54 + (1.3 - p.z) * .27) * p.lum));
-      context.fillStyle = `rgba(230,232,232,${alpha})`;
+      context.fillStyle = `rgba(${canvasInk()},${alpha})`;
       context.beginPath(); context.arc(p.x, p.y, Math.max(.45, p.size * 1.2), 0, Math.PI * 2); context.fill();
     }
+    const anchors = [[.18,.32,.66,.12,0], [.78,.62,-.4,-.55,.25]];
+    for (const [nx,ny,px,py,pz] of anchors) {
+      const [x,y,z] = turn(px,py,pz,ax,ay), perspective = 4.4 / (4.4 + z);
+      const sx = width*.52+x*scale*perspective, sy = height*.45+y*scale*perspective;
+      context.strokeStyle = `rgba(${canvasInk()},.22)`; context.lineWidth = .7;
+      context.beginPath(); context.moveTo(sx,sy); context.lineTo(width*nx,height*ny); context.stroke();
+      context.fillStyle = `rgba(${canvasInk()},.65)`;context.fillRect(sx-1.5,sy-1.5,3,3);
+    }
     // Three fine orbital paths and tracked satellites give the form a frame of reference.
-    for (let ring = 0; ring < 3; ring++) {
-      context.strokeStyle = `rgba(200,210,220,${ring ? .08 : .16})`; context.lineWidth = .7; context.beginPath();
+    for (let ring = 0; ring < 2; ring++) {
+      context.strokeStyle = `rgba(${canvasInk()},${ring ? .06 : .12})`; context.lineWidth = .7; context.beginPath();
       for (let s = 0; s <= 150; s++) {
         const theta = s / 150 * Math.PI * 2, r = 1.55 + ring * .12;
         const [x, y, z] = turn(Math.cos(theta) * r, Math.sin(theta) * r, 0, .9 + ring * .65, -.2 + ring * .8 + elapsed * .02);
@@ -235,8 +254,8 @@
       const theta = elapsed * .2 + ring * 2.1, r = 1.55 + ring * .12;
       const [x, y, z] = turn(Math.cos(theta) * r, Math.sin(theta) * r, 0, .9 + ring * .65, -.2 + ring * .8 + elapsed * .02);
       const perspective = 4.4 / (4.4 + z), px = width * .52 + x * scale * perspective, py = height * .45 + y * scale * perspective;
-      context.fillStyle = '#ddd'; context.fillRect(px - 1.5, py - 1.5, 3, 3);
-      if (!ring) { context.fillStyle = '#777'; context.font = '7px monospace'; context.fillText('NK—001', px + 9, py + 3); }
+      context.fillStyle = isLight() ? '#333' : '#ddd'; context.fillRect(px - 1.5, py - 1.5, 3, 3);
+      if (!ring) { context.fillStyle = '#777'; context.font = '7px monospace'; context.fillText(current === 'engineering' ? 'ME—001' : current === 'development' ? 'DEV—002' : 'VIS—003', px + 9, py + 3); }
     }
   }
   function draw() { drawStars(); drawSculpture(); }
@@ -263,10 +282,38 @@
   reduced.addEventListener('change', e => setPaused(e.matches));
   document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
   document.addEventListener('pointermove', e => { pointer.x = e.clientX; pointer.y = e.clientY; }, { passive: true });
+  const sceneContent = {
+    engineering: { descriptor: 'ENGINEERING / FORM, FORCE & FUNCTION', skills: ['CAD', 'Mechanisms', 'Prototyping'], hint: 'A GEAR / IDEAS THAT MOVE THE PHYSICAL WORLD', projects: [
+      { title: 'MonoLyft', meta: 'MECHANICAL DESIGN / GRADE A', href: '/pro/monolyft/' },
+      { title: 'Illuminating the Margins', meta: 'SUSTAINABILITY / GRADE A+', href: '/engineering/illuminating-margins.html' }
+    ] },
+    development: { descriptor: 'DEVELOPMENT / STRUCTURE, LOGIC & CONNECTION', skills: ['React / Vite', 'Firebase', 'Web & Android'], hint: 'A SYSTEM / COMPLEXITY, CONNECTED', projects: [
+      { title: 'FoE-SemApp', meta: 'NATIVE AND CROSS-PLATFORM', href: 'https://semapp.nimaat.top' },
+      { title: 'The Poet’s Calendar', meta: 'REACT / FIREBASE', href: 'https://tpcalen.vercel.app' }
+    ] },
+    design: { descriptor: 'DESIGN / IDENTITY, PRINT & MOTION', skills: ['Brand identity', 'Editorial', 'Video'], hint: 'A RIBBON / IDEAS GIVEN A VISUAL LIFE', projects: [
+      { title: 'FractalX film', meta: 'VISUAL STORYTELLING', href: '#fractalx-film' },
+      { title: 'Visual explorations', meta: 'BRAND / PRINT / DIGITAL', href: '#creative' }
+    ] }
+  };
+  function updateSceneContent(key) {
+    const data = sceneContent[key];
+    $('#sceneDescriptor').textContent = data.descriptor;
+    $('#sceneSkills').replaceChildren(...data.skills.map(text => { const span=document.createElement('span');span.textContent=text;return span; }));
+    $('#sceneHint').textContent = data.hint;
+    ['#sceneProjectOne','#sceneProjectTwo'].forEach((selector,index) => {
+      const link=$(selector), project=data.projects[index];
+      link.href=project.href;
+      link.querySelector('.scene-node-meta').textContent=project.meta;
+      link.querySelector('strong').replaceChildren(document.createTextNode(project.title+' '),Object.assign(document.createElement('span'),{textContent:'↗'}));
+      if(project.href.startsWith('https:')){link.target='_blank';link.rel='noopener';}else{link.removeAttribute('target');link.removeAttribute('rel');}
+    });
+    $('#shapeStatus').textContent = `${key[0].toUpperCase()+key.slice(1)} selected. Explore ${data.projects.map(p=>p.title).join(' and ')}.`;
+  }
   $$('[data-shape]').forEach(button => button.addEventListener('click', () => {
     from = current; origins = forms.map((p, i) => positions[i] || p[from]); current = button.dataset.shape; blend = paused ? 1 : 0;
     $$('[data-shape]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
-    $('#shapeStatus').textContent = `${current[0].toUpperCase() + current.slice(1)} form selected`;
+    updateSceneContent(current);
     drawSculpture();
   }));
   if (sculpture) {
@@ -285,5 +332,6 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(entries => { sculptureVisible = entries[0].isIntersecting; if (sculptureVisible) drawSculpture(); }).observe(sculpture);
     new ResizeObserver(resize).observe(sculpture);
   }
+  document.addEventListener('mission:theme', draw);
   addEventListener('resize', resize); resize(); setPaused(paused); start();
 })();
