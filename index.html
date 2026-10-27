@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script src="/theme.js"></script>
+    <meta name="theme-color" content="#0b0c0e">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- ── PRIMARY META ───────────────────────────────────────── -->
@@ -68,6 +70,7 @@
     <meta property="og:title" content="Nimsandu Kottage — Design, Code &amp; Mechanical Engineering">
     <meta property="og:url" content="https://nimaat.top/">
     <meta property="og:description" content="Design, software and mechanical engineering by Nimsandu Kottage. Explore projects, prototypes and visual work from Sri Lanka.">
+    <link rel="stylesheet" href="/theme.css">
   </head>
   <body class="mission-site">
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -85,6 +88,14 @@
       </nav>
       <a class="nav-contact" href="/#contact">Let’s talk <span>↗</span>
       </a>
+      <label class="theme-picker">
+        <span class="sr-only">Colour theme</span>
+        <select data-theme-select aria-label="Colour theme">
+          <option value="auto">◐ Auto</option>
+          <option value="light">☼ Light</option>
+          <option value="dark">◑ Dark</option>
+        </select>
+      </label>
       <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu">
         <span></span>
         <span></span>
@@ -126,26 +137,45 @@
             <span>Designer. Developer. Mechanical engineering undergraduate.<br>Always figures a way out.</span>
           </div>
         </div>
-        <div class="orbital-lab">
+        <div class="orbital-lab discipline-map" aria-label="Explore my disciplines">
           <div class="lab-heading">
-            <span>EXPERIMENT 001 / FORM &amp; POSSIBILITY</span>
+            <span>THREE DISCIPLINES / ONE PRACTICE</span>
             <span class="lab-live">
-              <i></i> LIVE</span>
+              <i></i> EXPLORE</span>
           </div>
           <canvas id="sculpture" aria-hidden="true"></canvas>
           <div class="lab-axis axis-x" aria-hidden="true"></div>
           <div class="lab-axis axis-y" aria-hidden="true"></div>
-          <span class="lab-coordinate coord-one">Y +</span>
-          <span class="lab-coordinate coord-two">X +</span>
-          <div class="lab-controls">
-            <div class="shape-controls" role="group" aria-label="Sculpture form">
-              <button data-shape="orbit" aria-pressed="true">01 Orbit</button>
-              <button data-shape="core" aria-pressed="false">02 Core</button>
-              <button data-shape="helix" aria-pressed="false">03 Helix</button>
+          <div class="scene-skillset">
+            <span class="eyebrow" id="sceneDescriptor">ENGINEERING / FORM, FORCE &amp; FUNCTION</span>
+            <div id="sceneSkills">
+              <span>CAD</span>
+              <span>Mechanisms</span>
+              <span>Prototyping</span>
             </div>
-            <span>DRAG TO ROTATE / CLICK TO DISTURB</span>
           </div>
-          <span class="sr-only" id="shapeStatus" aria-live="polite">Orbit form selected</span>
+          <a class="scene-project scene-project-one" id="sceneProjectOne" href="/pro/monolyft/">
+            <span class="scene-node-dot"></span>
+            <span class="scene-node-meta">MECHANICAL DESIGN / GRADE A</span>
+            <strong>MonoLyft <span>↗</span>
+            </strong>
+          </a>
+          <a class="scene-project scene-project-two" id="sceneProjectTwo" href="/engineering/illuminating-margins.html">
+            <span class="scene-node-dot"></span>
+            <span class="scene-node-meta">SUSTAINABILITY / GRADE A+</span>
+            <strong>Illuminating<br>the Margins <span>↗</span>
+            </strong>
+          </a>
+          <div class="lab-controls">
+            <div class="shape-controls" role="group" aria-label="Explore a discipline">
+              <button data-shape="engineering" aria-pressed="true">01 Engineering</button>
+              <button data-shape="development" aria-pressed="false">02 Development</button>
+              <button data-shape="design" aria-pressed="false">03 Design</button>
+            </div>
+            <span id="sceneHint">A GEAR / IDEAS THAT MOVE THE PHYSICAL WORLD</span>
+            <span class="scene-help">SELECT A DISCIPLINE · DRAG TO ROTATE</span>
+          </div>
+          <span class="sr-only" id="shapeStatus" aria-live="polite">Engineering selected. Explore MonoLyft and Illuminating the Margins.</span>
         </div>
         <div class="hero-bottom">
           <a class="text-link" href="#engineering">Begin the exploration <span>↓</span>
@@ -456,6 +486,21 @@
             </span>
           </button>
         </div>
+        <a id="fractalx-film" class="story-feature spotlight reveal" href="https://www.linkedin.com/posts/fractalx-org_it-is-a-great-pleasure-to-announce-that-fractalx-activity-7437115318335987712-YU72?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAC7fK3cBaDge7N1HRnyaZgXP6TU7iEHw-Xw" target="_blank" rel="noopener">
+          <div class="story-image">
+            <img src="/img/vid1.png" alt="FractalX visual storytelling video preview" loading="lazy">
+            <span class="story-play" aria-hidden="true">↗</span>
+          </div>
+          <div class="story-copy">
+            <span class="eyebrow">MOTION / VISUAL STORYTELLING</span>
+            <h3>A story for<br>
+              <em>FractalX.</em>
+            </h3>
+            <p>A visual introduction to the FractalX framework.</p>
+            <span class="text-link">Watch the film <span>↗</span>
+            </span>
+          </div>
+        </a>
         <div class="motion-links">
           <a href="https://youtu.be/vPuxunvZaWU" target="_blank" rel="noopener">
             <img src="/img/vid2.png" alt="Motion graphics preview" loading="lazy">
@@ -469,41 +514,60 @@
           </a>
         </div>
       </section>
-      <section id="contact" class="mission-section contact-mission" data-chapter="06 / CONTACT">
+      <section id="contact" class="mission-section contact-mission contact-refined" data-chapter="06 / CONTACT">
         <div class="section-kicker">
-          <span>06 / ESTABLISH CONTACT</span>
+          <span>06 / THE NEXT CONVERSATION</span>
           <span class="cross">+</span>
         </div>
-        <span class="contact-signal" aria-hidden="true">
-          <i></i>
-          <i></i>
-          <i></i>
-        </span>
-        <h2>The next thing<br>
-          <em>starts with hello.</em>
-        </h2>
-        <div class="contact-bottom">
-          <p>Open for freelance, collaboration,<br>and interesting problems.</p>
+        <div class="contact-invitation">
           <div>
-            <a class="contact-email" href="mailto:hello@nimaat.top">hello@nimaat.top ↗</a>
-            <button data-copy-email type="button">Copy email ⧉</button>
-            <span class="sr-only" data-copy-status aria-live="polite"></span>
+            <span class="eyebrow">
+              <i class="signal-dot"></i> OPEN FOR FREELANCE &amp; COLLABORATION</span>
+            <h2>Have something<br>
+              <em>in mind?</em>
+            </h2>
           </div>
+          <p>A useful idea. A difficult problem.<br>Or something you haven’t quite figured out yet.<br>Let’s see where it goes.</p>
         </div>
-        <div class="contact-links">
-          <a href="https://github.com/nimsandu" target="_blank" rel="noopener">GitHub ↗</a>
-          <a href="https://linkedin.com/in/nimsandu" target="_blank" rel="noopener">LinkedIn ↗</a>
-          <a href="https://buymeacoffee.com/nimsandu" target="_blank" rel="noopener">Buy me a coffee ↗</a>
-          <a href="/rates.html">Rates &amp; policies ↗</a>
+        <div class="contact-mail-panel">
+          <a href="mailto:hello@nimaat.top" class="contact-email">
+            <span class="eyebrow">WRITE TO ME</span>
+            <span class="email-address">hello@nimaat.top</span>
+            <span class="email-arrow" aria-hidden="true">↗</span>
+          </a>
+          <button class="copy-email-button" data-copy-email type="button" aria-label="Copy email address">Copy address <span aria-hidden="true">⧉</span>
+          </button>
+          <span class="sr-only" data-copy-status aria-live="polite"></span>
         </div>
+        <div class="contact-destinations">
+          <a href="https://github.com/nimsandu" target="_blank" rel="noopener">
+            <span class="eyebrow">01 / CODE</span>
+            <strong>GitHub <span>↗</span>
+            </strong>
+            <span>nimsandu</span>
+          </a>
+          <a href="https://linkedin.com/in/nimsandu" target="_blank" rel="noopener">
+            <span class="eyebrow">02 / CONNECT</span>
+            <strong>LinkedIn <span>↗</span>
+            </strong>
+            <span>Nimsandu Kottage</span>
+          </a>
+          <a href="/rates.html">
+            <span class="eyebrow">03 / WORK TOGETHER</span>
+            <strong>Rates &amp; policies <span>↗</span>
+            </strong>
+            <span>Before we begin</span>
+          </a>
+        </div>
+        <a class="contact-support" href="https://buymeacoffee.com/nimsandu" target="_blank" rel="noopener">Enjoy the things I make? <span>Buy me a coffee ↗</span>
+        </a>
       </section>
     </main>
-    <footer class="site-footer">
-      <a href="/" class="wordmark">NK.</a>
-      <span>© 2026 Nimsandu Kottage</span>
-      <span class="footer-coordinate">DESIGNED ON EARTH. BUILT WITH CURIOSITY.</span>
-      <a href="/rates.html">Rates &amp; policies ↗</a>
-      <a href="#main-content">Back to top ↑</a>
+    <footer class="site-footer refined-footer">
+      <a href="/" class="wordmark" aria-label="Nimsandu Kottage home">NK.</a>
+      <span>© 2026 Nimsandu Kottage <span class="footer-location">/ Sri Lanka</span>
+      </span>
+      <a href="#main-content">Back to the beginning ↑</a>
     </footer>
     <div class="mission-status">
       <span>
