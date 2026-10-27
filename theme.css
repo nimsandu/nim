@@ -437,7 +437,7 @@ images retain their monochrome treatment. */
 }
 
 [data-theme="light"] .hero-portrait img {
-  filter:grayscale(1) brightness(1.15) contrast(.87);
+  filter:grayscale(1) invert(1);
   mix-blend-mode:multiply;
   mask-image:linear-gradient(to right,transparent,#000 15%,#000 45%,transparent 94%),linear-gradient(to bottom,transparent,#000 14%,#000 65%,transparent);
   mask-composite:intersect;
@@ -905,3 +905,13 @@ images retain their monochrome treatment. */
   }
 }
 
+
+/* Education marks stay legible in both palettes while preserving their artwork. */
+.institution-grid { display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:-10px 0 45px; }
+.institution-card { display:flex;align-items:center;gap:24px;padding:26px;border:1px solid var(--line);background:var(--panel); }
+.institution-mark { width:76px;height:88px;padding:12px 14px;background:#f1f1ec;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+.institution-mark img { width:48px;height:64px;object-fit:contain;filter:grayscale(1); }
+.institution-card .eyebrow { font-size:6px; }
+.institution-card h3 { font-size:18px;line-height:1.35;letter-spacing:-.035em;margin:9px 0; }
+.institution-card p { font-size:10px;line-height:1.8; }
+@media(max-width:760px) { .institution-grid{grid-template-columns:1fr;gap:15px;margin:0 0 35px}.institution-card{padding:22px;gap:20px}.institution-card h3{font-size:17px}.institution-mark{width:64px;height:78px;padding:10px}.institution-card .eyebrow{font-size:6px} }

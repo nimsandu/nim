@@ -81,11 +81,8 @@
       </a>
       <a class="nav-coordinate" href="/#home">EARTH / SRI LANKA</a>
       <nav aria-label="Main navigation">
-        <a href="/work.html">Software</a>
-        <a href="/#engineering">Engineering</a>
-        <a href="/#creative">Creative</a>
-        <a href="/#about">About</a>
-      </nav>
+<a href="/#about">About</a><a href="/#engineering">Engineering</a><a href="/work.html">Software</a><a href="/#creative">Creative</a>
+</nav>
       <a class="nav-contact" href="/#contact">Let’s talk <span>↗</span>
       </a>
       <label class="theme-picker">
@@ -102,18 +99,13 @@
       </button>
     </header>
     <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" hidden>
-      <a href="/work.html">Software <span>01</span>
-      </a>
-      <a href="/#engineering">Engineering <span>02</span>
-      </a>
-      <a href="/#creative">Creative <span>03</span>
-      </a>
-      <a href="/#about">About <span>04</span>
-      </a>
-      <a href="/#contact">Contact <span>↗</span>
-      </a>
-      <a href="/rates.html">Rates &amp; policies ↗</a>
-    </nav>
+<a href="/#about">About <span>01</span>
+      </a><a href="/#engineering">Engineering <span>02</span>
+      </a><a href="/work.html">Software <span>03</span>
+      </a><a href="/#creative">Creative <span>05</span>
+      </a><a href="/#contact">Contact <span>↗</span>
+      </a><a href="/rates.html">Rates &amp; policies ↗</a>
+</nav>
     <main id="main-content" class="mission-main">
       <section id="home" class="landing" data-chapter="00 / DEPARTURE">
         <div class="landing-top">
@@ -178,15 +170,78 @@
           <span class="sr-only" id="shapeStatus" aria-live="polite">Engineering selected. Explore MonoLyft and Illuminating the Margins.</span>
         </div>
         <div class="hero-bottom">
-          <a class="text-link" href="#engineering">Begin the exploration <span>↓</span>
+          <a class="text-link" href="#about">Begin the exploration <span>↓</span>
           </a>
           <span>A SMALL CORNER OF A VERY LARGE UNIVERSE.</span>
           <a href="/work.html" class="text-link">Project archive ↗</a>
         </div>
       </section>
-      <section id="engineering" class="mission-section" data-chapter="01 / ENGINEERING">
+      <section id="about" class="mission-section about-mission" data-chapter="01 / THE HUMAN">
         <div class="section-kicker">
-          <span>01 / ENGINEERING MISSIONS</span>
+          <span>01 / THE HUMAN ELEMENT</span>
+          <span class="cross">+</span>
+        </div>
+        <div class="about-intro">
+          <h2>Most people<br>pick a lane.<br>
+            <em>I picked an ocean.</em>
+          </h2>
+          <div>
+            <p class="large-copy">There’s a thread connecting circuits and steel, pixels and physics.</p>
+            <p>I’m Nimsandu, reading for a BSc. Engineering (Hons) in Mechanical Engineering at SLIIT. My path started at Ananda College and grew into software, design, ICT workshops, and the craft of building things with people.</p>
+            <p>I like problems that don’t fit neatly into one field. The useful ideas often live somewhere in between.</p>
+            <div class="identity-facts">
+              <span>SLIIT / MECHANICAL ENGINEERING UG</span>
+              <span>ANANDA COLLEGE / ALUMNUS</span>
+              <span>SRI LANKA / EARTH</span>
+            </div>
+          </div>
+        </div>
+        <div class="institution-grid" aria-label="Education and background">
+          <div class="institution-card">
+            <div class="institution-mark">
+              <img src="/img/st.png" alt="SLIIT crest" loading="lazy" width="48" height="64">
+            </div>
+            <div>
+              <span class="eyebrow">CURRENT / MECHANICAL ENGINEERING UG</span>
+              <h3>Sri Lanka Institute of<br>Information Technology</h3>
+              <p>BSc. Engineering (Hons)</p>
+            </div>
+          </div>
+          <div class="institution-card">
+            <div class="institution-mark">
+              <img src="/img/ac.png" alt="Ananda College crest" loading="lazy" width="48" height="64">
+            </div>
+            <div>
+              <span class="eyebrow">BACKGROUND / ALUMNUS</span>
+              <h3>Ananda College</h3>
+              <p>ICT Society · Workshops · Leadership</p>
+            </div>
+          </div>
+        </div>
+        <div class="discipline-console reveal">
+          <div class="discipline-tabs" role="group" aria-label="Explore my disciplines">
+            <button data-discipline="engineering" aria-pressed="true">
+              <span>01</span>Engineering <i>↗</i>
+            </button>
+            <button data-discipline="development" aria-pressed="false">
+              <span>02</span>Development <i>↗</i>
+            </button>
+            <button data-discipline="design" aria-pressed="false">
+              <span>03</span>Design <i>↗</i>
+            </button>
+          </div>
+          <div class="discipline-detail" aria-live="polite">
+            <span class="eyebrow" id="disciplineLabel">MATTER / MOTION / CONSTRAINTS</span>
+            <h3 id="disciplineTitle">Understand it.<br>Then build it.</h3>
+            <p id="disciplineCopy">Mechanical engineering brings the ideas into the physical world: CAD, materials, mechanisms, and prototypes that have to work beyond the screen.</p>
+            <a id="disciplineLink" class="text-link" href="#engineering">Explore engineering ↗</a>
+            <div class="console-reticle" aria-hidden="true">+</div>
+          </div>
+        </div>
+      </section>
+      <section id="engineering" class="mission-section" data-chapter="02 / ENGINEERING">
+        <div class="section-kicker">
+          <span>02 / ENGINEERING MISSIONS</span>
           <span class="cross">+</span>
         </div>
         <div class="section-heading">
@@ -247,14 +302,14 @@
               <span class="grade">A</span>
             </div>
             <div class="engineering-visual chair-visual">
-              <svg class="chair-diagram" viewbox="0 0 500 330" role="img" aria-label="Simplified spring-assisted chair">
+              <svg class="chair-diagram" viewbox="0 0 500 330" role="img" aria-label="Spring-assisted chair with an outer-edge hinge; the backrest-side edge rises when released">
                 <g fill="none" stroke="currentColor" stroke-width="3">
                   <ellipse cx="260" cy="299" rx="145" ry="10" opacity=".15"></ellipse>
                   <path d="M142 291V167h197V58m0 233V58M142 255h197"></path>
-                  <path class="mini-spring" d="m241 251 10-8-20-8 20-8-20-8 20-8-20-8 10-8" stroke-width="2"></path>
+                  <path class="mini-spring" d="M241 255 L241 245 L249 237.5 L233 230 L249 222.5 L233 215 L249 207.5 L233 200 L249 192.5 L233 185 L241 175" stroke-width="2"></path>
                   <g class="mini-seat">
                     <path d="M130 163h218v12H130z" fill="currentColor" fill-opacity=".12"></path>
-                    <circle cx="339" cy="169" r="5"></circle>
+                    <circle cx="142" cy="169" r="5"></circle>
                   </g>
                   <path d="M107 300h278" opacity=".25"></path>
                 </g>
@@ -276,9 +331,9 @@
           </article>
         </div>
       </section>
-      <section id="software" class="mission-section" data-chapter="02 / SOFTWARE">
+      <section id="software" class="mission-section" data-chapter="03 / SOFTWARE">
         <div class="section-kicker">
-          <span>02 / DIGITAL SYSTEMS</span>
+          <span>03 / DIGITAL SYSTEMS</span>
           <span class="cross">+</span>
         </div>
         <div class="section-heading">
@@ -335,47 +390,6 @@
         </div>
         <a href="/work.html" class="archive-link">There’s more in the archive <span>11 PROJECTS / EXPLORE ↗</span>
         </a>
-      </section>
-      <section id="about" class="mission-section about-mission" data-chapter="03 / THE HUMAN">
-        <div class="section-kicker">
-          <span>03 / THE HUMAN ELEMENT</span>
-          <span class="cross">+</span>
-        </div>
-        <div class="about-intro">
-          <h2>Most people<br>pick a lane.<br>
-            <em>I picked an ocean.</em>
-          </h2>
-          <div>
-            <p class="large-copy">There’s a thread connecting circuits and steel, pixels and physics.</p>
-            <p>I’m Nimsandu, reading for a BSc. Engineering (Hons) in Mechanical Engineering at SLIIT. My path started at Ananda College and grew into software, design, ICT workshops, and the craft of building things with people.</p>
-            <p>I like problems that don’t fit neatly into one field. The useful ideas often live somewhere in between.</p>
-            <div class="identity-facts">
-              <span>SLIIT / MECHANICAL ENGINEERING UG</span>
-              <span>ANANDA COLLEGE / ALUMNUS</span>
-              <span>SRI LANKA / EARTH</span>
-            </div>
-          </div>
-        </div>
-        <div class="discipline-console reveal">
-          <div class="discipline-tabs" role="group" aria-label="Explore my disciplines">
-            <button data-discipline="engineering" aria-pressed="true">
-              <span>01</span>Engineering <i>↗</i>
-            </button>
-            <button data-discipline="development" aria-pressed="false">
-              <span>02</span>Development <i>↗</i>
-            </button>
-            <button data-discipline="design" aria-pressed="false">
-              <span>03</span>Design <i>↗</i>
-            </button>
-          </div>
-          <div class="discipline-detail" aria-live="polite">
-            <span class="eyebrow" id="disciplineLabel">MATTER / MOTION / CONSTRAINTS</span>
-            <h3 id="disciplineTitle">Understand it.<br>Then build it.</h3>
-            <p id="disciplineCopy">Mechanical engineering brings the ideas into the physical world: CAD, materials, mechanisms, and prototypes that have to work beyond the screen.</p>
-            <a id="disciplineLink" class="text-link" href="#engineering">Explore engineering ↗</a>
-            <div class="console-reticle" aria-hidden="true">+</div>
-          </div>
-        </div>
       </section>
       <section id="opensource" class="mission-section open-mission" data-chapter="04 / OPEN SOURCE">
         <div class="section-kicker">

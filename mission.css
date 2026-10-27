@@ -729,24 +729,6 @@ p {
   opacity:0;
 }
 
-.chair-visual .mini-seat {
-  transform-origin:339px 169px;
-  transition:transform .9s var(--ease);
-}
-
-.chair-visual[data-released=true] .mini-seat {
-  transform:rotate(16deg);
-}
-
-.chair-visual .mini-spring {
-  transform-origin:241px 255px;
-  transition:transform .9s var(--ease);
-}
-
-.chair-visual[data-released=true] .mini-spring {
-  transform:scaleY(1.9);
-}
-
 @keyframes energyFlow {
   to {
     stroke-dashoffset:-40;
