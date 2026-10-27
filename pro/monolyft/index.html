@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MonoLyft: a spring-powered chair that helps people stand up</title>
+<meta name="description" content="Project summary: MonoLyft, a low-cost, spring-assisted chair for elderly people, designed and built for ME1050 Introduction to Engineering Design and Communication at SLIIT.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&display=swap">
+<style>
+  :root {
+    --concrete: #E4E7E2;
+    --paper: #F5F6F3;
+    --steel: #22272A;
+    --steel-soft: #4A5256;
+    --birch: #D7B47D;
+    --brass: #7F5410;
+    --brass-fill: #B07412;
+    --hairline: rgba(34, 39, 42, .2);
+    --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --text: "Source Serif 4", Georgia, "Times New Roman", serif;
+    color-scheme: light;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--concrete);
+    color: var(--steel);
+    font-family: var(--text);
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  p { margin: 0 0 1em; max-width: 62ch; }
+  ul, ol { margin: 0; padding: 0; list-style: none; }
+
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--brass-fill);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 1120px;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2.5rem);
+  }
+
+  /* Top bar */
+  .topbar {
+    padding-block: 1.1rem;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: .95rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .topbar span:last-child { color: var(--steel-soft); font-weight: 500; }
+
+  /* Hero */
+  .hero { padding-block: clamp(1.5rem, 4vw, 3rem) clamp(3rem, 7vw, 5rem); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem; align-items: end; }
+  @media (min-width: 900px) {
+    .hero-grid { grid-template-columns: minmax(0, 1fr) 340px; gap: 3.5rem; }
+  }
+  h1 {
+    margin: 0 0 1.6rem;
+    font-family: var(--display);
+    font-weight: 800;
+    font-stretch: 70%;
+    font-size: clamp(3.75rem, 17vw, 8rem);
+    line-height: .86;
+    letter-spacing: -.01em;
+  }
+  .lede {
+    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+    line-height: 1.45;
+    max-width: 30em;
+    margin-bottom: 2rem;
+  }
+  .facts { display: grid; gap: 1.1rem 2rem; margin: 0; }
+  @media (min-width: 560px) { .facts { grid-template-columns: 1fr 1fr; } }
+  .facts dt {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: .9rem;
+    color: var(--brass);
+    margin-bottom: .1rem;
+  }
+  .facts dd { margin: 0; font-size: 1.02rem; line-height: 1.45; }
+
+  .hero-photo {
+    margin: 0;
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(rgba(34,39,42,.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,39,42,.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    border: 1px solid var(--hairline);
+    padding: 1.5rem 1rem 0;
+  }
+  .hero-photo img { margin-inline: auto; max-height: 540px; width: auto; }
+  .hero-photo figcaption {
+    margin: 0 -1rem;
+    padding: .75rem 1rem;
+    border-top: 1px solid var(--hairline);
+    background: var(--paper);
+    font-family: var(--display);
+    font-size: .88rem;
+    color: var(--steel-soft);
+  }
+
+  /* Sections */
+  .section { padding-block: clamp(2.75rem, 6vw, 4.5rem); border-top: 1px solid var(--hairline); }
+  .row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem 3rem; }
+  @media (min-width: 900px) { .row { grid-template-columns: 210px minmax(0, 1fr); } }
+  h2 {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 1.15;
+  }
+  h3 {
+    margin: 0 0 .6rem;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    line-height: 1.25;
+  }
+  .small { font-size: .98rem; line-height: 1.55; color: var(--steel-soft); }
+
+  .targets { display: grid; gap: .5rem; margin-top: 1.5rem; max-width: 62ch; }
+  .targets li { padding-left: 1.4rem; position: relative; }
+  .targets li::before {
+    content: "";
+    position: absolute; left: 0; top: .72em;
+    width: .7rem; height: 2px; background: var(--brass-fill);
+  }
+
+  /* How it works */
+  .demo { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+  @media (min-width: 1040px) { .demo { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: start; } }
+  .schematic {
+    margin: 0;
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(rgba(34,39,42,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,39,42,.07) 1px, transparent 1px);
+    background-size: 26px 26px;
+    border: 1px solid var(--hairline);
+  }
+  .schematic svg { width: 100%; height: auto; }
+  .schematic .controls {
+    display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.25rem;
+    padding: .9rem 1rem;
+    border-top: 1px solid var(--hairline);
+    background: var(--paper);
+  }
+  .toggle {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1rem;
+    background: var(--steel);
+    color: var(--paper);
+    border: 0;
+    border-radius: 3px;
+    padding: .7rem 1.2rem;
+    cursor: pointer;
+  }
+  .toggle:hover { background: #343b3f; }
+  .status { font-family: var(--display); font-size: .92rem; color: var(--steel-soft); margin: 0; }
+  .svg-label { font-family: var(--display); font-size: 13px; font-weight: 600; fill: var(--steel); }
+  #lock { fill: var(--brass-fill); stroke: var(--brass-fill); stroke-width: 2; transition: fill .3s; }
+  .is-released #lock { fill: var(--paper); }
+
+  .steps { counter-reset: step; display: grid; gap: .25rem; }
+  .steps li {
+    counter-increment: step;
+    position: relative;
+    padding: .6rem .75rem .6rem 3rem;
+    border-left: 3px solid transparent;
+    transition: background-color .25s, border-color .25s;
+  }
+  .steps li::before {
+    content: counter(step);
+    position: absolute; left: .75rem; top: .62rem;
+    width: 1.5rem; height: 1.5rem;
+    border: 2px solid var(--steel);
+    border-radius: 50%;
+    font-family: var(--display); font-weight: 700; font-size: .85rem;
+    line-height: calc(1.5rem - 4px); text-align: center;
+  }
+  .steps strong { font-family: var(--display); font-weight: 700; }
+  .steps li { font-size: 1.02rem; line-height: 1.5; }
+  [data-state="seated"] .steps li:nth-child(-n+2),
+  [data-state="released"] .steps li:nth-child(3) {
+    background: var(--paper);
+    border-left-color: var(--brass-fill);
+  }
+
+  /* Concepts */
+  .concepts {
+    display: grid; gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    margin-top: 2rem;
+  }
+  .concept { margin: 0; background: var(--paper); border: 1px solid var(--hairline); }
+  .concept.is-chosen { border: 2px solid var(--brass-fill); }
+  .concept img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: #fff; }
+  .concept figcaption { padding: .9rem 1rem 1.1rem; }
+  .concept p { font-size: .98rem; line-height: 1.5; margin: .35rem 0 .9rem; }
+  .concept h3 { margin-bottom: 0; }
+  .chosen-tag { display: block; }
+  .score { display: flex; align-items: center; gap: .75rem; font-family: var(--display); font-weight: 600; font-size: .95rem; }
+  .bar { flex: 1; height: 10px; background: rgba(34,39,42,.14); }
+  .bar span { display: block; height: 100%; width: var(--v); background: var(--steel-soft); }
+  .is-chosen .bar span { background: var(--brass-fill); }
+  .chosen-tag { color: var(--brass); font-family: var(--display); font-weight: 600; font-size: .85rem; }
+
+  /* Build gallery */
+  .gallery {
+    display: grid; gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    margin-top: 2rem;
+  }
+  .gallery figure { margin: 0; }
+  .gallery img { width: 100%; background: var(--paper); }
+  .photo img { aspect-ratio: 3 / 4; object-fit: cover; }
+  .parts img { height: 250px; object-fit: contain; padding: 1rem; border: 1px solid var(--hairline); }
+  .gallery figcaption { margin-top: .5rem; font-size: .92rem; line-height: 1.45; color: var(--steel-soft); }
+  .parts { margin-top: 1.25rem; }
+
+  /* Results */
+  .test-photo { margin: 0 0 2rem; }
+  .test-photo img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center 40%; }
+  .test-photo figcaption { margin-top: .5rem; font-size: .92rem; color: var(--steel-soft); }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 520px; font-size: 1rem; line-height: 1.4; }
+  caption { text-align: left; font-family: var(--display); font-weight: 700; font-size: 1.1rem; padding-bottom: .6rem; }
+  th, td { text-align: left; padding: .7rem .75rem .7rem 0; border-bottom: 1px solid var(--hairline); vertical-align: top; }
+  thead th { font-family: var(--display); font-weight: 600; font-size: .9rem; color: var(--steel-soft); border-bottom-color: var(--steel); }
+  tbody th { font-family: var(--display); font-weight: 600; font-size: 1rem; }
+  td.pass { font-family: var(--display); font-weight: 700; color: var(--brass); }
+  .cost { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; margin-top: 2.25rem; }
+  @media (min-width: 640px) { .cost { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+  .figure-big { font-family: var(--display); font-weight: 800; font-stretch: 75%; font-size: 2.75rem; line-height: 1; margin: 0 0 .6rem; }
+
+  /* Next steps */
+  .two { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+  @media (min-width: 700px) { .two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+  .plain-list { display: grid; gap: .9rem; }
+  .plain-list li { font-size: 1.02rem; line-height: 1.5; }
+  .plain-list strong { font-family: var(--display); font-weight: 700; }
+
+  /* Team */
+  .team { display: grid; gap: .25rem 2rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+  .team li { padding-block: .55rem; border-bottom: 1px solid var(--hairline); font-size: 1rem; line-height: 1.4; }
+  .team span { display: block; color: var(--steel-soft); font-size: .92rem; }
+
+  footer { padding-block: 2rem 3rem; border-top: 1px solid var(--hairline); }
+  footer p { font-size: .92rem; color: var(--steel-soft); max-width: none; margin: 0; }
+</style>
+</head>
+<body>
+
+<header class="wrap topbar">
+  <!-- Swap this for a link back to your portfolio home page -->
+  <span>Nimsandu Kottage</span>
+  <span>Project summary</span>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>MonoLyft</h1>
+        <p class="lede">A chair that helps people with weak or arthritic knees stand up, using a coil spring instead of a motor. It fits a standard chair frame and needs no electricity.</p>
+        <dl class="facts">
+          <div>
+            <dt>Course</dt>
+            <dd>ME1050 Introduction to Engineering Design and Communication, Year 1 Semester 1, SLIIT</dd>
+          </div>
+          <div>
+            <dt>Team</dt>
+            <dd>Group 07, seven first-year engineering students</dd>
+          </div>
+          <div>
+            <dt>My role</dt>
+            <dd>Project lead and concept generation</dd>
+          </div>
+          <div>
+            <dt>Result</dt>
+            <dd>Grade A, report submitted 12 July 2026</dd>
+          </div>
+        </dl>
+      </div>
+      <figure class="hero-photo">
+        <img src="assets/chair.webp" width="560" height="1054" alt="The MonoLyft prototype: a black steel chair with a wooden seat tilted forward and a coil spring mounted underneath.">
+        <figcaption>The finished prototype with the seat tilted forward.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap row">
+      <h2>The problem</h2>
+      <div>
+        <p>Standing up from a normal 42–48 cm chair asks a lot of the knees. For someone with arthritis or weak leg muscles it can be painful or impossible. That raises the risk of falls and leaves people relying on family members for everyday help.</p>
+        <p>Powered lift chairs exist, but they cost upward of LKR 150,000 and need mains electricity, which puts them out of reach for most Sri Lankan households. Our aim was a low-cost mechanical alternative that fits onto an ordinary chair.</p>
+        <p>We interviewed two elderly people with knee problems. They felt the most pain in the first part of the rise, and sudden, jerky movement made them anxious. So the lift had to be gradual, and it had to assist rather than do all the work.</p>
+        <ul class="targets">
+          <li>Support users up to 80 kg, tested at 150% of the expected load</li>
+          <li>Stay stable on slopes up to 20°</li>
+          <li>Be learnable by a new user in three attempts or fewer</li>
+          <li>Lift smoothly, with no sudden push</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap row">
+      <h2>How it works</h2>
+      <div class="demo" data-state="seated" id="demo">
+        <figure class="schematic">
+          <svg viewBox="0 0 520 330" role="img" aria-label="Side view of the chair. A seat hinged at the back rests on the frame with a coil spring beneath it. When the lock is released the spring pushes the front of the seat upward.">
+            <line x1="40" y1="300" x2="480" y2="300" stroke="#22272A" stroke-opacity=".35" stroke-width="2"/>
+            <line x1="100" y1="262" x2="400" y2="262" stroke="#6B7276" stroke-width="5"/>
+            <path d="M100 180 V300" stroke="#22272A" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M400 300 V36" stroke="#22272A" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <line x1="100" y1="180" x2="400" y2="180" stroke="#22272A" stroke-width="7"/>
+            <path id="spring" d="" fill="none" stroke="#22272A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+            <rect id="lock" x="253" y="246" width="18" height="12" rx="2"/>
+            <g id="seat">
+              <rect x="92" y="164" width="316" height="12" rx="2" fill="#D7B47D" stroke="#22272A" stroke-width="1.5"/>
+            </g>
+            <circle cx="400" cy="170" r="7" fill="#F5F6F3" stroke="#22272A" stroke-width="2.5"/>
+            <text class="svg-label" x="418" y="196">Hinge</text>
+            <text class="svg-label" x="238" y="222" text-anchor="end">Coil spring</text>
+            <text class="svg-label" x="238" y="254" text-anchor="end">Quick-release lock</text>
+          </svg>
+          <div class="controls">
+            <button class="toggle" type="button" id="toggle" aria-pressed="false" hidden>Release the lock</button>
+            <p class="status" id="status" aria-live="polite">Seated: the spring is compressed and locked.</p>
+          </div>
+        </figure>
+        <ol class="steps">
+          <li><strong>Sit down.</strong> Your weight compresses the coil spring under the seat.</li>
+          <li><strong>Lock.</strong> A quick-release clamp lever holds the seat down and keeps the spring’s energy stored.</li>
+          <li><strong>Release.</strong> Open the lock and the spring pushes the seat up and forward, so you rise with less effort.</li>
+          <li><strong>Sit again.</strong> The hinge lowers the seat slowly instead of dropping you.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap row">
+      <h2>Choosing a concept</h2>
+      <div>
+        <p>Each team member sketched their own idea, then we compared them as a group. Three survived: a spring-assisted seat, a scissor-lift base and an electric actuator that raises and tilts the seat. We scored them on five weighted criteria: feasibility, engineering depth, impact, innovativeness and team alignment.</p>
+        <p>The spring won. When we shifted the weights by 10% towards feasibility, which is the actuator’s strongest area, the spring still came first (3.90 against 3.75).</p>
+        <div class="concepts">
+          <figure class="concept is-chosen">
+            <img src="assets/concept-a.webp" width="900" height="635" alt="Sketch of concept A: a seated figure above a hinged seat with a coil spring beneath it.">
+            <figcaption>
+              <h3>A. Spring-assisted seat <span class="chosen-tag">Selected</span></h3>
+              <p>A coil spring stores energy when you sit and releases it as an upward push.</p>
+              <div class="score"><span>4.05</span><div class="bar" aria-hidden="true"><span style="--v: 81%"></span></div></div>
+            </figcaption>
+          </figure>
+          <figure class="concept">
+            <img src="assets/concept-b.webp" width="662" height="447" alt="Sketch of concept B: a seated figure above a scissor-lift frame.">
+            <figcaption>
+              <h3>B. Scissor-lift base</h3>
+              <p>Needs too much height to fold under a normal seat, which made the chair bulky and less stable.</p>
+              <div class="score"><span>3.05</span><div class="bar" aria-hidden="true"><span style="--v: 61%"></span></div></div>
+            </figcaption>
+          </figure>
+          <figure class="concept">
+            <img src="assets/concept-c.webp" width="634" height="448" alt="Sketch of concept C: a seated figure above a seat raised by a linear actuator.">
+            <figcaption>
+              <h3>C. Actuator and hinge tilt</h3>
+              <p>Needs a motor, wiring and a power supply, so it costs more and has more that can fail.</p>
+              <div class="score"><span>3.60</span><div class="bar" aria-hidden="true"><span style="--v: 72%"></span></div></div>
+            </figcaption>
+          </figure>
+        </div>
+        <p class="small" style="margin-top: 1rem;">Scores are weighted totals out of 5.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap row">
+      <h2>Building it</h2>
+      <div>
+        <p>We built the prototype between 12 and 28 June 2026, starting from a scrap steel chair frame. We cut, ground and welded in reinforcements and hinge plates, machined the rods and brackets in the workshop, and used a wire EDM machine to cut precise mounting holes in the brackets. Then we fitted the spring, threaded bars and hex nuts under a wooden seat.</p>
+        <p>The hard parts were alignment and tuning. Hinges that were slightly out of line made the seat bind, and the spring needed repeated adjustment until it helped without pushing abruptly.</p>
+        <div class="gallery photo">
+          <figure>
+            <img src="assets/frame.webp" width="1200" height="1600" alt="A scrap steel chair frame lying in a workshop yard.">
+            <figcaption>The scrap steel chair frame we started with.</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/spring-assembly.webp" width="800" height="1423" alt="Hands fitting a coil spring onto threaded rods on a workshop table.">
+            <figcaption>Fitting the spring onto its threaded bars.</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/cnc.webp" width="800" height="1422" alt="Team members standing at a CNC machine in the workshop." style="object-position: center 62%;">
+            <figcaption>Machining parts at the CNC machine.</figcaption>
+          </figure>
+        </div>
+        <div class="gallery parts">
+          <figure>
+            <img src="assets/spring.webp" width="751" height="666" alt="A coil spring on a threaded rod with a steel cross bar.">
+            <figcaption>The spring on its threaded rod and cross bar.</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/lock.webp" width="800" height="641" alt="Two black quick-release clamp levers with brass pivots.">
+            <figcaption>Quick-release lever clamps for the lock.</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/hinge.webp" width="700" height="1244" alt="The wooden seat attached to the steel frame by two black hinge plates.">
+            <figcaption>The seat hinge at the back of the frame.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap row">
+      <h2>Test results</h2>
+      <div>
+        <figure class="test-photo">
+          <img src="assets/test.webp" width="1200" height="676" alt="A trial participant sitting on the prototype chair on a lawn.">
+          <figcaption>A trial participant sitting on the prototype.</figcaption>
+        </figure>
+        <div class="table-wrap">
+          <table>
+            <caption>Every test met its target</caption>
+            <thead>
+              <tr><th scope="col">Test</th><th scope="col">Target</th><th scope="col">Measured</th><th scope="col">Result</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Load</th><td>Stable structure at 150% of expected load</td><td>Stable under load</td><td class="pass">Pass</td></tr>
+              <tr><th scope="row">Slope stability</th><td>Stable up to 20°</td><td>Stable up to 24°</td><td class="pass">Pass</td></tr>
+              <tr><th scope="row">Learning time</th><td>Fewer than 3 attempts</td><td>2 attempts on average</td><td class="pass">Pass</td></tr>
+              <tr><th scope="row">User trial</th><td>Successful operation</td><td>7 of 7 participants</td><td class="pass">Pass</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="cost">
+          <div>
+            <p class="figure-big">LKR 4,575</p>
+            <p class="small">Total cost including workshop rent and transport. Materials alone came to LKR 2,075, and most parts were second-hand or from local hardware shops. A powered lift chair starts at LKR 150,000.</p>
+          </div>
+          <div>
+            <p class="figure-big">7 of 7</p>
+            <p class="small">trial participants used it successfully. They were general participants, not the elderly users it is designed for, and the prototype hasn’t been certified to a formal safety standard. It is a working prototype, not a finished product.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap row">
+      <h2>Next steps and lessons</h2>
+      <div class="two">
+        <div>
+          <h3>What we would improve</h3>
+          <ul class="plain-list">
+            <li><strong>Adjustable spring.</strong> The current spring gives one fixed level of help. An adjustable one could be tuned to each user’s weight.</li>
+            <li><strong>Test with elderly users.</strong> A larger group from the real target audience.</li>
+            <li><strong>Lighter frame.</strong> Aluminium instead of mild steel, so the chair is easier to move.</li>
+            <li><strong>Better ergonomics.</strong> More padding and lumbar support.</li>
+            <li><strong>Safety certification.</strong> A necessary step before any commercial release.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>What I took from it</h3>
+          <ul class="plain-list">
+            <li><strong>Simple can beat clever.</strong> The spring beat the motorised concept on safety and ease of use, even though the actuator looked more advanced on paper.</li>
+            <li><strong>Sourcing is engineering.</strong> Buying parts on price alone, without checking their rated specification, delayed our assembly.</li>
+            <li><strong>Shared tools settle arguments.</strong> The weighted decision matrix turned “which one should we build?” into a discussion about evidence.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap row">
+      <h2>The team</h2>
+      <div>
+        <ul class="team">
+          <li>Nimsandu Kottage <span>Project lead and concept generation</span></li>
+          <li>S.A.S. Vismini <span>Report writing and documentation</span></li>
+          <li>K.M.G.Y. Thilakarathna <span>Material sourcing and assembly</span></li>
+          <li>P.H. Handaragama <span>Prototype fabrication</span></li>
+          <li>J.L.I. Udana <span>Report writing and documentation</span></li>
+          <li>M.G.K. Yehan <span>Testing and validation</span></li>
+          <li>A. Dissanayake <span>Cost analysis and documentation</span></li>
+        </ul>
+        <p class="small" style="margin-top: 1.25rem;">Supervised by Kumara Jayawickrama.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>ME1050 Introduction to Engineering Design and Communication, Faculty of Engineering, Sri Lanka Institute of Information Technology.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var demo = document.getElementById('demo');
+  var seat = document.getElementById('seat');
+  var spring = document.getElementById('spring');
+  var btn = document.getElementById('toggle');
+  var status = document.getElementById('status');
+  var svg = demo.querySelector('svg');
+
+  var PIVOT = { x: 400, y: 170 };   // seat hinge
+  var ATTACH = { x: 262, y: 176 };  // where the spring meets the seat underside
+  var BASE = { x: 262, y: 259 };    // where the spring sits on the cross bar
+  var MAX_ANGLE = 14;               // degrees the seat tilts when released
+  var COILS = 9, LEAD = 14, WIDTH = 12;
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var angle = 0, frame = null, released = false;
+
+  function draw(deg) {
+    var r = deg * Math.PI / 180;
+    var dx = ATTACH.x - PIVOT.x, dy = ATTACH.y - PIVOT.y;
+    var ax = PIVOT.x + dx * Math.cos(r) - dy * Math.sin(r);
+    var ay = PIVOT.y + dx * Math.sin(r) + dy * Math.cos(r);
+
+    seat.setAttribute('transform', 'rotate(' + deg + ' ' + PIVOT.x + ' ' + PIVOT.y + ')');
+
+    var vx = ax - BASE.x, vy = ay - BASE.y;
+    var len = Math.sqrt(vx * vx + vy * vy);
+    var ux = vx / len, uy = vy / len;
+    var nx = -uy, ny = ux;
+    var span = len - LEAD * 2;
+    var d = 'M' + BASE.x + ' ' + BASE.y;
+    d += ' L' + (BASE.x + ux * LEAD).toFixed(1) + ' ' + (BASE.y + uy * LEAD).toFixed(1);
+    for (var i = 1; i <= COILS * 2; i++) {
+      var t = LEAD + span * (i / (COILS * 2 + 1)) ;
+      var side = (i % 2 === 0 ? -1 : 1) * WIDTH;
+      d += ' L' + (BASE.x + ux * t + nx * side).toFixed(1) + ' ' + (BASE.y + uy * t + ny * side).toFixed(1);
+    }
+    d += ' L' + (ax - ux * LEAD).toFixed(1) + ' ' + (ay - uy * LEAD).toFixed(1);
+    d += ' L' + ax.toFixed(1) + ' ' + ay.toFixed(1);
+    spring.setAttribute('d', d);
+  }
+
+  function go(target, ms) {
+    if (frame) cancelAnimationFrame(frame);
+    if (reduce) { angle = target; draw(angle); return; }
+    var from = angle, t0 = performance.now();
+    (function step(now) {
+      var k = Math.min(1, (now - t0) / ms);
+      var e = 1 - Math.pow(1 - k, 3);
+      angle = from + (target - from) * e;
+      draw(angle);
+      if (k < 1) frame = requestAnimationFrame(step);
+    })(t0);
+  }
+
+  btn.hidden = false;
+  btn.addEventListener('click', function () {
+    released = !released;
+    btn.setAttribute('aria-pressed', String(released));
+    btn.textContent = released ? 'Sit back down' : 'Release the lock';
+    status.textContent = released
+      ? 'Released: the spring pushes the seat up and forward.'
+      : 'Seated: the spring is compressed and locked.';
+    demo.setAttribute('data-state', released ? 'released' : 'seated');
+    svg.classList.toggle('is-released', released);
+    go(released ? MAX_ANGLE : 0, released ? 650 : 1400);
+  });
+
+  draw(0);
+})();
+</script>
+</body>
+</html>
