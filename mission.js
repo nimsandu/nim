@@ -104,13 +104,39 @@
     button.setAttribute('aria-pressed', String(night));
     button.textContent = night ? 'Night mode / switch to day ↔' : 'Day mode / switch to night ↔';
   }));
-  $$('[data-chair-toggle]').forEach(button => button.addEventListener('click', () => {
-    const stage = button.closest('.chair-visual');
-    const released = stage.dataset.released !== 'true';
-    stage.dataset.released = String(released);
-    button.setAttribute('aria-pressed', String(released));
-    button.textContent = released ? 'Compress the spring ↓' : 'Release the spring ↑';
-  }));
+  function drawMiniChair(stage, degrees) {
+    const pivot = { x:142, y:169 }, attach = { x:241, y:175 }, base = { x:241, y:255 };
+    const angle = degrees * Math.PI / 180, dx = attach.x-pivot.x, dy = attach.y-pivot.y;
+    const end = { x:pivot.x+dx*Math.cos(angle)-dy*Math.sin(angle), y:pivot.y+dx*Math.sin(angle)+dy*Math.cos(angle) };
+    stage.querySelector('.mini-seat').setAttribute('transform', `rotate(${degrees} ${pivot.x} ${pivot.y})`);
+    const vx=end.x-base.x, vy=end.y-base.y, length=Math.hypot(vx,vy), ux=vx/length, uy=vy/length;
+    const lead=10, width=8, coils=8, span=length-lead*2;
+    let path=`M${base.x} ${base.y} L${base.x+ux*lead} ${base.y+uy*lead}`;
+    for(let i=1;i<=coils*2;i++) {
+      const distance=lead+span*i/(coils*2+1), side=(i%2?1:-1)*width;
+      path+=` L${base.x+ux*distance-uy*side} ${base.y+uy*distance+ux*side}`;
+    }
+    path+=` L${end.x-ux*lead} ${end.y-uy*lead} L${end.x} ${end.y}`;
+    stage.querySelector('.mini-spring').setAttribute('d',path);
+  }
+  $$('[data-chair-toggle]').forEach(button => {
+    const stage=button.closest('.chair-visual'), state={angle:0,frame:0};
+    drawMiniChair(stage,0);
+    button.addEventListener('click', () => {
+      const released=stage.dataset.released!=='true', target=released?-16:0;
+      stage.dataset.released=String(released);button.setAttribute('aria-pressed',String(released));
+      button.textContent=released?'Compress the spring ↓':'Release the spring ↑';
+      cancelAnimationFrame(state.frame);
+      if(paused||reduced.matches) {state.angle=target;drawMiniChair(stage,target);return;}
+      const from=state.angle,start=performance.now();
+      function step(now) {
+        const fraction=Math.min(1,(now-start)/850),ease=1-Math.pow(1-fraction,3);
+        state.angle=from+(target-from)*ease;drawMiniChair(stage,state.angle);
+        if(fraction<1)state.frame=requestAnimationFrame(step);else state.frame=0;
+      }
+      state.frame=requestAnimationFrame(step);
+    });
+  });
   const disciplines = {
     engineering: { label: 'MATTER / MOTION / CONSTRAINTS', title: 'Understand it.\nThen build it.', copy: 'Mechanical engineering brings the ideas into the physical world: CAD, materials, mechanisms, and prototypes that have to work beyond the screen.', href: '#engineering', link: 'Explore engineering ↗' },
     development: { label: 'LOGIC / SYSTEMS / POSSIBILITY', title: 'Make the complex\nfeel simple.', copy: 'From native Android capabilities and real-time sync to small browser tools. I build systems around the way people actually use them.', href: '/work.html', link: 'Explore software ↗' },

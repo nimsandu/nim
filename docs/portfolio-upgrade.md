@@ -58,3 +58,15 @@ The canvas changes its ink for each palette, including when motion is paused. `t
 The FractalX visual-storytelling video is restored with `img/vid1.png` and its exact original LinkedIn destination from the initial source. The design scene links directly to the film feature. Contact now has a single email panel, a separate copy control with a readable fallback, clear GitHub/LinkedIn/rates destinations and a compact footer.
 
 Additional validation: automatic theme boundaries (05:59/06:00 and 17:59/18:00 Sri Lankan time), midnight, manual overrides, saved preferences, invalid settings and blocked storage; browser theme changes and persistence across pages; all three discipline-to-project mappings; restored film destination equality against the original source; desktop and 390px mobile layouts. Clipboard copying falls back gracefully when the browser denies access. Rates content and client-ID gate logic remain unchanged.
+
+## Identity and MonoLyft correction
+
+About now comes immediately after the landing section, followed by Engineering and Software. The section numbers, header/mobile navigation and exploration link follow that order. The existing SLIIT and Ananda College crests are restored as monochrome education cards, with responsive layouts and readable backgrounds in either theme.
+
+Light mode applies `grayscale(1) invert(1)` to the original hero image. Dark mode keeps its prior treatment.
+
+The MonoLyft mechanism is corrected to pivot at the outer edge opposite the backrest. The detailed diagram now rotates by −14° around (100, 170), keeping that hinge fixed while the backrest-side edge rises. Its spring attachment follows the rotated seat underside. The homepage preview uses the matching outer-edge pivot and continuously recomputes the spring during its movement. The hinge label, image caption, release description and accessible status are corrected to match. Other case-study content is retained.
+
+Validation: JavaScript syntax; direct execution of the actual detailed-demo script with reduced motion to verify the pivot, backrest rise, connected spring, status and reset; section order, both logo sources and light-only inversion; local links/assets/anchors and IDs; desktop and 390px mobile browser checks.
+
+![Corrected MonoLyft mechanism](monolyft-hinge.jpg)

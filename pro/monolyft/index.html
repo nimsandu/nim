@@ -270,8 +270,12 @@
 <link rel="stylesheet" href="/mission.css"/><link rel="stylesheet" href="/monolyft-mission.css"/><link rel="stylesheet" href="/theme.css">
 </head>
 <body class="mission-site monolyft-page"><a class="skip-link" href="#main-content">Skip to content</a><canvas id="starfield" aria-hidden="true"></canvas><div class="reading-progress" aria-hidden="true"></div>
-<header class="site-nav"><a class="wordmark" href="/" aria-label="Nimsandu Kottage home">NK<span>.</span></a><a class="nav-coordinate" href="/#home">EARTH / SRI LANKA</a><nav aria-label="Main navigation"><a href="/work.html" >Software</a><a href="/#engineering">Engineering</a><a href="/#creative">Creative</a><a href="/#about">About</a></nav><a class="nav-contact" href="/#contact">Let’s talk <span>↗</span></a><label class="theme-picker"><span class="sr-only">Colour theme</span><select data-theme-select aria-label="Colour theme"><option value="auto">◐ Auto</option><option value="light">☼ Light</option><option value="dark">◑ Dark</option></select></label><button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button></header>
-<nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" hidden><a href="/work.html">Software <span>01</span></a><a href="/#engineering">Engineering <span>02</span></a><a href="/#creative">Creative <span>03</span></a><a href="/#about">About <span>04</span></a><a href="/#contact">Contact <span>↗</span></a><a href="/rates.html">Rates &amp; policies ↗</a></nav>
+<header class="site-nav"><a class="wordmark" href="/" aria-label="Nimsandu Kottage home">NK<span>.</span></a><a class="nav-coordinate" href="/#home">EARTH / SRI LANKA</a><nav aria-label="Main navigation">
+<a href="/#about">About</a><a href="/#engineering">Engineering</a><a href="/work.html" >Software</a><a href="/#creative">Creative</a>
+</nav><a class="nav-contact" href="/#contact">Let’s talk <span>↗</span></a><label class="theme-picker"><span class="sr-only">Colour theme</span><select data-theme-select aria-label="Colour theme"><option value="auto">◐ Auto</option><option value="light">☼ Light</option><option value="dark">◑ Dark</option></select></label><button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button></header>
+<nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" hidden>
+<a href="/#about">About <span>01</span></a><a href="/#engineering">Engineering <span>02</span></a><a href="/work.html">Software <span>03</span></a><a href="/#creative">Creative <span>05</span></a><a href="/#contact">Contact <span>↗</span></a><a href="/rates.html">Rates &amp; policies ↗</a>
+</nav>
 
 
 
@@ -329,7 +333,7 @@
       <h2>How it works</h2>
       <div class="demo" data-state="seated" id="demo">
         <figure class="schematic">
-          <svg viewBox="0 0 520 330" role="img" aria-label="Side view of the chair. A seat hinged at the back rests on the frame with a coil spring beneath it. When the lock is released the spring pushes the front of the seat upward.">
+          <svg viewBox="0 0 520 330" role="img" aria-label="Side view of the chair. A seat hinged at the outer edge, opposite the backrest, rests on the frame with a coil spring beneath it. When the lock is released the backrest-side edge rises.">
             <line x1="40" y1="300" x2="480" y2="300" stroke="#22272A" stroke-opacity=".35" stroke-width="2"/>
             <line x1="100" y1="262" x2="400" y2="262" stroke="#6B7276" stroke-width="5"/>
             <path d="M100 180 V300" stroke="#22272A" stroke-width="7" stroke-linecap="round" fill="none"/>
@@ -340,8 +344,8 @@
             <g id="seat">
               <rect x="92" y="164" width="316" height="12" rx="2" fill="#D7B47D" stroke="#22272A" stroke-width="1.5"/>
             </g>
-            <circle cx="400" cy="170" r="7" fill="#F5F6F3" stroke="#22272A" stroke-width="2.5"/>
-            <text class="svg-label" x="418" y="196">Hinge</text>
+            <circle cx="100" cy="170" r="7" fill="#F5F6F3" stroke="#22272A" stroke-width="2.5"/>
+            <text class="svg-label" x="60" y="203">Outer-edge hinge</text>
             <text class="svg-label" x="238" y="222" text-anchor="end">Coil spring</text>
             <text class="svg-label" x="238" y="254" text-anchor="end">Quick-release lock</text>
           </svg>
@@ -353,7 +357,7 @@
         <ol class="steps">
           <li><strong>Sit down.</strong> Your weight compresses the coil spring under the seat.</li>
           <li><strong>Lock.</strong> A quick-release clamp lever holds the seat down and keeps the spring’s energy stored.</li>
-          <li><strong>Release.</strong> Open the lock and the spring pushes the seat up and forward, so you rise with less effort.</li>
+          <li><strong>Release.</strong> Open the lock and the spring lifts the backrest-side edge around the outer-edge hinge, tilting the seat forward to help you stand.</li>
           <li><strong>Sit again.</strong> The hinge lowers the seat slowly instead of dropping you.</li>
         </ol>
       </div>
@@ -428,7 +432,7 @@
           </figure>
           <figure>
             <img src="assets/hinge.webp" width="700" height="1244" alt="The wooden seat attached to the steel frame by two black hinge plates.">
-            <figcaption>The seat hinge at the back of the frame.</figcaption>
+            <figcaption>The seat hinge at the outer edge, opposite the backrest.</figcaption>
           </figure>
         </div>
       </div>
@@ -527,10 +531,10 @@
   var status = document.getElementById('status');
   var svg = demo.querySelector('svg');
 
-  var PIVOT = { x: 400, y: 170 };   // seat hinge
+  var PIVOT = { x: 100, y: 170 };   // outer edge, opposite the backrest
   var ATTACH = { x: 262, y: 176 };  // where the spring meets the seat underside
   var BASE = { x: 262, y: 259 };    // where the spring sits on the cross bar
-  var MAX_ANGLE = 14;               // degrees the seat tilts when released
+  var MAX_ANGLE = -14;              // backrest-side edge rises around the fixed outer edge
   var COILS = 9, LEAD = 14, WIDTH = 12;
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -580,7 +584,7 @@
     btn.setAttribute('aria-pressed', String(released));
     btn.textContent = released ? 'Sit back down' : 'Release the lock';
     status.textContent = released
-      ? 'Released: the spring pushes the seat up and forward.'
+      ? 'Released: the backrest-side edge rises; the outer-edge hinge stays fixed.'
       : 'Seated: the spring is compressed and locked.';
     demo.setAttribute('data-state', released ? 'released' : 'seated');
     svg.classList.toggle('is-released', released);
