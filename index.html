@@ -46,7 +46,7 @@
         "sameAs": "https://www.sliit.lk"
       },
       {
-        "@type": "CollageOrHighSchool",
+        "@type": "HighSchool",
         "name": "Ananda College",
         "sameAs": "https://www.anandacollege.edu.lk"
       }
@@ -76,8 +76,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="experience.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="reading-progress" aria-hidden="true"></div>
   <div class="cursor" id="cursor"></div>
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="grain" aria-hidden="true"></div>
@@ -116,9 +119,10 @@
 
   <!-- HERO -->
   <main id="main-content">
-  <section class="hero" id="home">
+  <section class="hero section--ink" id="home">
+    <div class="hero-grid" aria-hidden="true"></div>
     <div class="geo-coord geo-coord--tl" aria-hidden="true"><span>6.9271°N</span><span>79.8612°E</span></div>
-    <div class="geo-coord geo-coord--tr" aria-hidden="true"><span>nimaat.top</span><span>v2.0</span></div>
+    <div class="geo-coord geo-coord--tr" aria-hidden="true"><span>nimaat.top</span><span>Portfolio — 2026</span></div>
 
     <div class="hero-body">
       <div class="hero-left">
@@ -129,7 +133,7 @@
           <span class="os-badge-icon">⬡</span>
           <span class="os-badge-text">Open Source Advocate</span>
           <span class="os-badge-dot">·</span>
-          <span class="os-badge-count">5 of 7 Dev projects public</span>
+          <span class="os-badge-count">Ideas worth sharing</span>
         </div>
         <h1 class="hero-name">
           <span class="hn-1 reveal">Nimsandu</span>
@@ -139,6 +143,7 @@
           <p class="hero-roles">Designer &nbsp;·&nbsp; Developer &nbsp;·&nbsp; Engineer</p>
           <p class="hero-blurb">Crafting at the intersection of three worlds.<br>Always figures a way out.</p>
         </div>
+        <div class="hero-actions reveal"><a class="editorial-button" href="#work">Explore selected work <span>↘</span></a><a class="hero-contact" href="#contact">Let’s talk ↗</a></div>
         <div class="hero-counters reveal">
           <div class="hc-item"><span class="hc-n">100+</span><span class="hc-l">Projects</span></div>
           <div class="hc-div"></div>
@@ -147,25 +152,18 @@
           <div class="hc-item"><span class="hc-n">∞</span><span class="hc-l">Curiosity</span></div>
         </div>
       </div>
-      <div class="hero-right reveal-img">
-        <figure class="hero-fig">
-          <span class="fig-corner fig-corner--tl" aria-hidden="true"></span>
-          <span class="fig-corner fig-corner--tr" aria-hidden="true"></span>
-          <span class="fig-corner fig-corner--bl" aria-hidden="true"></span>
-          <span class="fig-corner fig-corner--br" aria-hidden="true"></span>
-          <div class="hero-img-wrap">
-            <img src="./img/hero.jpg" alt="Nimsandu Kottage - Mechanical Engineering student, developer and designer based in Sri Lanka" class="hero-img bw-img" />
-          </div>
-          <figcaption class="hero-caption">
-            <span>Nimsandu Kottage</span><span>SLIIT — BSC.ME</span>
-          </figcaption>
-        </figure>
+      <div class="hero-right sculpture-wrap">
+        <canvas id="sculpture" aria-hidden="true"></canvas>
+        <div class="sculpture-cross sculpture-cross--a" aria-hidden="true">+</div>
+        <div class="sculpture-cross sculpture-cross--b" aria-hidden="true">+</div>
+        <div class="sculpture-label"><span>FORM STUDY / 001</span><span>ORDER ↔ POSSIBILITY</span></div>
+        <div class="sculpture-controls"><span>Move to influence the field</span><button id="motionToggle" type="button" aria-pressed="false">Pause motion</button></div>
       </div>
     </div>
     <div class="hero-foot">
       <div class="scroll-hint">
         <div class="scroll-track"><div class="scroll-thumb"></div></div>
-        <span><a href="#about">There's More Down Here</a></span>
+        <span><a href="#about">Scroll to discover</a></span>
       </div>
     </div>
   </section>
@@ -250,13 +248,14 @@
           <p class="ab-p">The obsession grew sideways into CAD models and stress simulations, into brand identities and motion graphics, into cloud-oriented service management and AI systems. The best engineers design. The best designers think in systems. The best developers understand constraints. These aren't different fields. They're the same field, wearing different clothes.</p>
           <p class="ab-p">I've taught ICT workshops to curious young Sri Lankans, managed large-scale events, and shipped software, and decided to chase a degree in things that spin, stress, and bend. That's not a contradiction. That's the point.</p>
           <a href="https://buymeacoffee.com/nimsandu" target="_blank" rel="noopener" class="bmc-btn">
-            <img class="bmc-icon" src="./img/coffee.svg" alt="Buy Me a Coffee" class="bmc-logo" />
+            <img class="bmc-icon bmc-logo" src="./img/coffee.svg" alt="" />
             <span>Buy me a coffee</span>
             <span class="bmc-arrow">↗</span>
           </a>
         </div>
 
         <div class="about-creds reveal">
+          <figure class="about-portrait tilt-surface"><img src="./img/hero.jpg" alt="Nimsandu Kottage" loading="lazy"/><figcaption>THE PERSON BEHIND THE PIXELS / SRI LANKA</figcaption></figure>
           <div class="cred-block">
             <span class="cred-label"><span class="cred-plus" aria-hidden="true">+</span> Education</span>
             <div class="cred-inst-row">
@@ -304,212 +303,266 @@
     </div>
   </section>
 
-  <!-- PROJECTS -->
+<!-- PROJECTS -->
   <section class="section" id="work">
     <div class="container">
       <header class="section-head reveal">
-        <div class="sh-tag-row"><span class="geo-plus" aria-hidden="true">✛</span><span class="s-tag">02 — Development</span></div>
+        <div class="sh-tag-row">
+          <span class="geo-plus" aria-hidden="true">✛</span>
+          <span class="s-tag">02 — Development</span>
+        </div>
         <h2 class="s-title">Built Things</h2>
       </header>
-      <div class="proj-grid">
-
-        <!-- PROJECT 01 — VisionTPC FEATURED (full width) -->
-        <article class="proj-card proj-card--featured proj-card--wide reveal">
-          <a href="https://tpcalen.vercel.app" target="_blank" rel="noopener" class="proj-link proj-link--wide">
-            <div class="proj-img-shell proj-img-shell--wide">
-              <img src="./img/pro1.png" alt="VisionTPC — The Poet's Calendar, a Flutter and Firebase poetry journaling app" class="proj-img bw-img" style="margin-top: -20%;" loading="lazy" />
-              <div class="proj-overlay">
-                <div class="proj-overlay-inner">
-                  <span class="proj-overlay-title">View Project ↗</span>
-                  <p class="proj-overlay-desc">A sanctuary for poets. Write freely, without judgment.</p>
-                </div>
-              </div>
-              <span class="proj-num-badge">01</span>
-              <!-- Wide info panel -->
-              <div class="proj-wide-panel">
-                <div class="pwp-inner">
-                  <div class="pwp-left">
-                    <span class="pwp-num">Project 01</span>
-                    <h3 class="pwp-title">The Poet's<br>Calendar</h3>
-                    <p class="pwp-tagline"><em>"Because poetry isn't just written. It's lived."</em></p>
-                  </div>
-                  <div class="pwp-right">
-                    <p class="pwp-desc">A space created for those who find solace in poetry. Whether you're capturing fleeting thoughts, penning down emotions, or weaving stories through verse, your words are safe, organized, and always within reach.</p>
-                    <div class="pwp-tags"><span>React</span><span>Firebase</span><span>PWA</span><span>Poetry</span></div>
-                    <a href="#" class="pwp-cta">View Project ↗</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="proj-foot">
-              <div class="pf-text">
-                <h3 class="pf-title">Project VisionTPC</h3>
-                <p class="pf-subtitle">The Poet's Calendar</p>
-                <p class="pf-stack">React · JavaScript · Firebase</p>
-              </div>
-              <span class="pf-arrow">↗</span>
-            </div>
-          </a>
-        </article>
-
-        <article class="proj-card reveal">
-          <a href="./pro/clk-t.html" class="proj-link" target="_blank" rel="noopener">
-            <div class="proj-img-shell">
-              <img src="./img/pro2.png" alt="CozyClock V02 — CSS and JavaScript" class="proj-img bw-img" loading="lazy" />
-              <div class="proj-overlay"><div class="proj-overlay-inner"><span class="proj-overlay-title">View Project ↗</span></div></div>
-              <span class="proj-num-badge">02</span>
-              <a href="https://github.com/nimsandu/nim/blob/952e05af5c1b08808d0a2eb41116adafb10dec32/pro/clk-t.html" class="proj-os-link" target="_blank" rel="noopener">
-              <span class="proj-os-pill">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-                </svg>View Source</span>
-              </a>
-            </div>
-            <div class="proj-foot">
-              <div class="pf-text"><h3 class="pf-title">CozyClock V02</h3><p class="pf-stack">HTML · JavaScript · CSS</p></div>
-              <span class="pf-arrow">↗</span>
-            </div>
-          </a>
-          <div class="proj-hover-card proj-hover-card--std">
-            <div class="phc-inner">
-              <span class="phc-num">02</span>
-              <h4 class="phc-title">CozyClock V02</h4>
-              <p class="phc-desc">A sleek and intuitive clock application built with modern web technologies. Features a clean design and smooth user experience with an inbuilt Page Timer ideal for cozy reading sessions.</p>
-              <div class="phc-tags"><span>CSS</span><span>JavaScript</span><span>HTML</span></div>
-            </div>
+      <article class="semapp-feature reveal">
+        <div class="semapp-copy">
+          <span class="eyebrow">FEATURED BUILD / 2026</span>
+          <h3>Everything in sync.<br>
+            <em>Everywhere you go.</em>
+          </h3>
+          <p class="semapp-name">FoE-SemApp</p>
+          <p>A fully automated app that moves with you. Native Android capabilities meet a cross-platform progressive web app, with real-time sync keeping everything connected.</p>
+          <div class="feature-tags">
+            <span>Native notifications</span>
+            <span>Biometrics</span>
+            <span>Android widgets</span>
+            <span>Real-time sync</span>
           </div>
-        </article>
-
-        <article class="proj-card reveal">
-          <a href="./pro/pt.html" class="proj-link" target="_blank" rel="noopener">
-            <div class="proj-img-shell">
-              <img src="./img/pro3.png" alt="PageTimer V02 — CSS and JavaScript" class="proj-img bw-img" loading="lazy" />
-              <div class="proj-overlay"><div class="proj-overlay-inner"><span class="proj-overlay-title">View Project ↗</span></div></div>
-              <span class="proj-num-badge">03</span>
-              <a href="https://github.com/nimsandu/nim/blob/952e05af5c1b08808d0a2eb41116adafb10dec32/pro/pt.html" class="proj-os-link" target="_blank" rel="noopener">
-              <span class="proj-os-pill"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>View Source</span>
-              </a>
-            </div>
-            <div class="proj-foot">
-              <div class="pf-text"><h3 class="pf-title">PageTimer V02</h3><p class="pf-stack">HTML · JavaScript · CSS</p></div>
-              <span class="pf-arrow">↗</span>
-            </div>
+          <p class="stack-note">REACT / VITE / FIREBASE / ANDROID / PWA</p>
+          <a class="editorial-button" href="https://semapp.nimaat.top" target="_blank" rel="noopener">Explore FoE-SemApp <span>↗</span>
           </a>
-          <div class="proj-hover-card proj-hover-card--std">
-            <div class="phc-inner">
-              <span class="phc-num">03</span>
-              <h4 class="phc-title">PageTimer V02</h4>
-              <p class="phc-desc">Web platform built with JavaScripts with the purpose of providing a simple timer that help users to assign individual timers for each page they complete, boosting productivity.</p>
-              <div class="phc-tags"><span>CSS</span><span>JavaScript</span><span>HTML</span></div>
-            </div>
-          </div>
-        </article>
-
-        <article class="proj-card reveal">
-          <a href="./pro/cal2.html" class="proj-link" target="_blank" rel="noopener">
-            <div class="proj-img-shell">
-              <img src="./img/pro4.png" alt="CalendarClock — The Productivity Clock intigrated with Google Calendar" class="proj-img bw-img" loading="lazy" />
-              <div class="proj-overlay"><div class="proj-overlay-inner"><span class="proj-overlay-title">View Project ↗</span></div></div>
-              <span class="proj-num-badge">04</span>
-                <a href="https://github.com/nimsandu/nim/blob/952e05af5c1b08808d0a2eb41116adafb10dec32/pro/cal2.html" class="proj-os-link" target="_blank" rel="noopener">
-                    <span class="proj-os-pill"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>View Source</span>
-                </a>
-            </div>
-            <div class="proj-foot">
-              <div class="pf-text"><h3 class="pf-title">CalendarClock</h3><p class="pf-stack">Google Calendar · JS · CSS</p></div>
-              <span class="pf-arrow">↗</span>
-            </div>
-          </a>
-          <div class="proj-hover-card proj-hover-card--std">
-            <div class="phc-inner">
-              <span class="phc-num">04</span>
-              <h4 class="phc-title">CalendarClock</h4>
-              <p class="phc-desc">Cross-platform Responsive WebApp That combines a Clock with the your own Google Calendar and a customizable background which even goole does not provide for their calendar.</p>
-              <div class="phc-tags"><span>Google Calendar</span><span>JS</span><span>CSS</span></div>
-            </div>
-          </div>
-        </article>
-
-        <article class="proj-card reveal">
-          <a href="./pro/clock.html" class="proj-link" target="_blank" rel="noopener">
-            <div class="proj-img-shell">
-              <img src="./img/pro5.png" alt="CozyClock V01 — CSS and JavaScript" class="proj-img bw-img" loading="lazy" />
-              <div class="proj-overlay"><div class="proj-overlay-inner"><span class="proj-overlay-title">View Project ↗</span></div></div>
-              <span class="proj-num-badge">05</span>
-              <a href="https://github.com/nimsandu/nim/blob/952e05af5c1b08808d0a2eb41116adafb10dec32/pro/clock.html" class="proj-os-link" target="_blank" rel="noopener">
-              <span class="proj-os-pill"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>View Source</span>
-              </a>
-            </div>
-            <div class="proj-foot">
-              <div class="pf-text"><h3 class="pf-title">CozyClock V01</h3><p class="pf-stack">HTML · JavaScript · CSS</p></div>
-              <span class="pf-arrow">↗</span>
-            </div>
-          </a>
-          <div class="proj-hover-card proj-hover-card--std">
-            <div class="phc-inner">
-              <span class="phc-num">05</span>
-              <h4 class="phc-title">CozyClock V01</h4>
-              <p class="phc-desc">A minimal clock application built with modern web technologies. Features a clean design and an inbuilt Page Timer ideal for OLED Screens.</p>
-              <div class="phc-tags"><span>CSS</span><span>JavaScript</span><span>HTML</span></div>
-            </div>
-          </div>
-        </article>
-
-        <article class="proj-card reveal">
-          <a href="./pro/pgt.html" class="proj-link" target="_blank" rel="noopener">
-            <div class="proj-img-shell">
-              <img src="./img/pro6.png" alt="PageTimer V02 — CSS and JavaScript" class="proj-img bw-img" loading="lazy" />
-              <div class="proj-overlay"><div class="proj-overlay-inner"><span class="proj-overlay-title">View Project ↗</span></div></div>
-              <span class="proj-num-badge">06</span>
-                  <a href="https://github.com/nimsandu/nim/blob/952e05af5c1b08808d0a2eb41116adafb10dec32/pro/pgt.html" class="proj-os-link" target="_blank" rel="noopener">
-              <span class="proj-os-pill"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>View Source</span>
-              </a>
-            </div>
-            <div class="proj-foot">
-              <div class="pf-text"><h3 class="pf-title">PageTimer V01</h3><p class="pf-stack">HTML · JavaScript · CSS</p></div>
-              <span class="pf-arrow">↗</span>
-            </div>
-          </a>
-          <div class="proj-hover-card proj-hover-card--std">
-            <div class="phc-inner">
-              <span class="phc-num">06</span>
-              <h4 class="phc-title">PageTimer V01</h4>
-              <p class="phc-desc">Web platform built with JavaScripts with the purpose of providing a simple timer that help users to assign individual timers for each page they complete, boosting productivity.</p>
-              <div class="phc-tags"><span>CSS</span><span>JavaScript</span><span>HTML</span></div>
-            </div>
-          </div>
-        </article>
-
-        <article class="proj-card reveal">
-          <a href="https://countexp-sk.vercel.app" class="proj-link" target="_blank" rel="noopener">
-            <div class="proj-img-shell">
-              <img src="./img/pro7.png" alt="Countries Explorer" class="bw-img proj-img proj-img--contain bw-img" loading="lazy" />
-              <div class="proj-overlay"><div class="proj-overlay-inner"><span class="proj-overlay-title">View Project ↗</span></div></div>
-              <span class="proj-num-badge">07</span>
-              <span class="proj-closed-pill">⬛ Closed Source</span>
-            </div>
-            <div class="proj-foot">
-              <div class="pf-text"><h3 class="pf-title">Countries Explorer</h3><p class="pf-stack">Web · React · Clerk · Firebase</p></div>
-              <span class="pf-arrow">↗</span>
-            </div>
-          </a>
-          <div class="proj-hover-card proj-hover-card--std">
-            <div class="phc-inner">
-              <span class="phc-num">07</span>
-              <h4 class="phc-title">Countries Explorer</h4>
-              <p class="phc-desc">A full-stack web platform integrating Clerk auth, Firebase, and Axios for a rich country data experience. Part of VisionProjects.</p>
-              <div class="phc-tags"><span>React</span><span>Clerk</span><span>Firebase</span><span>Axios</span></div>
-            </div>
-          </div>
-        </article>
-
+        </div>
+        <div class="semapp-stage tilt-surface">
+          <div class="stage-orbit" aria-hidden="true"></div>
+          <img src="./img/semapp-placeholder.svg" alt="FoE-SemApp placeholder artwork — replace with an app screenshot" loading="lazy">
+          <span class="stage-caption">FoE-SemApp / image coming soon</span>
+        </div>
+      </article>
+      <div class="work-toolbar">
+        <p class="eyebrow">THE PROJECT INDEX</p>
+        <div class="work-filters" role="group" aria-label="Filter projects">
+          <button type="button" data-filter="all" aria-pressed="true">All work</button>
+          <button type="button" data-filter="apps" aria-pressed="false">Apps</button>
+          <button type="button" data-filter="tools" aria-pressed="false">Tools</button>
+          <button type="button" data-filter="experiments" aria-pressed="false">Experiments</button>
+        </div>
+        <span class="sr-only" id="filterStatus" aria-live="polite"></span>
       </div>
-            <div class="vp-footer-note reveal">
-        <span class="geo-plus" aria-hidden="true">✛</span>
-        <p>An Open-Learning Initiative is currently under development. with the vision to make educational content accessible to everyone, with contributions from the community. Check back soon to contribute.</p>
+      <div class="project-index">
+        <article class="index-card reveal" data-category="apps">
+          <a class="index-visual" href="https://tpcalen.vercel.app" target="_blank" rel="noopener">
+            <img src="./img/pro1.png" alt="VisionTPC preview" loading="lazy">
+            <span class="index-number">01</span>
+            <span class="index-visit">OPEN PROJECT ↗</span>
+          </a>
+          <div class="index-meta">
+            <a href="https://tpcalen.vercel.app" target="_blank" rel="noopener">
+              <h3>VisionTPC <span>↗</span>
+              </h3>
+            </a>
+            <p>A quiet home for poetry, thoughts, and the things worth keeping.</p>
+            <div class="index-bottom">
+              <span>React · Firebase</span>
+              <span>Web app</span>
+            </div>
+          </div>
+        </article>
+        <article class="index-card reveal" data-category="tools">
+          <a class="index-visual" href="./pro/clk-t.html" target="_blank" rel="noopener">
+            <img src="./img/pro2.png" alt="CozyClock V02 preview" loading="lazy">
+            <span class="index-number">02</span>
+            <span class="index-visit">OPEN PROJECT ↗</span>
+          </a>
+          <div class="index-meta">
+            <a href="./pro/clk-t.html" target="_blank" rel="noopener">
+              <h3>CozyClock V02 <span>↗</span>
+              </h3>
+            </a>
+            <p>A rainy, ambient workspace with a clock and focus tools.</p>
+            <div class="index-bottom">
+              <span>HTML · CSS · JavaScript</span>
+              <a href="https://github.com/nimsandu/nim/blob/main/pro/clk-t.html" target="_blank" rel="noopener" aria-label="View source for CozyClock V02">Source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="index-card reveal" data-category="experiments">
+          <a class="index-visual" href="./pro/BitPaint.html" target="_blank" rel="noopener">
+            <div class="project-art art-3" aria-hidden="true">
+              <span>01</span>
+              <small>ONE BIT. ENDLESS IDEAS.</small>
+            </div>
+            <span class="index-number">03</span>
+            <span class="index-visit">OPEN PROJECT ↗</span>
+          </a>
+          <div class="index-meta">
+            <a href="./pro/BitPaint.html" target="_blank" rel="noopener">
+              <h3>BitPaint <span>↗</span>
+              </h3>
+            </a>
+            <p>A tiny 1-bit sketchpad. Draw, fill, and make something with less.</p>
+            <div class="index-bottom">
+              <span>Canvas · JavaScript</span>
+              <a href="https://github.com/nimsandu/nim/blob/main/pro/BitPaint.html" target="_blank" rel="noopener" aria-label="View source for BitPaint">Source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="index-card reveal" data-category="experiments">
+          <a class="index-visual" href="./pro/scrap-cut.html" target="_blank" rel="noopener">
+            <div class="project-art art-4" aria-hidden="true">
+              <span>✂</span>
+              <small>CUT / COMPOSE / CREATE</small>
+            </div>
+            <span class="index-number">04</span>
+            <span class="index-visit">OPEN PROJECT ↗</span>
+          </a>
+          <div class="index-meta">
+            <a href="./pro/scrap-cut.html" target="_blank" rel="noopener">
+              <h3>Scrapbook Cutout Shop <span>↗</span>
+              </h3>
+            </a>
+            <p>Turn words into pastel paper cutouts, with stickers, tape, and doodles.</p>
+            <div class="index-bottom">
+              <span>Canvas · JavaScript</span>
+              <a href="https://github.com/nimsandu/nim/blob/main/pro/scrap-cut.html" target="_blank" rel="noopener" aria-label="View source for Scrapbook Cutout Shop">Source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="index-card reveal" data-category="experiments">
+          <a class="index-visual" href="./pro/ran-mizer.html" target="_blank" rel="noopener">
+            <div class="project-art art-5" aria-hidden="true">
+              <span>Aa</span>
+              <small>LETTERS, REIMAGINED.</small>
+            </div>
+            <span class="index-number">05</span>
+            <span class="index-visit">OPEN PROJECT ↗</span>
+          </a>
+          <div class="index-meta">
+            <a href="./pro/ran-mizer.html" target="_blank" rel="noopener">
+              <h3>Cutout Word Randomizer <span>↗</span>
+              </h3>
+            </a>
+            <p>Words snipped from imaginary newspapers and magazines.</p>
+            <div class="index-bottom">
+              <span>Canvas · Typography</span>
+              <a href="https://github.com/nimsandu/nim/blob/main/pro/ran-mizer.html" target="_blank" rel="noopener" aria-label="View source for Cutout Word Randomizer">Source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="index-card reveal" data-category="tools">
+          <a class="index-visual" href="./pro/pt.html" target="_blank" rel="noopener">
+            <img src="./img/pro3.png" alt="Study Timer preview" loading="lazy">
+            <span class="index-number">06</span>
+            <span class="index-visit">OPEN PROJECT ↗</span>
+          </a>
+          <div class="index-meta">
+            <a href="./pro/pt.html" target="_blank" rel="noopener">
+              <h3>Study Timer <span>↗</span>
+              </h3>
+            </a>
+            <p>An individual timer for each page. Small steps, steady progress.</p>
+            <div class="index-bottom">
+              <span>HTML · CSS · JavaScript</span>
+              <a href="https://github.com/nimsandu/nim/blob/main/pro/pt.html" target="_blank" rel="noopener" aria-label="View source for Study Timer">Source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="index-card reveal" data-category="tools">
+          <a class="index-visual" href="./pro/pgt.html" target="_blank" rel="noopener">
+            <img src="./img/pro6.png" alt="Page Goal Timer preview" loading="lazy">
+            <span class="index-number">07</span>
+            <span class="index-visit">OPEN PROJECT ↗</span>
+          </a>
+          <div class="index-meta">
+            <a href="./pro/pgt.html" target="_blank" rel="noopener">
+              <h3>Page Goal Timer <span>↗</span>
+              </h3>
+            </a>
+            <p>Break a study session into pages and keep your goal in sight.</p>
+            <div class="index-bottom">
+              <span>HTML · CSS · JavaScript</span>
+              <a href="https://github.com/nimsandu/nim/blob/main/pro/pgt.html" target="_blank" rel="noopener" aria-label="View source for Page Goal Timer">Source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="index-card reveal" data-category="tools">
+          <a class="index-visual" href="./pro/cal2.html" target="_blank" rel="noopener">
+            <img src="./img/pro4.png" alt="CalendarClock preview" loading="lazy">
+            <span class="index-number">08</span>
+            <span class="index-visit">OPEN PROJECT ↗</span>
+          </a>
+          <div class="index-meta">
+            <a href="./pro/cal2.html" target="_blank" rel="noopener">
+              <h3>CalendarClock <span>↗</span>
+              </h3>
+            </a>
+            <p>Your calendar, a clock, and a background that feels like you.</p>
+            <div class="index-bottom">
+              <span>Google Calendar · JavaScript</span>
+              <a href="https://github.com/nimsandu/nim/blob/main/pro/cal2.html" target="_blank" rel="noopener" aria-label="View source for CalendarClock">Source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="index-card reveal" data-category="tools">
+          <a class="index-visual" href="./pro/clock.html" target="_blank" rel="noopener">
+            <img src="./img/pro5.png" alt="CozyClock V01 preview" loading="lazy">
+            <span class="index-number">09</span>
+            <span class="index-visit">OPEN PROJECT ↗</span>
+          </a>
+          <div class="index-meta">
+            <a href="./pro/clock.html" target="_blank" rel="noopener">
+              <h3>CozyClock V01 <span>↗</span>
+              </h3>
+            </a>
+            <p>An understated clock and page timer for a quieter desktop.</p>
+            <div class="index-bottom">
+              <span>HTML · CSS · JavaScript</span>
+              <a href="https://github.com/nimsandu/nim/blob/main/pro/clock.html" target="_blank" rel="noopener" aria-label="View source for CozyClock V01">Source ↗</a>
+            </div>
+          </div>
+        </article>
+        <article class="index-card reveal" data-category="apps">
+          <a class="index-visual" href="https://countexp-sk.vercel.app" target="_blank" rel="noopener">
+            <img src="./img/pro7.png" alt="Countries Explorer preview" loading="lazy">
+            <span class="index-number">10</span>
+            <span class="index-visit">OPEN PROJECT ↗</span>
+          </a>
+          <div class="index-meta">
+            <a href="https://countexp-sk.vercel.app" target="_blank" rel="noopener">
+              <h3>Countries Explorer <span>↗</span>
+              </h3>
+            </a>
+            <p>Explore country data through a React web application.</p>
+            <div class="index-bottom">
+              <span>React · Clerk · Firebase</span>
+              <span>Web app</span>
+            </div>
+          </div>
+        </article>
+        <article class="index-card reveal" data-category="experiments">
+          <a class="index-visual" href="./pro/asg-sus.html" target="_blank" rel="noopener">
+            <div class="project-art art-11" aria-hidden="true">
+              <span>☼</span>
+              <small>ILLUMINATING THE MARGINS</small>
+            </div>
+            <span class="index-number">11</span>
+            <span class="index-visit">OPEN PROJECT ↗</span>
+          </a>
+          <div class="index-meta">
+            <a href="./pro/asg-sus.html" target="_blank" rel="noopener">
+              <h3>Illuminating the Margins <span>↗</span>
+              </h3>
+            </a>
+            <p>An interactive overview of solar-powered rural street lighting.</p>
+            <div class="index-bottom">
+              <span>Sustainable Engineering · Web</span>
+              <a href="https://github.com/nimsandu/nim/blob/main/pro/asg-sus.html" target="_blank" rel="noopener" aria-label="View source for Illuminating the Margins">Source ↗</a>
+            </div>
+          </div>
+        </article>
       </div>
+      <p class="work-endnote">Small tools. Personal experiments. Things I wanted to exist.</p>
     </div>
   </section>
+
 
   <!-- OPEN SOURCE -->
   <section class="section section--os" id="opensource">
@@ -517,7 +570,7 @@
       <header class="section-head reveal">
         <div class="sh-tag-row"><span class="geo-plus" aria-hidden="true">✛</span><span class="s-tag">03 — Open Source</span></div>
         <h2 class="s-title os-title">Built in the<br><em>Open</em></h2>
-        <p class="os-intro reveal">5 of 7 projects are publicly available. Open source isn't a checkbox - it's a commitment to the community that shaped these skills.</p>
+        <p class="os-intro reveal">From small browser experiments to community-built themes, the source is open to explore. Open source isn't a checkbox - it's a commitment to the community that shaped these skills.</p>
       </header>
 
       <!-- SPICETIFY BLOOM HERO CARD -->
@@ -610,10 +663,10 @@
           <div class="os-contrib-card">
             <div class="occ-top">
               <span class="occ-icon">⬡</span>
-              <span class="occ-badge">5 of 7 Projects Public</span>
+              <span class="occ-badge">Open Browser Projects</span>
             </div>
             <h5 class="occ-name">Personal Projects</h5>
-            <p class="occ-desc">All major personal projects, from mobile apps to web tools, are publicly available on GitHub. Code that's built to be shared, studied, and built upon.</p>
+            <p class="occ-desc">The browser tools in this portfolio are publicly available on GitHub. Code that's built to be shared, studied, and built upon.</p>
             <a href="https://github.com/nimsandu" target="_blank" rel="noopener" class="occ-link">github.com/nimsandu ↗</a>
           </div>
           <div class="os-contrib-card os-contrib-card--cta">
@@ -846,13 +899,13 @@
   <footer class="footer">
     <div class="container footer-inner">
       <span class="ft-logo">NK.</span>
-      <span class="ft-copy">© 2025 Nimsandu Kottage · nimaat.top · Made by Nimsandu · Refined with AI</span>
+      <span class="ft-copy">© 2026 Nimsandu Kottage · nimaat.top · Made by Nimsandu · Refined with AI</span>
       <a href="./rates.html" target="_blank" class="ft-rates">Rates &amp; Policies ↗</a>
     </div>
   </footer>
 
   <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog">
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Creative work preview">
     <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
     <div class="lightbox-inner">
       <button class="lightbox-close" id="lightboxClose" aria-label="Close image">✕</button>
@@ -863,7 +916,7 @@
     </div>
   </div>
 
-  <script src="index.js"></script>
+  <script src="index.js" defer></script>
   <script src="https://cdn.wolfigs.com/webnak.js" data-site="ilk_38b2e9fbfaa03ff369c9"></script>
 </body>
 </html>
