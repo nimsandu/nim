@@ -1,35 +1,46 @@
-# Kinetic portfolio edition
+# Mission portfolio
 
-This upgrade extends the existing monochrome editorial design with a 3D particle field, a featured FoE-SemApp presentation, and an updated project index. The site remains plain HTML, CSS and JavaScript and can be served directly through GitHub Pages.
+A complete redesign of the portfolio around a monochrome mission-through-space aesthetic. The main site, software archive and engineering case studies share navigation, typography, a star field, motion settings and a mission status bar. It remains a static site, with no build step or runtime dependencies.
 
-![Desktop preview](preview.jpg)
+![Mission landing](preview.jpg)
 
-## Files
+![Engineering missions](engineering-preview.jpg)
 
-- `index.html`: existing portfolio content, new hero, SemApp feature and project index.
-- `index.css`: retained original design system.
-- `experience.css`: monochrome tokens, kinetic edition styles and responsive layouts.
-- `index.js`: dependency-free interactions and 3D projection onto a 2D canvas.
-- `img/semapp-placeholder.svg`: intentionally illustrative artwork, not actual application UI.
+## Pages
 
-## Replace the SemApp image
+- `/`: portrait-led landing, interactive orbital sculpture, engineering projects, featured software, interactive discipline console, open source, creative gallery and contact.
+- `/work.html`: software archive. Ten project entries plus the featured FoE-SemApp make eleven software projects. Category filters operate on the ten-entry index.
+- `/engineering/illuminating-margins.html`: a simple case study with the A+ result, project summary, team-photo placeholder, report area, and the original interactive overview in an expandable iframe. A separate link opens the overview in a new tab.
+- `/pro/monolyft/`: the user's complete case study, reframed in the shared mission shell. Its text, prototype photographs, results and working spring demo are retained. The homepage records its Y1S1 grade A.
+- `/pro/asg-sus.html`: the original interactive overview, retained unchanged.
 
-Add your screenshot to `img/`, then change the `src` and `alt` of the image inside `.semapp-stage` in `index.html`. Remove the “image coming soon” caption when using the real screenshot. `object-fit: contain` preserves the entire image.
+## Asset handoff
 
-## Interaction details
+Edit `mission-config.js` after adding the assets:
 
-The particle field rotates slowly, responds to pointer movement and ripples when pressed. Its render loop stops outside the viewport, when the document is hidden, or when paused. Rendering is capped near 30 frames per second and device pixel ratio is capped at 1.7. The operating system's reduced-motion preference disables animation by default; the explicit control permits resuming it.
+```js
+window.MISSION_ASSETS = Object.freeze({
+  semAppImage: '/img/semapp-screenshot.png',
+  illuminatingReport: '/reports/illuminating-margins.pdf',
+  illuminatingTeamImage: '/img/illuminating-team.jpg',
+});
+```
 
-Project filters use semantic buttons with pressed state and a live result count. All nine HTML applications currently in `pro/` are linked, alongside VisionTPC and Countries Explorer. FoE-SemApp links to https://semapp.nimaat.top and is described with React, Vite, Firebase, native Android notifications, biometrics, widgets, PWA support and real-time synchronization.
+These example paths are instructions, not files included in this change. Keep a value `null` until its actual file is added. The project report PDF was not found in the repository or the available file search. The site shows an honest “coming soon” label instead of a broken download link. Once configured, the real download anchor is displayed with the `download` attribute, and the pending notice disappears. The team image and SemApp screenshot likewise replace their placeholders automatically.
 
-The creative image viewer supports keyboard activation, Escape, trapped modal focus and focus restoration. The mobile navigation keeps hidden links out of the tab order and closes after navigation. Content remains readable if JavaScript is unavailable.
+## Interaction and accessibility
+
+- The particle sculpture morphs between an orbit, a spherical core and a helix, with drag rotation and click disturbance. Orbital paths and tracked satellites give it spatial context.
+- The portrait fades horizontally toward the scene on desktop; mobile uses a vertical fade beneath the name. The source photograph is unchanged.
+- Engineering cards expose day/night solar and spring-release previews through keyboard-operable buttons.
+- The discipline console switches between engineering, development and design content.
+- Software filters announce their result count. Native dialog semantics provide creative preview focus handling, Escape and focus return.
+- Contact supports copying the email address, with a readable fallback if clipboard access fails.
+- Motion respects the system preference, can be paused, and keeps that choice for the browser session. Background-tab animation stops; the sculpture skips rendering outside the viewport. Rendering is capped near 30 FPS and 1.6 device pixel ratio, with fewer stars and particles on small screens.
+- The main content remains readable without JavaScript. Mobile navigation keeps background content inert while open.
 
 ## Validation
 
-- JavaScript syntax: `node --check index.js`.
-- Source checks: local links and assets exist; section anchors resolve; IDs are unique; no nested anchors; all `pro/*.html` projects are listed.
-- Whitespace: `git -c core.whitespace=cr-at-eol diff --check` (original HTML uses CRLF).
-- Browser QA: desktop hero and SemApp layouts, motion toggle, all/experiment filters (11/4 results), creative gallery open/Escape close, 390px embedded mobile viewport, mobile menu open/navigation/close, mobile horizontal overflow and image loading.
-- Existing project applications, custom-domain configuration and auxiliary pages are retained.
+JavaScript syntax; local routes, assets and cross-page anchors; unique IDs and no nested links. Browser checks cover desktop and 390px embedded mobile layouts, sculpture forms and pause, engineering controls, discipline switching, archive filters (10 total / 3 experiments), creative dialog open/Escape, the embedded overview and expand control, MonoLyft's original spring demo, mobile menu navigation, loaded images and horizontal overflow.
 
-The retained third-party analytics script and external font loading are unchanged. Existing figures and claims in the older open-source and VisionProjects sections are retained from the previous site. This change does not add a live GitHub statistics integration.
+The report PDF, team photo and actual SemApp screenshot still need to be supplied. The academic grades are supplied by the user. The Illuminating summary describes the proposal and avoids presenting estimated benefits in the older interactive map as measured project outcomes.
