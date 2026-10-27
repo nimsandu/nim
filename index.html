@@ -1,36 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- ── PRIMARY META ───────────────────────────────────────── -->
-  <title>Nimsandu Kottage - Designer, Developer & Engineering UG</title>
-  <meta name="description" content="Nimsandu Kottage is a Mechanical Engineering student, software developer, and graphic designer based in Sri Lanka. Building at the intersection of engineering, design, and code." />
-  <meta name="author" content="Nimsandu Kottage" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://nimaat.top/" />
-
-  <!-- ── OPEN GRAPH (Facebook, LinkedIn, WhatsApp, etc.) ────── -->
-  <meta property="og:type"        content="website" />
-  <meta property="og:url"         content="https://nimaat.top/" />
-  <meta property="og:title"       content="Nimsandu Kottage — Designer, Developer & Mechanical Engineering (UG)" />
-  <meta property="og:description" content="Mechanical Engineering student, software developer, and graphic designer based in Sri Lanka. Building at the intersection of engineering, design, and code." />
-  <meta property="og:image"       content="https://nimaat.top/img/socialcard.png" />
-  <meta property="og:image:width"  content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:site_name"   content="Nimsandu Kottage" />
-  <meta property="og:locale"      content="en_US" />
-
-  <!-- ── TWITTER / X CARD ──────────────────────────────────── -->
-  <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:url"         content="https://nimaat.top/" />
-  <meta name="twitter:title"       content="Nimsandu Kottage - Designer, Developer & Engineering UG" />
-  <meta name="twitter:description" content="Mechanical Engineering student, software developer, and graphic designer based in Sri Lanka. Building at the intersection of engineering, design, and code." />
-  <meta name="twitter:image"       content="https://nimaat.top/img/socialcard.png" />
-
-  <!-- ── JSON-LD STRUCTURED DATA ───────────────────────────── -->
-  <script type="application/ld+json">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ── PRIMARY META ───────────────────────────────────────── -->
+    <title>Nimsandu Kottage — Design, Code &amp; Mechanical Engineering</title>
+    <meta name="description" content="Design, software and mechanical engineering by Nimsandu Kottage. Explore projects, prototypes and visual work from Sri Lanka.">
+    <meta name="author" content="Nimsandu Kottage">
+    <meta name="robots" content="index, follow">
+    <!-- ── OPEN GRAPH (Facebook, LinkedIn, WhatsApp, etc.) ────── -->
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://nimaat.top/img/socialcard.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Nimsandu Kottage">
+    <meta property="og:locale" content="en_US">
+    <!-- ── TWITTER / X CARD ──────────────────────────────────── -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://nimaat.top/">
+    <meta name="twitter:title" content="Nimsandu Kottage - Designer, Developer &amp; Engineering UG">
+    <meta name="twitter:description" content="Mechanical Engineering student, software developer, and graphic designer based in Sri Lanka. Building at the intersection of engineering, design, and code.">
+    <meta name="twitter:image" content="https://nimaat.top/img/socialcard.png">
+    <!-- ── JSON-LD STRUCTURED DATA ───────────────────────────── -->
+    <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -66,857 +58,466 @@
     ]
   }
   </script>
-
-  <!-- ── FAVICON ────────────────────────────────────────────── -->
-  <link rel="icon" href="./img/favicon.png" type="image/png" />
-
-  <!-- ── FONTS ──────────────────────────────────────────────── -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="index.css" />
-  <link rel="stylesheet" href="experience.css" />
-</head>
-<body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
-  <div class="reading-progress" aria-hidden="true"></div>
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="grain" aria-hidden="true"></div>
-
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo">NK<span class="logo-mark">.</span></a>
-      <ul class="nav-links">
-        <li><a href="#about"      class="nav-link">About</a></li>
-        <li><a href="#work"       class="nav-link">Work</a></li>
-        <li><a href="#opensource" class="nav-link">Open Source</a></li>
-        <li><a href="#closedwork" class="nav-link">VisionProjects</a></li>
-        <li><a href="#creative"   class="nav-link">Creative</a></li>
-        <li><a href="#contact"    class="nav-link">Contact</a></li>
-      </ul>
-      <div class="nav-right">
-        <a href="./rates.html" target="_blank" rel="noopener" class="nav-cta">Rates ↗</a>
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
-          <span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-    <div class="mobile-menu-inner">
-      <a href="#about"      class="m-link">About</a>
-      <a href="#work"       class="m-link">Work</a>
-      <a href="#opensource" class="m-link">Open Source</a>
-      <a href="#closedwork" class="m-link">VisionProjects</a>
-      <a href="#creative"   class="m-link">Creative</a>
-      <a href="#contact"    class="m-link">Contact</a>
-      <a href="./rates.html" target="_blank" class="m-link m-link--accent">Rates &amp; Policies ↗</a>
-    </div>
-  </div>
-
-  <!-- HERO -->
-  <main id="main-content">
-  <section class="hero section--ink" id="home">
-    <div class="hero-grid" aria-hidden="true"></div>
-    <div class="geo-coord geo-coord--tl" aria-hidden="true"><span>6.9271°N</span><span>79.8612°E</span></div>
-    <div class="geo-coord geo-coord--tr" aria-hidden="true"><span>nimaat.top</span><span>Portfolio — 2026</span></div>
-
-    <div class="hero-body">
-      <div class="hero-left">
-        <div class="hero-badge reveal">
-          <span class="badge-pulse"></span>Available for new projects
+    <!-- ── FAVICON ────────────────────────────────────────────── -->
+    <link rel="icon" href="/img/favicon.png" type="image/png">
+    <!-- ── FONTS ──────────────────────────────────────────────── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/mission.css">
+    <link rel="canonical" href="https://nimaat.top/">
+    <meta property="og:title" content="Nimsandu Kottage — Design, Code &amp; Mechanical Engineering">
+    <meta property="og:url" content="https://nimaat.top/">
+    <meta property="og:description" content="Design, software and mechanical engineering by Nimsandu Kottage. Explore projects, prototypes and visual work from Sri Lanka.">
+  </head>
+  <body class="mission-site">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <canvas id="starfield" aria-hidden="true"></canvas>
+    <div class="reading-progress" aria-hidden="true"></div>
+    <header class="site-nav">
+      <a class="wordmark" href="/" aria-label="Nimsandu Kottage home">NK<span>.</span>
+      </a>
+      <a class="nav-coordinate" href="/#home">EARTH / SRI LANKA</a>
+      <nav aria-label="Main navigation">
+        <a href="/work.html">Software</a>
+        <a href="/#engineering">Engineering</a>
+        <a href="/#creative">Creative</a>
+        <a href="/#about">About</a>
+      </nav>
+      <a class="nav-contact" href="/#contact">Let’s talk <span>↗</span>
+      </a>
+      <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+    <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" hidden>
+      <a href="/work.html">Software <span>01</span>
+      </a>
+      <a href="/#engineering">Engineering <span>02</span>
+      </a>
+      <a href="/#creative">Creative <span>03</span>
+      </a>
+      <a href="/#about">About <span>04</span>
+      </a>
+      <a href="/#contact">Contact <span>↗</span>
+      </a>
+      <a href="/rates.html">Rates &amp; policies ↗</a>
+    </nav>
+    <main id="main-content" class="mission-main">
+      <section id="home" class="landing" data-chapter="00 / DEPARTURE">
+        <div class="landing-top">
+          <span>PORTFOLIO / VOL. 03</span>
+          <span>DESIGN × CODE × ENGINEERING</span>
+          <span>6.9271° N / 79.8612° E</span>
         </div>
-        <div class="hero-os-badge reveal">
-          <span class="os-badge-icon">⬡</span>
-          <span class="os-badge-text">Open Source Advocate</span>
-          <span class="os-badge-dot">·</span>
-          <span class="os-badge-count">Ideas worth sharing</span>
+        <div class="hero-identity">
+          <p class="eyebrow">
+            <i class="signal-dot"></i> Available for interesting problems</p>
+          <h1>
+            <span>Nimsandu</span>
+            <em>Kottage.</em>
+          </h1>
+          <div class="hero-portrait">
+            <img src="/img/hero.jpg" alt="Nimsandu Kottage" fetchpriority="high">
+            <span class="portrait-coordinate">01 / THE HUMAN BEHIND THE WORK</span>
+          </div>
+          <div class="hero-statement">
+            <p>Three disciplines.<br>One restless curiosity.</p>
+            <span>Designer. Developer. Mechanical engineering undergraduate.<br>Always figures a way out.</span>
+          </div>
         </div>
-        <h1 class="hero-name">
-          <span class="hn-1 reveal">Nimsandu</span>
-          <span class="hn-2 reveal">Kottage<span class="hn-mark">.</span></span>
-        </h1>
-        <div class="hero-sub reveal">
-          <p class="hero-roles">Designer &nbsp;·&nbsp; Developer &nbsp;·&nbsp; Engineer</p>
-          <p class="hero-blurb">Crafting at the intersection of three worlds.<br>Always figures a way out.</p>
+        <div class="orbital-lab">
+          <div class="lab-heading">
+            <span>EXPERIMENT 001 / FORM &amp; POSSIBILITY</span>
+            <span class="lab-live">
+              <i></i> LIVE</span>
+          </div>
+          <canvas id="sculpture" aria-hidden="true"></canvas>
+          <div class="lab-axis axis-x" aria-hidden="true"></div>
+          <div class="lab-axis axis-y" aria-hidden="true"></div>
+          <span class="lab-coordinate coord-one">Y +</span>
+          <span class="lab-coordinate coord-two">X +</span>
+          <div class="lab-controls">
+            <div class="shape-controls" role="group" aria-label="Sculpture form">
+              <button data-shape="orbit" aria-pressed="true">01 Orbit</button>
+              <button data-shape="core" aria-pressed="false">02 Core</button>
+              <button data-shape="helix" aria-pressed="false">03 Helix</button>
+            </div>
+            <span>DRAG TO ROTATE / CLICK TO DISTURB</span>
+          </div>
+          <span class="sr-only" id="shapeStatus" aria-live="polite">Orbit form selected</span>
         </div>
-        <div class="hero-actions reveal"><a class="editorial-button" href="#work">Explore selected work <span>↘</span></a><a class="hero-contact" href="#contact">Let’s talk ↗</a></div>
-        <div class="hero-counters reveal">
-          <div class="hc-item"><span class="hc-n">100+</span><span class="hc-l">Projects</span></div>
-          <div class="hc-div"></div>
-          <div class="hc-item"><span class="hc-n">03</span><span class="hc-l">Disciplines</span></div>
-          <div class="hc-div"></div>
-          <div class="hc-item"><span class="hc-n">∞</span><span class="hc-l">Curiosity</span></div>
+        <div class="hero-bottom">
+          <a class="text-link" href="#engineering">Begin the exploration <span>↓</span>
+          </a>
+          <span>A SMALL CORNER OF A VERY LARGE UNIVERSE.</span>
+          <a href="/work.html" class="text-link">Project archive ↗</a>
         </div>
-      </div>
-      <div class="hero-right sculpture-wrap">
-        <canvas id="sculpture" aria-hidden="true"></canvas>
-        <div class="sculpture-cross sculpture-cross--a" aria-hidden="true">+</div>
-        <div class="sculpture-cross sculpture-cross--b" aria-hidden="true">+</div>
-        <div class="sculpture-label"><span>FORM STUDY / 001</span><span>ORDER ↔ POSSIBILITY</span></div>
-        <div class="sculpture-controls"><span>Move to influence the field</span><button id="motionToggle" type="button" aria-pressed="false">Pause motion</button></div>
-      </div>
-    </div>
-    <div class="hero-foot">
-      <div class="scroll-hint">
-        <div class="scroll-track"><div class="scroll-thumb"></div></div>
-        <span><a href="#about">Scroll to discover</a></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- MARQUEE -->
-  <div class="marquee-band" aria-hidden="true">
-    <div class="marquee-track">
-      <span class="mq-item">Mechanical Engineering</span><span class="mq-sep">◆</span>
-      <span class="mq-item">Software Development</span><span class="mq-sep">◆</span>
-      <span class="mq-item">Graphic Design</span><span class="mq-sep">◆</span>
-      <span class="mq-item">SLIIT</span><span class="mq-sep">◆</span>
-      <span class="mq-item">Ananda College</span><span class="mq-sep">◆</span>
-      <span class="mq-item">Cloud Services</span><span class="mq-sep">◆</span>
-      <span class="mq-item">AI Technologies</span><span class="mq-sep">◆</span>
-      <span class="mq-item">ICT Education</span><span class="mq-sep">◆</span>
-      <span class="mq-item">nimaat.top</span><span class="mq-sep">◆</span>
-      <span class="mq-item">Mechanical Engineering</span><span class="mq-sep">◆</span>
-      <span class="mq-item">Software Development</span><span class="mq-sep">◆</span>
-      <span class="mq-item">Graphic Design</span><span class="mq-sep">◆</span>
-      <span class="mq-item">SLIIT</span><span class="mq-sep">◆</span>
-      <span class="mq-item">Ananda College</span><span class="mq-sep">◆</span>
-      <span class="mq-item">Cloud Services</span><span class="mq-sep">◆</span>
-      <span class="mq-item">AI Technologies</span><span class="mq-sep">◆</span>
-      <span class="mq-item">ICT Education</span><span class="mq-sep">◆</span>
-      <span class="mq-item">nimaat.top</span><span class="mq-sep">◆</span>
-    </div>
-  </div>
-
-  <!-- ABOUT -->
-  <section class="section section--about" id="about">
-    <div class="container">
-
-      <div class="about-philosophy reveal">
-        <div class="ap-tag-row">
-          <span class="geo-plus" aria-hidden="true">✛</span>
-          <span class="s-tag">01 — About</span>
+      </section>
+      <section id="engineering" class="mission-section" data-chapter="01 / ENGINEERING">
+        <div class="section-kicker">
+          <span>01 / ENGINEERING MISSIONS</span>
+          <span class="cross">+</span>
         </div>
-        <div class="ap-headline-wrap">
-          <h2 class="ap-headline">
-            <span class="ap-h1">Most people</span>
-            <span class="ap-h2">pick a lane.</span>
-            <span class="ap-h3"><em>I picked an ocean.</em></span>
+        <div class="section-heading">
+          <h2>Ideas with<br>
+            <em>physical consequences.</em>
           </h2>
-          <p class="ap-sub">Mechanical engineering. Design. Development.<br>Three fields that look nothing alike, until you build something real.</p>
+          <p>First-year mechanical engineering projects.<br>Real constraints. Real people. Things that matter.</p>
         </div>
-      </div>
-
-      <!-- Discipline schematic -->
-      <div class="disciplines-viz reveal">
-        <div class="dv-node">
-          <div class="dv-ring"></div>
-          <span class="dv-letter">M</span>
-          <div class="dv-info">
-            <span class="dv-name">Mechanical<br>Engineering</span>
-            <span class="dv-inst">SLIIT — UG</span>
-          </div>
-        </div>
-        <div class="dv-connector"><div class="dv-line"></div><div class="dv-inters"><span>+</span></div><div class="dv-line"></div></div>
-        <div class="dv-node">
-          <div class="dv-ring"></div>
-          <span class="dv-letter">D</span>
-          <div class="dv-info">
-            <span class="dv-name">Design &amp;<br>Visual Arts</span>
-            <span class="dv-inst">Brand · Print · Motion</span>
-          </div>
-        </div>
-        <div class="dv-connector"><div class="dv-line"></div><div class="dv-inters"><span>+</span></div><div class="dv-line"></div></div>
-        <div class="dv-node">
-          <div class="dv-ring"></div>
-          <span class="dv-letter">S</span>
-          <div class="dv-info">
-            <span class="dv-name">Software<br>Development</span>
-            <span class="dv-inst">Web · Mobile · API</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="about-main">
-        <div class="about-narrative reveal">
-          <p class="ab-p ab-p--lead">There's a thread connecting circuits and steel, pixels and physics. I found it early, and refused to let go.</p>
-          <p class="ab-p">I'm Nimsandu, currently reading for a BSc. Engineering (Hons) in Mechanical Engineering at the Sri Lanka Institute of Information Technology. My path started at Ananda College, where I ran ICT workshops, led events, and fell deep into the craft of software as an active member of the Ananda College ICT Society.</p>
-          <p class="ab-p">The obsession grew sideways into CAD models and stress simulations, into brand identities and motion graphics, into cloud-oriented service management and AI systems. The best engineers design. The best designers think in systems. The best developers understand constraints. These aren't different fields. They're the same field, wearing different clothes.</p>
-          <p class="ab-p">I've taught ICT workshops to curious young Sri Lankans, managed large-scale events, and shipped software, and decided to chase a degree in things that spin, stress, and bend. That's not a contradiction. That's the point.</p>
-          <a href="https://buymeacoffee.com/nimsandu" target="_blank" rel="noopener" class="bmc-btn">
-            <img class="bmc-icon bmc-logo" src="./img/coffee.svg" alt="" />
-            <span>Buy me a coffee</span>
-            <span class="bmc-arrow">↗</span>
-          </a>
-        </div>
-
-        <div class="about-creds reveal">
-          <figure class="about-portrait tilt-surface"><img src="./img/hero.jpg" alt="Nimsandu Kottage" loading="lazy"/><figcaption>THE PERSON BEHIND THE PIXELS / SRI LANKA</figcaption></figure>
-          <div class="cred-block">
-            <span class="cred-label"><span class="cred-plus" aria-hidden="true">+</span> Education</span>
-            <div class="cred-inst-row">
-              <div class="cred-logo-wrap">
-                <img src="./img/st.png" alt="SLIIT" class="cred-logo bw-img" />
-              </div>
-              <div>
-                <p class="cred-title">Sri Lanka Institute of<br>Information Technology</p>
-                <p class="cred-detail">BSc. Engineering (Hons)<br>Mechanical Engineering - Undergraduate</p>
-              </div>
+        <div class="engineering-grid">
+          <article class="engineering-card spotlight reveal">
+            <div class="card-topline">
+              <span>Y1 / S1 · SUSTAINABLE ENGINEERING</span>
+              <span class="grade">A+</span>
             </div>
-          </div>
-          <div class="cred-block">
-            <span class="cred-label"><span class="cred-plus" aria-hidden="true">+</span> Background</span>
-            <div class="cred-inst-row">
-              <div class="cred-logo-wrap">
-                <img src="./img/ac.png" alt="Ananda College" class="cred-logo bw-img" />
-              </div>
-              <div>
-                <p class="cred-title">Ananda College</p>
-                <p class="cred-detail">Alumnus · ICT Society Member<br>Event Management &amp; Leadership</p>
-              </div>
+            <div class="engineering-visual solar-visual" data-light="night">
+              <svg class="solar-diagram" viewbox="0 0 500 330" role="img" aria-label="Solar streetlight diagram showing panel, battery and LED light">
+                <defs>
+                  <pattern id="panelGrid" width="17" height="13" patternunits="userSpaceOnUse">
+                    <path d="M17 0H0V13" fill="none" stroke="currentColor" stroke-width=".6"></path>
+                  </pattern>
+                </defs>
+                <g fill="none" stroke="currentColor">
+                  <path class="sun-rays" d="M75 63v-15m0 70v-15m-20-20H40m70 0H95M58 66 48 56m44 44 10 10m-44-10-10 10m44-44 10-10"></path>
+                  <circle class="sun" cx="75" cy="83" r="16"></circle>
+                  <ellipse cx="276" cy="300" rx="145" ry="10" opacity=".2"></ellipse>
+                  <path d="M259 290V92h30l40 24" stroke-width="5"></path>
+                  <path d="m195 62 115 14-16 46-115-14z" stroke-width="2"></path>
+                  <path d="m195 62 115 14-16 46-115-14z" fill="url(#panelGrid)"></path>
+                  <path d="m313 110 43 8-4 10-44-7z" fill="currentColor"></path>
+                  <rect x="243" y="173" width="33" height="48" rx="3"></rect>
+                  <path d="M250 185h18m-18 9h18m-9 8v8"></path>
+                  <path class="energy-path" d="M232 97v48h27v28m17 22h25V123h20" stroke-dasharray="4 6"></path>
+                  <path class="light-beam" d="m314 131-50 150h181l-95-148" fill="currentColor" opacity=".08" stroke="none"></path>
+                  <path d="M110 282h318" opacity=".25"></path>
+                  <path d="M160 35v15m-7-7h14M387 238v15m-7-7h14" opacity=".4"></path>
+                </g>
+                <g fill="currentColor" font-family="monospace" font-size="8" letter-spacing="1">
+                  <text x="202" y="46">SOLAR ARRAY</text>
+                  <text x="298" y="206">STORAGE</text>
+                  <text x="363" y="153">LED</text>
+                </g>
+              </svg>
+              <button class="small-control" data-solar-toggle aria-pressed="true">Night mode / switch to day ↔</button>
             </div>
-          </div>
-          <div class="cred-block">
-            <span class="cred-label"><span class="cred-plus" aria-hidden="true">+</span> Expertise</span>
-            <div class="cred-tags">
-              <span class="c-tag">Cloud Services</span>
-              <span class="c-tag">AI Technologies</span>
-              <span class="c-tag">ICT Education</span>
-              <span class="c-tag">Event Management</span>
-              <span class="c-tag">Workshop Facilitation</span>
-              <span class="c-tag">Systems Thinking</span>
-            </div>
-          </div>
-          <div class="cred-block">
-            <a href="./rates.html" target="_blank" rel="noopener" class="rates-btn">
-              <span>Rates &amp; Project Policies</span>
-              <span class="rates-arrow">↗</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-<!-- PROJECTS -->
-  <section class="section" id="work">
-    <div class="container">
-      <header class="section-head reveal">
-        <div class="sh-tag-row">
-          <span class="geo-plus" aria-hidden="true">✛</span>
-          <span class="s-tag">02 — Development</span>
-        </div>
-        <h2 class="s-title">Built Things</h2>
-      </header>
-      <article class="semapp-feature reveal">
-        <div class="semapp-copy">
-          <span class="eyebrow">FEATURED BUILD / 2026</span>
-          <h3>Everything in sync.<br>
-            <em>Everywhere you go.</em>
-          </h3>
-          <p class="semapp-name">FoE-SemApp</p>
-          <p>A fully automated app that moves with you. Native Android capabilities meet a cross-platform progressive web app, with real-time sync keeping everything connected.</p>
-          <div class="feature-tags">
-            <span>Native notifications</span>
-            <span>Biometrics</span>
-            <span>Android widgets</span>
-            <span>Real-time sync</span>
-          </div>
-          <p class="stack-note">REACT / VITE / FIREBASE / ANDROID / PWA</p>
-          <a class="editorial-button" href="https://semapp.nimaat.top" target="_blank" rel="noopener">Explore FoE-SemApp <span>↗</span>
-          </a>
-        </div>
-        <div class="semapp-stage tilt-surface">
-          <div class="stage-orbit" aria-hidden="true"></div>
-          <img src="./img/semapp-placeholder.svg" alt="FoE-SemApp placeholder artwork — replace with an app screenshot" loading="lazy">
-          <span class="stage-caption">FoE-SemApp / image coming soon</span>
-        </div>
-      </article>
-      <div class="work-toolbar">
-        <p class="eyebrow">THE PROJECT INDEX</p>
-        <div class="work-filters" role="group" aria-label="Filter projects">
-          <button type="button" data-filter="all" aria-pressed="true">All work</button>
-          <button type="button" data-filter="apps" aria-pressed="false">Apps</button>
-          <button type="button" data-filter="tools" aria-pressed="false">Tools</button>
-          <button type="button" data-filter="experiments" aria-pressed="false">Experiments</button>
-        </div>
-        <span class="sr-only" id="filterStatus" aria-live="polite"></span>
-      </div>
-      <div class="project-index">
-        <article class="index-card reveal" data-category="apps">
-          <a class="index-visual" href="https://tpcalen.vercel.app" target="_blank" rel="noopener">
-            <img src="./img/pro1.png" alt="VisionTPC preview" loading="lazy">
-            <span class="index-number">01</span>
-            <span class="index-visit">OPEN PROJECT ↗</span>
-          </a>
-          <div class="index-meta">
-            <a href="https://tpcalen.vercel.app" target="_blank" rel="noopener">
-              <h3>VisionTPC <span>↗</span>
+            <div class="engineering-copy">
+              <span class="eyebrow">MISSION 01 / CLEAN ENERGY</span>
+              <h3>Illuminating<br>
+                <em>the Margins.</em>
               </h3>
-            </a>
-            <p>A quiet home for poetry, thoughts, and the things worth keeping.</p>
-            <div class="index-bottom">
-              <span>React · Firebase</span>
-              <span>Web app</span>
+              <p>Solar-powered street lighting for rural Sri Lankan communities. A proposal for safer evenings through off-grid energy and community ownership.</p>
+              <a href="/engineering/illuminating-margins.html" class="text-link">Read the case study <span>↗</span>
+              </a>
             </div>
+          </article>
+          <article class="engineering-card spotlight reveal">
+            <div class="card-topline">
+              <span>Y1 / S1 · ENGINEERING DESIGN</span>
+              <span class="grade">A</span>
+            </div>
+            <div class="engineering-visual chair-visual">
+              <svg class="chair-diagram" viewbox="0 0 500 330" role="img" aria-label="Simplified spring-assisted chair">
+                <g fill="none" stroke="currentColor" stroke-width="3">
+                  <ellipse cx="260" cy="299" rx="145" ry="10" opacity=".15"></ellipse>
+                  <path d="M142 291V167h197V58m0 233V58M142 255h197"></path>
+                  <path class="mini-spring" d="m241 251 10-8-20-8 20-8-20-8 20-8-20-8 10-8" stroke-width="2"></path>
+                  <g class="mini-seat">
+                    <path d="M130 163h218v12H130z" fill="currentColor" fill-opacity=".12"></path>
+                    <circle cx="339" cy="169" r="5"></circle>
+                  </g>
+                  <path d="M107 300h278" opacity=".25"></path>
+                </g>
+                <g fill="currentColor" font-family="monospace" font-size="8" letter-spacing="1">
+                  <text x="163" y="96">STORED ENERGY → ASSISTED MOTION</text>
+                  <text x="278" y="224">COIL SPRING</text>
+                </g>
+              </svg>
+              <button class="small-control" data-chair-toggle aria-pressed="false">Release the spring ↑</button>
+            </div>
+            <div class="engineering-copy">
+              <span class="eyebrow">MISSION 02 / ASSISTIVE MECHANICS</span>
+              <h3>MonoLyft<em>.</em>
+              </h3>
+              <p>A spring-powered chair that helps people stand. An ordinary frame, stored mechanical energy, and a simpler route to independence.</p>
+              <a href="/pro/monolyft/" class="text-link">Explore the prototype <span>↗</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section id="software" class="mission-section" data-chapter="02 / SOFTWARE">
+        <div class="section-kicker">
+          <span>02 / DIGITAL SYSTEMS</span>
+          <span class="cross">+</span>
+        </div>
+        <div class="section-heading">
+          <h2>From a thought<br>
+            <em>to your everyday.</em>
+          </h2>
+          <a class="text-link" href="/work.html">View all software <span>↗</span>
+          </a>
+        </div>
+        <article class="semapp-mission spotlight reveal">
+          <div class="semapp-content">
+            <span class="eyebrow">FLAGSHIP / NATIVE AND EVERYWHERE</span>
+            <h3>FoE-SemApp<em>.</em>
+            </h3>
+            <p class="large-copy">One system.<br>Everywhere you are.</p>
+            <p>A fully automated app with native Android notifications, biometrics, and widgets. A PWA for any platform. Everything connected by real-time sync.</p>
+            <div class="tag-list">
+              <span>React</span>
+              <span>Vite</span>
+              <span>Firebase</span>
+              <span>Android</span>
+              <span>PWA</span>
+            </div>
+            <a class="primary-link" href="https://semapp.nimaat.top" target="_blank" rel="noopener">Launch FoE-SemApp <span>↗</span>
+            </a>
+          </div>
+          <div class="semapp-display tilt-surface">
+            <span class="display-coordinate">CROSS-PLATFORM / CONNECTED</span>
+            <div class="display-orbit" aria-hidden="true"></div>
+            <img src="/img/semapp-placeholder.svg" alt="FoE-SemApp illustrative placeholder; app screenshot to be added" loading="lazy">
+            <span class="placeholder-note">PLACEHOLDER VISUAL / APP IMAGE COMING SOON</span>
           </div>
         </article>
-        <article class="index-card reveal" data-category="tools">
-          <a class="index-visual" href="./pro/clk-t.html" target="_blank" rel="noopener">
-            <img src="./img/pro2.png" alt="CozyClock V02 preview" loading="lazy">
-            <span class="index-number">02</span>
-            <span class="index-visit">OPEN PROJECT ↗</span>
-          </a>
-          <div class="index-meta">
-            <a href="./pro/clk-t.html" target="_blank" rel="noopener">
-              <h3>CozyClock V02 <span>↗</span>
+        <div class="selected-software">
+          <a href="https://tpcalen.vercel.app" target="_blank" rel="noopener" class="software-tile spotlight reveal">
+            <div>
+              <span class="eyebrow">01 / VISION PROJECTS</span>
+              <h3>The Poet’s Calendar <span>↗</span>
               </h3>
-            </a>
-            <p>A rainy, ambient workspace with a clock and focus tools.</p>
-            <div class="index-bottom">
-              <span>HTML · CSS · JavaScript</span>
-              <a href="https://github.com/nimsandu/nim/blob/main/pro/clk-t.html" target="_blank" rel="noopener" aria-label="View source for CozyClock V02">Source ↗</a>
+              <p>A quiet place for the things you cannot leave unwritten.</p>
             </div>
-          </div>
-        </article>
-        <article class="index-card reveal" data-category="experiments">
-          <a class="index-visual" href="./pro/BitPaint.html" target="_blank" rel="noopener">
-            <div class="project-art art-3" aria-hidden="true">
-              <span>01</span>
-              <small>ONE BIT. ENDLESS IDEAS.</small>
-            </div>
-            <span class="index-number">03</span>
-            <span class="index-visit">OPEN PROJECT ↗</span>
+            <img src="/img/pro1.png" alt="The Poet’s Calendar" loading="lazy">
           </a>
-          <div class="index-meta">
-            <a href="./pro/BitPaint.html" target="_blank" rel="noopener">
+          <a href="/pro/BitPaint.html" target="_blank" rel="noopener" class="software-tile bitpaint-tile spotlight reveal">
+            <div>
+              <span class="eyebrow">02 / BROWSER EXPERIMENT</span>
               <h3>BitPaint <span>↗</span>
               </h3>
-            </a>
-            <p>A tiny 1-bit sketchpad. Draw, fill, and make something with less.</p>
-            <div class="index-bottom">
-              <span>Canvas · JavaScript</span>
-              <a href="https://github.com/nimsandu/nim/blob/main/pro/BitPaint.html" target="_blank" rel="noopener" aria-label="View source for BitPaint">Source ↗</a>
+              <p>One bit. A blank canvas. An unreasonable number of possibilities.</p>
             </div>
-          </div>
-        </article>
-        <article class="index-card reveal" data-category="experiments">
-          <a class="index-visual" href="./pro/scrap-cut.html" target="_blank" rel="noopener">
-            <div class="project-art art-4" aria-hidden="true">
-              <span>✂</span>
-              <small>CUT / COMPOSE / CREATE</small>
+            <div class="pixel-art" aria-hidden="true">B<span>01—∞</span>
             </div>
-            <span class="index-number">04</span>
-            <span class="index-visit">OPEN PROJECT ↗</span>
           </a>
-          <div class="index-meta">
-            <a href="./pro/scrap-cut.html" target="_blank" rel="noopener">
-              <h3>Scrapbook Cutout Shop <span>↗</span>
-              </h3>
-            </a>
-            <p>Turn words into pastel paper cutouts, with stickers, tape, and doodles.</p>
-            <div class="index-bottom">
-              <span>Canvas · JavaScript</span>
-              <a href="https://github.com/nimsandu/nim/blob/main/pro/scrap-cut.html" target="_blank" rel="noopener" aria-label="View source for Scrapbook Cutout Shop">Source ↗</a>
+        </div>
+        <a href="/work.html" class="archive-link">There’s more in the archive <span>11 PROJECTS / EXPLORE ↗</span>
+        </a>
+      </section>
+      <section id="about" class="mission-section about-mission" data-chapter="03 / THE HUMAN">
+        <div class="section-kicker">
+          <span>03 / THE HUMAN ELEMENT</span>
+          <span class="cross">+</span>
+        </div>
+        <div class="about-intro">
+          <h2>Most people<br>pick a lane.<br>
+            <em>I picked an ocean.</em>
+          </h2>
+          <div>
+            <p class="large-copy">There’s a thread connecting circuits and steel, pixels and physics.</p>
+            <p>I’m Nimsandu, reading for a BSc. Engineering (Hons) in Mechanical Engineering at SLIIT. My path started at Ananda College and grew into software, design, ICT workshops, and the craft of building things with people.</p>
+            <p>I like problems that don’t fit neatly into one field. The useful ideas often live somewhere in between.</p>
+            <div class="identity-facts">
+              <span>SLIIT / MECHANICAL ENGINEERING UG</span>
+              <span>ANANDA COLLEGE / ALUMNUS</span>
+              <span>SRI LANKA / EARTH</span>
             </div>
           </div>
-        </article>
-        <article class="index-card reveal" data-category="experiments">
-          <a class="index-visual" href="./pro/ran-mizer.html" target="_blank" rel="noopener">
-            <div class="project-art art-5" aria-hidden="true">
-              <span>Aa</span>
-              <small>LETTERS, REIMAGINED.</small>
+        </div>
+        <div class="discipline-console reveal">
+          <div class="discipline-tabs" role="group" aria-label="Explore my disciplines">
+            <button data-discipline="engineering" aria-pressed="true">
+              <span>01</span>Engineering <i>↗</i>
+            </button>
+            <button data-discipline="development" aria-pressed="false">
+              <span>02</span>Development <i>↗</i>
+            </button>
+            <button data-discipline="design" aria-pressed="false">
+              <span>03</span>Design <i>↗</i>
+            </button>
+          </div>
+          <div class="discipline-detail" aria-live="polite">
+            <span class="eyebrow" id="disciplineLabel">MATTER / MOTION / CONSTRAINTS</span>
+            <h3 id="disciplineTitle">Understand it.<br>Then build it.</h3>
+            <p id="disciplineCopy">Mechanical engineering brings the ideas into the physical world: CAD, materials, mechanisms, and prototypes that have to work beyond the screen.</p>
+            <a id="disciplineLink" class="text-link" href="#engineering">Explore engineering ↗</a>
+            <div class="console-reticle" aria-hidden="true">+</div>
+          </div>
+        </div>
+      </section>
+      <section id="opensource" class="mission-section open-mission" data-chapter="04 / OPEN SOURCE">
+        <div class="section-kicker">
+          <span>04 / OPEN TRANSMISSIONS</span>
+          <span class="cross">+</span>
+        </div>
+        <div class="section-heading">
+          <h2>Some ideas<br>
+            <em>belong to everyone.</em>
+          </h2>
+          <p>Code shared. Lessons exchanged.<br>Better things, built together.</p>
+        </div>
+        <div class="transmission-list">
+          <a class="transmission spotlight reveal" href="https://github.com/nimsandu/spicetify-bloom" target="_blank" rel="noopener">
+            <span class="transmission-number">01</span>
+            <div>
+              <span class="eyebrow">CREATOR / OPEN SOURCE</span>
+              <h3>Spicetify Bloom</h3>
+              <p>A calmer Spotify, inspired by Fluent Design. A theme shaped with an international community.</p>
             </div>
-            <span class="index-number">05</span>
-            <span class="index-visit">OPEN PROJECT ↗</span>
+            <span class="transmission-tag">CSS / MIT</span>
+            <span class="big-arrow">↗</span>
           </a>
-          <div class="index-meta">
-            <a href="./pro/ran-mizer.html" target="_blank" rel="noopener">
-              <h3>Cutout Word Randomizer <span>↗</span>
-              </h3>
-            </a>
-            <p>Words snipped from imaginary newspapers and magazines.</p>
-            <div class="index-bottom">
-              <span>Canvas · Typography</span>
-              <a href="https://github.com/nimsandu/nim/blob/main/pro/ran-mizer.html" target="_blank" rel="noopener" aria-label="View source for Cutout Word Randomizer">Source ↗</a>
+          <a class="transmission spotlight reveal" href="https://fractalx.org" target="_blank" rel="noopener">
+            <span class="transmission-number">02</span>
+            <div>
+              <span class="eyebrow">CONTRIBUTOR / DIGITAL DESIGN</span>
+              <h3>FractalX</h3>
+              <p>Visual language and interface contributions for an open-source framework.</p>
             </div>
-          </div>
-        </article>
-        <article class="index-card reveal" data-category="tools">
-          <a class="index-visual" href="./pro/pt.html" target="_blank" rel="noopener">
-            <img src="./img/pro3.png" alt="Study Timer preview" loading="lazy">
-            <span class="index-number">06</span>
-            <span class="index-visit">OPEN PROJECT ↗</span>
+            <span class="transmission-tag">DESIGN / COMMUNITY</span>
+            <span class="big-arrow">↗</span>
           </a>
-          <div class="index-meta">
-            <a href="./pro/pt.html" target="_blank" rel="noopener">
-              <h3>Study Timer <span>↗</span>
-              </h3>
-            </a>
-            <p>An individual timer for each page. Small steps, steady progress.</p>
-            <div class="index-bottom">
-              <span>HTML · CSS · JavaScript</span>
-              <a href="https://github.com/nimsandu/nim/blob/main/pro/pt.html" target="_blank" rel="noopener" aria-label="View source for Study Timer">Source ↗</a>
-            </div>
-          </div>
-        </article>
-        <article class="index-card reveal" data-category="tools">
-          <a class="index-visual" href="./pro/pgt.html" target="_blank" rel="noopener">
-            <img src="./img/pro6.png" alt="Page Goal Timer preview" loading="lazy">
-            <span class="index-number">07</span>
-            <span class="index-visit">OPEN PROJECT ↗</span>
+          <a class="text-link github-more" href="https://github.com/nimsandu" target="_blank" rel="noopener">Explore my GitHub <span>↗</span>
           </a>
-          <div class="index-meta">
-            <a href="./pro/pgt.html" target="_blank" rel="noopener">
-              <h3>Page Goal Timer <span>↗</span>
-              </h3>
-            </a>
-            <p>Break a study session into pages and keep your goal in sight.</p>
-            <div class="index-bottom">
-              <span>HTML · CSS · JavaScript</span>
-              <a href="https://github.com/nimsandu/nim/blob/main/pro/pgt.html" target="_blank" rel="noopener" aria-label="View source for Page Goal Timer">Source ↗</a>
+        </div>
+      </section>
+      <section id="creative" class="mission-section creative-mission" data-chapter="05 / CREATIVE">
+        <div class="section-kicker">
+          <span>05 / VISUAL EXPLORATIONS</span>
+          <span class="cross">+</span>
+        </div>
+        <div class="section-heading">
+          <h2>A different<br>
+            <em>kind of gravity.</em>
+          </h2>
+          <p>Identity. Print. Motion.<br>Giving ideas a form you can feel.</p>
+        </div>
+        <div class="creative-grid">
+          <button class="creative-item reveal" data-lightbox="/img/des1.png" data-caption="Brand Identity">
+            <div class="creative-image">
+              <img src="/img/des1.png" alt="Brand Identity by Nimsandu Kottage" loading="lazy">
+              <span>EXPAND ↗</span>
             </div>
-          </div>
-        </article>
-        <article class="index-card reveal" data-category="tools">
-          <a class="index-visual" href="./pro/cal2.html" target="_blank" rel="noopener">
-            <img src="./img/pro4.png" alt="CalendarClock preview" loading="lazy">
-            <span class="index-number">08</span>
-            <span class="index-visit">OPEN PROJECT ↗</span>
+            <span class="creative-meta">
+              <span>01 / DIGITAL DESIGN</span>
+              <strong>Brand Identity</strong>
+            </span>
+          </button>
+          <button class="creative-item reveal" data-lightbox="/img/des6.png" data-caption="Poster / Publication">
+            <div class="creative-image">
+              <img src="/img/des6.png" alt="Poster / Publication by Nimsandu Kottage" loading="lazy">
+              <span>EXPAND ↗</span>
+            </div>
+            <span class="creative-meta">
+              <span>02 / PRINT DESIGN</span>
+              <strong>Poster / Publication</strong>
+            </span>
+          </button>
+          <button class="creative-item reveal" data-lightbox="/img/des3.jpg" data-caption="Digital Graphics">
+            <div class="creative-image">
+              <img src="/img/des3.jpg" alt="Digital Graphics by Nimsandu Kottage" loading="lazy">
+              <span>EXPAND ↗</span>
+            </div>
+            <span class="creative-meta">
+              <span>03 / VISUAL DESIGN</span>
+              <strong>Digital Graphics</strong>
+            </span>
+          </button>
+          <button class="creative-item reveal" data-lightbox="/img/des4.png" data-caption="Collateral">
+            <div class="creative-image">
+              <img src="/img/des4.png" alt="Collateral by Nimsandu Kottage" loading="lazy">
+              <span>EXPAND ↗</span>
+            </div>
+            <span class="creative-meta">
+              <span>04 / PRINT DESIGN</span>
+              <strong>Collateral</strong>
+            </span>
+          </button>
+          <button class="creative-item reveal" data-lightbox="/img/des2.jpg" data-caption="Info Graphics">
+            <div class="creative-image">
+              <img src="/img/des2.jpg" alt="Info Graphics by Nimsandu Kottage" loading="lazy">
+              <span>EXPAND ↗</span>
+            </div>
+            <span class="creative-meta">
+              <span>05 / DIGITAL DESIGN</span>
+              <strong>Info Graphics</strong>
+            </span>
+          </button>
+          <button class="creative-item reveal" data-lightbox="/img/des5.png" data-caption="Editorial">
+            <div class="creative-image">
+              <img src="/img/des5.png" alt="Editorial by Nimsandu Kottage" loading="lazy">
+              <span>EXPAND ↗</span>
+            </div>
+            <span class="creative-meta">
+              <span>06 / PRINT DESIGN</span>
+              <strong>Editorial</strong>
+            </span>
+          </button>
+        </div>
+        <div class="motion-links">
+          <a href="https://youtu.be/vPuxunvZaWU" target="_blank" rel="noopener">
+            <img src="/img/vid2.png" alt="Motion graphics preview" loading="lazy">
+            <span>MOTION GRAPHICS &amp; LOOPS <i>PLAY ↗</i>
+            </span>
           </a>
-          <div class="index-meta">
-            <a href="./pro/cal2.html" target="_blank" rel="noopener">
-              <h3>CalendarClock <span>↗</span>
-              </h3>
-            </a>
-            <p>Your calendar, a clock, and a background that feels like you.</p>
-            <div class="index-bottom">
-              <span>Google Calendar · JavaScript</span>
-              <a href="https://github.com/nimsandu/nim/blob/main/pro/cal2.html" target="_blank" rel="noopener" aria-label="View source for CalendarClock">Source ↗</a>
-            </div>
-          </div>
-        </article>
-        <article class="index-card reveal" data-category="tools">
-          <a class="index-visual" href="./pro/clock.html" target="_blank" rel="noopener">
-            <img src="./img/pro5.png" alt="CozyClock V01 preview" loading="lazy">
-            <span class="index-number">09</span>
-            <span class="index-visit">OPEN PROJECT ↗</span>
+          <a href="https://youtube.com/shorts/fvOSpTRKzzw" target="_blank" rel="noopener">
+            <img src="/img/vid3.png" alt="Edited reel preview" loading="lazy">
+            <span>EDITED REEL <i>PLAY ↗</i>
+            </span>
           </a>
-          <div class="index-meta">
-            <a href="./pro/clock.html" target="_blank" rel="noopener">
-              <h3>CozyClock V01 <span>↗</span>
-              </h3>
-            </a>
-            <p>An understated clock and page timer for a quieter desktop.</p>
-            <div class="index-bottom">
-              <span>HTML · CSS · JavaScript</span>
-              <a href="https://github.com/nimsandu/nim/blob/main/pro/clock.html" target="_blank" rel="noopener" aria-label="View source for CozyClock V01">Source ↗</a>
-            </div>
+        </div>
+      </section>
+      <section id="contact" class="mission-section contact-mission" data-chapter="06 / CONTACT">
+        <div class="section-kicker">
+          <span>06 / ESTABLISH CONTACT</span>
+          <span class="cross">+</span>
+        </div>
+        <span class="contact-signal" aria-hidden="true">
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
+        <h2>The next thing<br>
+          <em>starts with hello.</em>
+        </h2>
+        <div class="contact-bottom">
+          <p>Open for freelance, collaboration,<br>and interesting problems.</p>
+          <div>
+            <a class="contact-email" href="mailto:hello@nimaat.top">hello@nimaat.top ↗</a>
+            <button data-copy-email type="button">Copy email ⧉</button>
+            <span class="sr-only" data-copy-status aria-live="polite"></span>
           </div>
-        </article>
-        <article class="index-card reveal" data-category="apps">
-          <a class="index-visual" href="https://countexp-sk.vercel.app" target="_blank" rel="noopener">
-            <img src="./img/pro7.png" alt="Countries Explorer preview" loading="lazy">
-            <span class="index-number">10</span>
-            <span class="index-visit">OPEN PROJECT ↗</span>
-          </a>
-          <div class="index-meta">
-            <a href="https://countexp-sk.vercel.app" target="_blank" rel="noopener">
-              <h3>Countries Explorer <span>↗</span>
-              </h3>
-            </a>
-            <p>Explore country data through a React web application.</p>
-            <div class="index-bottom">
-              <span>React · Clerk · Firebase</span>
-              <span>Web app</span>
-            </div>
-          </div>
-        </article>
-        <article class="index-card reveal" data-category="experiments">
-          <a class="index-visual" href="./pro/asg-sus.html" target="_blank" rel="noopener">
-            <div class="project-art art-11" aria-hidden="true">
-              <span>☼</span>
-              <small>ILLUMINATING THE MARGINS</small>
-            </div>
-            <span class="index-number">11</span>
-            <span class="index-visit">OPEN PROJECT ↗</span>
-          </a>
-          <div class="index-meta">
-            <a href="./pro/asg-sus.html" target="_blank" rel="noopener">
-              <h3>Illuminating the Margins <span>↗</span>
-              </h3>
-            </a>
-            <p>An interactive overview of solar-powered rural street lighting.</p>
-            <div class="index-bottom">
-              <span>Sustainable Engineering · Web</span>
-              <a href="https://github.com/nimsandu/nim/blob/main/pro/asg-sus.html" target="_blank" rel="noopener" aria-label="View source for Illuminating the Margins">Source ↗</a>
-            </div>
-          </div>
-        </article>
-      </div>
-      <p class="work-endnote">Small tools. Personal experiments. Things I wanted to exist.</p>
+        </div>
+        <div class="contact-links">
+          <a href="https://github.com/nimsandu" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://linkedin.com/in/nimsandu" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a href="https://buymeacoffee.com/nimsandu" target="_blank" rel="noopener">Buy me a coffee ↗</a>
+          <a href="/rates.html">Rates &amp; policies ↗</a>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <a href="/" class="wordmark">NK.</a>
+      <span>© 2026 Nimsandu Kottage</span>
+      <span class="footer-coordinate">DESIGNED ON EARTH. BUILT WITH CURIOSITY.</span>
+      <a href="/rates.html">Rates &amp; policies ↗</a>
+      <a href="#main-content">Back to top ↑</a>
+    </footer>
+    <div class="mission-status">
+      <span>
+        <i></i> ALL SYSTEMS CURIOUS</span>
+      <span id="chapterStatus">00 / DEPARTURE</span>
+      <span class="status-time" data-local-time>COLOMBO / UTC +05:30</span>
+      <button id="motionToggle" aria-pressed="false" type="button">Pause motion</button>
     </div>
-  </section>
-
-
-  <!-- OPEN SOURCE -->
-  <section class="section section--os" id="opensource">
-    <div class="container">
-      <header class="section-head reveal">
-        <div class="sh-tag-row"><span class="geo-plus" aria-hidden="true">✛</span><span class="s-tag">03 — Open Source</span></div>
-        <h2 class="s-title os-title">Built in the<br><em>Open</em></h2>
-        <p class="os-intro reveal">From small browser experiments to community-built themes, the source is open to explore. Open source isn't a checkbox - it's a commitment to the community that shaped these skills.</p>
-      </header>
-
-      <!-- SPICETIFY BLOOM HERO CARD -->
-      <div class="bloom-hero reveal">
-        <div class="bloom-bg-grid" aria-hidden="true"></div>
-        <div class="bloom-noise" aria-hidden="true"></div>
-        <div class="bloom-content">
-          <div class="bloom-left">
-            <div class="bloom-eyebrow">
-              <span class="bloom-tag">Flagship Open Source Project</span>
-              <span class="bloom-sep">·</span>
-              <span class="bloom-stat"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 670 stars</span>
-              <span class="bloom-sep">·</span>
-              <span class="bloom-stat">52 forks</span>
-            </div>
-            <h3 class="bloom-title">Spicetify<br>Bloom</h3>
-            <p class="bloom-desc">A Spotify theme inspired by Microsoft's Fluent Design. Always up-to-date. A powerful theme to calm your eyes while listening to your favorite beats.</p>
-            <div class="bloom-topics">
-              <span>CSS</span><span>Windows</span><span>Spotify</span><span>Fluent Design</span><span>UI Customization</span><span>Spicetify</span><span>Responsive</span><span>Calmness</span>
-            </div>
-            <div class="bloom-actions">
-              <a href="https://github.com/nimsandu/spicetify-bloom" target="_blank" rel="noopener" class="bloom-btn bloom-btn--primary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                View on GitHub
-              </a>
-              <a href="https://github.com/nimsandu/spicetify-bloom?tab=MIT-1-ov-file#readme" target="_blank" rel="noopener" class="bloom-btn bloom-btn--secondary">MIT Licensed ↗</a>
-            </div>
-          </div>
-          <div class="bloom-right">
-            <div class="bloom-stats-grid">
-              <div class="bloom-stat-card">
-                <span class="bsc-n">670</span>
-                <span class="bsc-l">GitHub Stars</span>
-              </div>
-              <div class="bloom-stat-card">
-                <span class="bsc-n">52</span>
-                <span class="bsc-l">Forks</span>
-              </div>
-              <div class="bloom-stat-card">
-                <span class="bsc-n">8</span>
-                <span class="bsc-l">Watchers</span>
-              </div>
-              <div class="bloom-stat-card">
-                <span class="bsc-n">MIT</span>
-                <span class="bsc-l">License</span>
-              </div>
-            </div>
-            <div class="bloom-fluent-demo" aria-hidden="true">
-              <div class="bfd-bar">
-                <div class="bfd-dot bfd-dot--r"></div>
-                <div class="bfd-dot bfd-dot--y"></div>
-                <div class="bfd-dot bfd-dot--g"></div>
-                <span class="bfd-title">Spotify — Spicetify Bloom</span>
-              </div>
-              <div class="bfd-track">
-                <div class="bfd-album"></div>
-                <div class="bfd-info">
-                  <div class="bfd-song"></div>
-                  <div class="bfd-artist"></div>
-                </div>
-                <div class="bfd-controls">
-                  <div class="bfd-btn"></div>
-                  <div class="bfd-btn bfd-btn--play"></div>
-                  <div class="bfd-btn"></div>
-                </div>
-              </div>
-              <div class="bfd-progress">
-                <div class="bfd-prog-bar"><div class="bfd-prog-fill"></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- OTHER OS CONTRIBUTIONS -->
-      <div class="os-contributions reveal">
-        <div class="os-contrib-head">
-          <h4 class="os-contrib-title">Also Contributing To</h4>
-        </div>
-        <div class="os-contrib-grid">
-          <div class="os-contrib-card">
-            <div class="occ-top">
-              <span class="occ-icon">◈</span>
-              <span class="occ-badge">Digital Designer</span>
-            </div>
-            <h5 class="occ-name">FractalX Framework</h5>
-            <p class="occ-desc">Contributing as a Digital Designer to the FractalX open-source framework. Shaping the visual language and UI components of a modern design system.</p>
-            <a href="https://fractalx.org" target="_blank" rel="noopener" class="occ-link">fractalx.org ↗</a>
-          </div>
-          <div class="os-contrib-card">
-            <div class="occ-top">
-              <span class="occ-icon">⬡</span>
-              <span class="occ-badge">Open Browser Projects</span>
-            </div>
-            <h5 class="occ-name">Personal Projects</h5>
-            <p class="occ-desc">The browser tools in this portfolio are publicly available on GitHub. Code that's built to be shared, studied, and built upon.</p>
-            <a href="https://github.com/nimsandu" target="_blank" rel="noopener" class="occ-link">github.com/nimsandu ↗</a>
-          </div>
-          <div class="os-contrib-card os-contrib-card--cta">
-            <div class="occ-top">
-              <span class="occ-icon os-heart">♥</span>
-            </div>
-            <h5 class="occ-name">The Philosophy</h5>
-            <p class="occ-desc">Open source is the thread between curiosity and community. Every line pushed publicly is a lesson shared, a tool freed, a door opened.</p>
-            <div class="occ-os-badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-              Open Source Advocate
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- CLOSED SOURCE / VISION PROJECTS -->
-  <section class="section section--closed" id="closedwork">
-    <div class="container">
-      <header class="section-head reveal">
-        <div class="sh-tag-row"><span class="geo-plus" aria-hidden="true">✛</span><span class="s-tag">04 — VisionProjects</span></div>
-        <h2 class="s-title">Built in the<br><em>Dark</em></h2>
-        <p class="cs-intro reveal">Closed-source initiatives under the VisionProjects umbrella, where a simple surface hides layers of experimental architecture, security research, and feature engineering pushed as far as possible.</p>
-      </header>
-
-      <!-- VISION PROJECTS HERO CARD -->
-      <div class="vp-hero reveal">
-        <div class="vp-bg-grid" aria-hidden="true"></div>
-        <div class="vp-eyebrow">
-          <span class="vp-tag">Closed Source Initiative</span>
-          <span class="bloom-sep">·</span>
-          <span class="vp-stat">⬛ Proprietary</span>
-        </div>
-        <div class="vp-headline-row">
-          <div class="vp-left">
-            <h3 class="vp-title">Vision<br>Projects</h3>
-            <p class="vp-desc">An umbrella of experimental builds, each project starts as a deceptively simple idea and evolves into a stress-test of what modern stacks can carry. Complex auth layers, edge-case security, non-standard feature sets. Simple on the surface. Engineered underneath.</p>
-          </div>
-          <div class="vp-right">
-            <div class="vp-stat-grid">
-              <div class="vp-stat-card"><span class="vps-n">2</span><span class="vps-l">Active Projects</span></div>
-              <div class="vp-stat-card"><span class="vps-n">∞</span><span class="vps-l">Features Pushed</span></div>
-              <div class="vp-stat-card"><span class="vps-n">⬛</span><span class="vps-l">Closed Source</span></div>
-              <div class="vp-stat-card"><span class="vps-n">EXP</span><span class="vps-l">Architecture</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- VISION PROJECTS CARDS -->
-      <div class="vp-grid reveal">
-
-        <!-- VisionTPC -->
-        <div class="vp-card">
-          <div class="vp-card-img-shell">
-            <img src="./img/pro1.png" alt="VisionTPC" class="vp-card-img bw-img" loading="lazy" />
-            <span class="vp-locked-badge">⬛ Closed Source</span>
-          </div>
-          <div class="vp-card-body">
-            <div class="vp-card-head">
-              <span class="vp-card-num">VP — 01</span>
-              <h4 class="vp-card-title">VisionTPC</h4>
-              <p class="vp-card-sub"><em>The Poet's Calendar</em></p>
-            </div>
-            <p class="vp-card-desc">A sanctuary for poets; built with React Vite and Firebase. On the surface, a simple poetry journaling app. Underneath: experimental sync architecture, end-to-end encrypted verse storage, multi-layer auth, and a feature set that keeps growing far beyond what a "notes app" should carry.</p>
-            <div class="vp-card-tags">
-              <span>Flutter</span><span>Firebase</span><span>E2E Encryption</span><span>Mobile</span><span>Experimental</span>
-            </div>
-            <div class="vp-card-complexity">
-              <span class="vp-complexity-label">Complexity Index</span>
-              <div class="vp-complexity-bar"><div class="vp-complexity-fill" style="width:88%"></div></div>
-              <span class="vp-complexity-val">88 / 100</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Countries Explorer -->
-        <div class="vp-card">
-          <div class="vp-card-img-shell">
-            <img src="./img/vp2.png" alt="Countries Explorer" class="vp-card-img vp-card-img--contain bw-img" loading="lazy" />
-            <span class="vp-locked-badge">⬛ Closed Source</span>
-          </div>
-          <div class="vp-card-body">
-            <div class="vp-card-head">
-              <span class="vp-card-num">VP — 02</span>
-              <h4 class="vp-card-title">Countries Explorer</h4>
-              <p class="vp-card-sub"><em>Simple idea. Complex stack.</em></p>
-            </div>
-            <p class="vp-card-desc">A countries data explorer platform. Simple premise, browse world countries. Complex reality: Clerk authentication layered with Firebase Auth, Axios-driven API orchestration, advanced caching, role-based access layers, and an over-engineered feature set that turns a browse page into an engineering showcase.</p>
-            <div class="vp-card-tags">
-              <span>React</span><span>Clerk</span><span>Firebase Auth</span><span>Axios</span><span>REST APIs</span>
-            </div>
-            <div class="vp-card-complexity">
-              <span class="vp-complexity-label">Complexity Index</span>
-              <div class="vp-complexity-bar"><div class="vp-complexity-fill" style="width:76%"></div></div>
-              <span class="vp-complexity-val">76 / 100</span>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- /vp-grid -->
-
-      <div class="vp-footer-note reveal">
-        <span class="geo-plus" aria-hidden="true">✛</span>
-        <p>VisionProjects are intentionally closed-source. The goal is to explore how far a simple idea can be pushed without the constraints of open development. These projects serve as personal engineering laboratories.</p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- CREATIVE -->
-  <section class="section section--ink" id="creative">
-    <div class="container">
-      <header class="section-head reveal">
-        <div class="sh-tag-row"><span class="geo-plus ink-mode" aria-hidden="true">✛</span><span class="s-tag">05 — Creative</span></div>
-        <h2 class="s-title">Designed Things</h2>
-      </header>
-
-      <div class="cr-row reveal">
-        <div class="cr-label"><span class="cr-letter">A</span><h3 class="cr-cat">Digital Design</h3><p class="cr-desc">UI, brand identity &amp; digital graphics</p></div>
-        <div class="cr-items">
-          <div class="cr-item cr-item--photo" data-lightbox="./img/des1.png" data-caption="Brand Identity">
-            <div class="cr-img-shell"><img src="./img/des1.png" alt="Brand Identity" class="cr-img cr-img--centered bw-img" loading="lazy" /></div>
-            <div class="cr-item-overlay"><span class="cr-item-label">Digital Design</span><span class="cr-item-title">Brand Identity</span><span class="cr-expand-hint">Click to expand ↗</span></div>
-          </div>
-          <div class="cr-item cr-item--photo" data-lightbox="./img/des2.jpg" data-caption="Info Graphics">
-            <div class="cr-img-shell"><img src="./img/des2.jpg" alt="Digital design work — Info Graphics by Nimsandu Kottage" class="cr-img bw-img" loading="lazy" style="padding: 16px;" /></div>
-            <div class="cr-item-overlay"><span class="cr-item-label">Digital Design</span><span class="cr-item-title">Info Graphics</span><span class="cr-expand-hint">Click to expand ↗</span></div>
-          </div>
-          <div class="cr-item cr-item--photo" data-lightbox="./img/des3.jpg" data-caption="Digital Graphics">
-            <div class="cr-img-shell cr-img-shell--sample"><img src="./img/des3.jpg" alt="Digital graphics work by Nimsandu Kottage" class="cr-img cr-img--centered bw-img" loading="lazy" /></div>
-            <div class="cr-item-overlay"><span class="cr-item-label">Digital Design</span><span class="cr-item-title">Digital Graphics</span><span class="cr-expand-hint">Click to expand ↗</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="cr-divider"></div>
-
-      <div class="cr-row reveal">
-        <div class="cr-label"><span class="cr-letter">B</span><h3 class="cr-cat">Print Design</h3><p class="cr-desc">Posters, publications &amp; collateral</p></div>
-        <div class="cr-items">
-          <div class="cr-item cr-item--photo" data-lightbox="./img/des6.png" data-caption="Poster / Publication">
-            <div class="cr-img-shell"><img src="./img/des6.png" alt="Print design work — poster and publication design by Nimsandu Kottage" class="cr-img bw-img" loading="lazy" style="padding: 16px;" /></div>
-            <div class="cr-item-overlay"><span class="cr-item-label">Print Design</span><span class="cr-item-title">Poster / Publication</span><span class="cr-expand-hint">Click to expand ↗</span></div>
-          </div>
-          <div class="cr-item cr-item--photo" data-lightbox="./img/des4.png" data-caption="Collateral">
-            <div class="cr-img-shell cr-img-shell--sample"><img src="./img/des4.png" alt="Print Collateral" class="cr-img cr-img--centered bw-img" loading="lazy" /></div>
-            <div class="cr-item-overlay"><span class="cr-item-label">Print Design</span><span class="cr-item-title">Collateral</span><span class="cr-expand-hint">Click to expand ↗</span></div>
-          </div>
-          <div class="cr-item cr-item--photo" data-lightbox="./img/des5.png" data-caption="Editorial">
-            <div class="cr-img-shell cr-img-shell--sample"><img src="./img/des5.png" alt="Editorial" class="cr-img cr-img--centered bw-img" loading="lazy" /></div>
-            <div class="cr-item-overlay"><span class="cr-item-label">Print Design</span><span class="cr-item-title">Editorial</span><span class="cr-expand-hint">Click to expand ↗</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="cr-divider"></div>
-
-      <div class="cr-row reveal">
-        <div class="cr-label"><span class="cr-letter">C</span><h3 class="cr-cat">Video Creation</h3><p class="cr-desc">Editing, motion &amp; visual storytelling</p></div>
-        <div class="cr-items">
-          <div class="cr-item cr-item--video" data-video-url="https://www.linkedin.com/posts/fractalx-org_it-is-a-great-pleasure-to-announce-that-fractalx-activity-7437115318335987712-YU72?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC7fK3cBaDge7N1HRnyaZgXP6TU7iEHw-Xw">
-            <div class="cr-img-shell cr-img-shell--sample">
-              <img src="./img/vid1.png" alt="visual storytelling" class="cr-img cr-img--centered bw-img" loading="lazy" />
-              <div class="cr-play-btn" aria-hidden="true"><span>▷</span></div>
-            </div>
-            <div class="cr-item-overlay"><span class="cr-item-label">Video Creation</span><span class="cr-item-title">Visual Storytelling</span><span class="cr-expand-hint">Click to watch ↗</span></div>
-          </div>
-          <div class="cr-item cr-item--video" data-video-url="https://youtu.be/vPuxunvZaWU">
-            <div class="cr-img-shell cr-img-shell--sample">
-              <img src="./img/vid2.png" alt="Motion Graphics & Loops" class="cr-img cr-img--centered bw-img" loading="lazy" />
-              <div class="cr-play-btn" aria-hidden="true"><span>▷</span></div>
-            </div>
-            <div class="cr-item-overlay"><span class="cr-item-label">Video Creation</span><span class="cr-item-title">Motion Graphics & Loops</span><span class="cr-expand-hint">Click to watch ↗</span></div>
-          </div>
-          <div class="cr-item cr-item--video" data-video-url="https://youtube.com/shorts/fvOSpTRKzzw">
-            <div class="cr-img-shell">
-              <img src="./img/vid3.png" alt="Edited Reel" class="cr-img bw-img" loading="lazy" style="padding: 16px;"/>
-              <div class="cr-play-btn" aria-hidden="true"><span>▷</span></div>
-            </div>
-            <div class="cr-item-overlay"><span class="cr-item-label">Video Creation</span><span class="cr-item-title">Edited Reel</span><span class="cr-expand-hint">Click to watch ↗</span></div>
-        </div>
-        </div>
-      </div>
-    </div>
-          <div class="vp-footer-note reveal" style=" background: var(--ink); border-color: rgba(46, 46, 46, 0); padding-left: 17vw; padding-top: -20px;">
-        <span class="geo-plus" aria-hidden="true">✛</span>
-        <p>Above are some of the delivered projects. A few of many...</p>
-      </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="section section--ink section--contact" id="contact">
-    <div class="container">
-      <div class="contact-geo-rule reveal" aria-hidden="true">
-        <span class="cgr-dot"></span><div class="cgr-line"></div><span class="cgr-dot"></span>
-      </div>
-      <div class="contact-grid">
-        <div class="contact-l reveal">
-          <div class="sh-tag-row"><span class="geo-plus ink-mode" aria-hidden="true">✛</span><span class="s-tag">06 — Contact</span></div>
-          <h2 class="contact-title">Let's make<br><em>something</em><br>real.</h2>
-          <p class="contact-sub">Open for freelance, collaboration,<br>and interesting problems.</p>
-        </div>
-        <div class="contact-r reveal">
-          <a href="mailto:hello@nimaat.top" class="c-row">
-            <div class="c-row-l"><span class="c-label">Email</span><span class="c-val"><span class="__cf_email__" data-cfemail="d6beb3babab996b8bfbbb7b7a2f8a2b9a6">hello@nimaat.top</span></span></div>
-            <span class="c-arrow">↗</span>
-          </a>
-          <a href="https://linkedin.com/in/nimsandu" target="_blank" rel="noopener" class="c-row">
-            <div class="c-row-l"><span class="c-label">LinkedIn</span><span class="c-val">Nimsandu Kottage</span></div>
-            <span class="c-arrow">↗</span>
-          </a>
-          <a href="https://github.com/nimsandu" target="_blank" rel="noopener" class="c-row">
-            <div class="c-row-l"><span class="c-label">GitHub</span><span class="c-val">nimsandu</span></div>
-            <span class="c-arrow">↗</span>
-          </a>
-          <a href="https://buymeacoffee.com/nimsandu" target="_blank" rel="noopener" class="c-row c-row--bmc">
-            <div class="c-row-l"><span class="c-label">Support</span><span class="c-val">Buy me a coffee</span></div>
-            <span class="c-arrow">↗</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <span class="ft-logo">NK.</span>
-      <span class="ft-copy">© 2026 Nimsandu Kottage · nimaat.top · Made by Nimsandu · Refined with AI</span>
-      <a href="./rates.html" target="_blank" class="ft-rates">Rates &amp; Policies ↗</a>
-    </div>
-  </footer>
-
-  <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Creative work preview">
-    <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
-    <div class="lightbox-inner">
-      <button class="lightbox-close" id="lightboxClose" aria-label="Close image">✕</button>
-      <div class="lightbox-img-wrap">
-        <img src="" alt="" class="lightbox-img" id="lightboxImg" />
-      </div>
-      <span class="lightbox-caption" id="lightboxCaption"></span>
-    </div>
-  </div>
-
-  <script src="index.js" defer></script>
-  <script src="https://cdn.wolfigs.com/webnak.js" data-site="ilk_38b2e9fbfaa03ff369c9"></script>
-</body>
+    <dialog id="galleryDialog" class="gallery-dialog" aria-label="Creative work preview">
+      <button type="button" class="dialog-close" aria-label="Close image">Close ×</button>
+      <img alt="">
+      <p></p>
+    </dialog>
+    <script src="/mission-config.js" defer></script>
+    <script src="/mission.js" defer></script>
+  </body>
 </html>
